@@ -681,6 +681,41 @@
   </footer>
 
   <script>
+    // ╔══════════════════════════════════════════════════════════════════════════╗
+    // ║  AKE — AXIOMATIC KERNEL ENGINE · UNIFIED FIELD THEORY                   ║
+    // ║  Protocolo: UFT-1.0 · Hub de Navegação · Zero Lógica de Domínio         ║
+    // ╠══════════════════════════════════════════════════════════════════════════╣
+    // ║  @domain    Hub — Plataformas Digitais DMOB/SEINFRA-AM                  ║
+    // ║  @author    Paulo Esteves Fernandes Neto — Chefe DMOB/SEINFRA-AM        ║
+    // ║  @version   1.0.0-ake                                                   ║
+    // ║  @build     GENESIS_RETROFIT                                            ║
+    // ║  @created   2026-03-24                                                  ║
+    // ║  @repo      github.com/leonzordhue/painel-dmob                          ║
+    // ║                                                                          ║
+    // ║  CLASSIFICAÇÃO AKE:                                                      ║
+    // ║    Perfil:        Hub (zero Library, zero Logic Core)                    ║
+    // ║    Camada 1–5:    Não aplicável — este arquivo é puro UI/navegação       ║
+    // ║    Camada 6 (UI): Links para 6 plataformas AKE + animação reveal        ║
+    // ║                                                                          ║
+    // ║  PLATAFORMAS VINCULADAS:                                                 ║
+    // ║    - seinfra-rodovias (Planejamento Rodoviário)                          ║
+    // ║    - seinfra-ramais (Consulta de Ramais)                                 ║
+    // ║    - rodovias-am-dashboard (Observatório de Sinistros)                   ║
+    // ║    - aero-amazonas (Aeródromos)                                          ║
+    // ║    - hidro-amazonas (Terminais Flutuantes)                               ║
+    // ║    - dmob-viario (Viário Municipal)                                      ║
+    // ╚══════════════════════════════════════════════════════════════════════════╝
+
+    var AKE_BUILD_LOG = [{
+      build: "1.0.0-ake",
+      data: "2026-03-24T10:15:00-04:00",
+      autor: "Paulo Esteves Fernandes Neto",
+      ia_assistente: "Claude Opus 4.6",
+      tipo: "GENESIS_RETROFIT",
+      descricao: "Retrofit AKE no hub de navegação. Sem Library, sem Logic Core. Apenas Header L0 e Log."
+    }];
+
+    // ── UI: Animação de Reveal (IntersectionObserver) ──
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
