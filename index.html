@@ -206,6 +206,7 @@
     .card-stripe.azul-cl { background: linear-gradient(90deg, #1a6bb5, #0d4f8a); }
     .card-stripe.hidro   { background: linear-gradient(90deg, #0077b6, #023e8a); }
     .card-stripe.aero    { background: linear-gradient(90deg, #7b2d8b, #4a1060); }
+    .card-stripe.atlas   { background: linear-gradient(90deg, #1a7a4e, #0d5235); }
 
     .card-body { padding: 1.75rem 1.75rem 1rem; flex: 1; }
     .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
@@ -221,6 +222,7 @@
     .card-icon.verde   { background: var(--verde-cl); }
     .card-icon.hidro   { background: #e0f2fe; }
     .card-icon.aero    { background: #f3e8ff; }
+    .card-icon.atlas   { background: #e6f4ed; }
     .card-icon.em-breve { opacity: 0.5; }
 
     .card-status {
@@ -639,13 +641,55 @@
 
       </div>
     </div>
+
+    <!-- ══ DIVISOR ══ -->
+    <div class="section-divider">
+      <div class="section-divider-line"></div>
+      <div class="section-divider-label">Geoinformação &amp; Cartografia</div>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <!-- ══ SEÇÃO ATLAS ══ -->
+    <div class="section-wrap" style="padding-top:0; padding-bottom: 4rem;">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-eyebrow">
+            <div class="section-eyebrow-bar"></div>
+            Cartografia Digital
+          </div>
+          <h2 class="section-title">Atlas do Amazonas</h2>
+        </div>
+        <div class="section-count">1 plataforma ativa</div>
+      </div>
+
+      <div class="grid-2" style="grid-template-columns: 1fr 1fr;">
+
+        <!-- Atlas do Amazonas -->
+        <a class="card reveal" href="https://leonzordhue.github.io/atlas-amazonas/" target="_blank" rel="noopener noreferrer">
+          <div class="card-stripe atlas"></div>
+          <div class="card-body">
+            <div class="card-top">
+              <div class="card-icon atlas">🗺️</div>
+              <div class="card-status"><span class="status-dot"></span>Ativo</div>
+            </div>
+            <h3 class="card-title">Atlas do Amazonas</h3>
+            <p class="card-desc">Plataforma cartográfica interativa com múltiplas camadas geoespaciais do Estado do Amazonas. Rodovias, ramais, aeródromos, hidrovias, terminais flutuantes, sítios arqueológicos IPHAN, unidades de conservação e limites municipais integrados com painel BI analítico.</p>
+          </div>
+          <div class="card-foot">
+            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
+            <div class="card-ref">01 / 01</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
   </main>
 
   <!-- ══ INDICADORES ══ -->
   <div class="indicators">
     <div class="indicators-inner">
       <div class="ind-item reveal">
-        <div class="ind-value"><span class="accent">6</span></div>
+        <div class="ind-value"><span class="accent">7</span></div>
         <div class="ind-label">Sistemas Ativos</div>
       </div>
       <div class="ind-item reveal d1">
@@ -687,15 +731,15 @@
     // ╠══════════════════════════════════════════════════════════════════════════╣
     // ║  @domain    Hub — Plataformas Digitais DMOB/SEINFRA-AM                  ║
     // ║  @author    Paulo Esteves Fernandes Neto — Chefe DMOB/SEINFRA-AM        ║
-    // ║  @version   1.0.0-ake                                                   ║
-    // ║  @build     GENESIS_RETROFIT                                            ║
+    // ║  @version   1.1.0-ake                                                   ║
+    // ║  @build     REV-2                                                        ║
     // ║  @created   2026-03-24                                                  ║
     // ║  @repo      github.com/leonzordhue/painel-dmob                          ║
     // ║                                                                          ║
     // ║  CLASSIFICAÇÃO AKE:                                                      ║
     // ║    Perfil:        Hub (zero Library, zero Logic Core)                    ║
     // ║    Camada 1–5:    Não aplicável — este arquivo é puro UI/navegação       ║
-    // ║    Camada 6 (UI): Links para 6 plataformas AKE + animação reveal        ║
+    // ║    Camada 6 (UI): Links para 7 plataformas AKE + animação reveal        ║
     // ║                                                                          ║
     // ║  PLATAFORMAS VINCULADAS:                                                 ║
     // ║    - seinfra-rodovias (Planejamento Rodoviário)                          ║
@@ -704,16 +748,29 @@
     // ║    - aero-amazonas (Aeródromos)                                          ║
     // ║    - hidro-amazonas (Terminais Flutuantes)                               ║
     // ║    - dmob-viario (Viário Municipal)                                      ║
+    // ║    - atlas-amazonas (Atlas Cartográfico — NOVO REV-2)                    ║
     // ╚══════════════════════════════════════════════════════════════════════════╝
 
-    var AKE_BUILD_LOG = [{
-      build: "1.0.0-ake",
-      data: "2026-03-24T10:15:00-04:00",
-      autor: "Paulo Esteves Fernandes Neto",
-      ia_assistente: "Claude Opus 4.6",
-      tipo: "GENESIS_RETROFIT",
-      descricao: "Retrofit AKE no hub de navegação. Sem Library, sem Logic Core. Apenas Header L0 e Log."
-    }];
+    var AKE_BUILD_LOG = [
+      {
+        build: "1.0.0-ake",
+        data: "2026-03-24T10:15:00-04:00",
+        autor: "Paulo Esteves Fernandes Neto",
+        ia_assistente: "Claude Opus 4.6",
+        tipo: "GENESIS_RETROFIT",
+        status: "SUPERADA",
+        descricao: "Retrofit AKE no hub de navegação. Sem Library, sem Logic Core. Apenas Header L0 e Log."
+      },
+      {
+        build: "1.1.0-ake",
+        data: "2026-04-15T00:00:00-04:00",
+        autor: "Paulo Esteves Fernandes Neto",
+        ia_assistente: "Claude Sonnet 4.6",
+        tipo: "REV-2",
+        status: "VIGENTE",
+        descricao: "Adição do card Atlas do Amazonas (atlas-amazonas). Nova seção 'Geoinformação & Cartografia'. Indicador de sistemas ativos atualizado de 6 para 7. Variáveis CSS card-stripe.atlas e card-icon.atlas inseridas. Nenhuma lógica de domínio alterada."
+      }
+    ];
 
     // ── UI: Animação de Reveal (IntersectionObserver) ──
     const io = new IntersectionObserver(entries => {
