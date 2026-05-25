@@ -1,0 +1,1674 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1A2B5E" />
+<title>SEINFRA/AM — Central de Inteligência de Infraestrutura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Lexend+Deca:wght@300;400;500;600;700;800;900&family=Lexend+Zetta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  AKE UFT-1.0 · SEINFRA BI · CSS LAYER 6 — UI TOKENS     ║
+   ╚══════════════════════════════════════════════════════════╝ */
+:root {
+  --azul: #1A2B5E;
+  --azul-dk:    #001E50;
+  --azul-md:    #1A4B9B;
+  --azul-lt:    #EBF0FA;
+  --azul-brd:   #C4D0E8;
+  --ouro:       #F5A623;
+  --ouro-dk:    #D48C10;
+  --ouro-lt:    #FEF3DC;
+  --ouro-brd:   #F5C878;
+  --verde: #2D8540;
+  --verde-lt:   #E6F4ED;
+  --vermelho:   #C0392B;
+  --verm-lt:    #FDECEA;
+  --roxo:       #6C3483;
+  --roxo-lt:    #F4ECF7;
+  --ciano:      #0E6B8F;
+  --ciano-lt:   #E8F4F8;
+  --cinza-1:    #1A2540;
+  --cinza-2:    #4A5568;
+  --cinza-3:    #8896A8;
+  --cinza-4:    #CBD5E0;
+  --cinza-5:    #F5F7FB;
+  --branco:     #FFFFFF;
+  --borda:      #E0E6F0;
+  --font: 'Lexend Deca', 'Outfit', sans-serif;
+  --sidebar-w:  260px;
+  --header-h:   60px;
+      --azul-mid: #1E3575;
+      --azul-hover: #152347;
+      --verde-gov: #2D8540;
+      --verde-cl: #E8F5EC;
+      --verde-brd: rgba(45,133,64,0.28);
+      --font-head: 'Lexend Zetta', 'Outfit', sans-serif;
+      --font-cond: 'Barlow Condensed', 'Outfit', sans-serif;
+    }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--cinza-5);color:var(--cinza-1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ── TOPBAR GOVERNO ── */
+.gov-bar{background:var(--azul-dk);padding:0.3rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:200;height:28px}
+.gov-bar-l{font-size:0.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+.gov-bar-r{font-size:0.58rem;color:rgba(255,255,255,.4);letter-spacing:.05em}
+.gov-live{display:flex;align-items:center;gap:.4rem;font-size:.6rem;font-weight:700;color:var(--ouro);text-transform:uppercase;letter-spacing:.1em}
+.gov-dot{width:5px;height:5px;border-radius:50%;background:var(--ouro);animation:pulse 2s infinite}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:28px;left:0;width:var(--sidebar-w);height:calc(100vh - 28px);background:var(--azul);display:flex;flex-direction:column;z-index:150;overflow-y:auto;overflow-x:hidden}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+
+.sidebar-brand{padding:1.2rem 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.sb-icon{width:36px;height:36px;background:var(--ouro);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.sb-name{font-size:.95rem;font-weight:800;color:var(--branco);letter-spacing:-.01em}
+.sb-name span{color:var(--ouro)}
+.sb-sub{font-size:.58rem;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+
+.sb-section{padding:.9rem 1rem .3rem;font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.55rem .9rem .55rem 1rem;cursor:pointer;border-left:3px solid transparent;transition:all .18s ease;position:relative;margin:1px .7rem;border-radius:10px;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.09);border-left-color:rgba(255,255,255,.0);transform:translateX(2px)}
+.nav-item:hover .nav-icon{background:rgba(255,255,255,.18);transform:scale(1.08)}
+.nav-item.active{background:linear-gradient(135deg,rgba(245,166,35,.18),rgba(245,166,35,.08));border-left-color:var(--ouro);box-shadow:0 2px 12px rgba(245,166,35,.15),inset 0 0 0 1px rgba(245,166,35,.15)}
+.nav-item.active .nav-icon{background:rgba(245,166,35,.25);box-shadow:0 0 10px rgba(245,166,35,.2)}
+.nav-item.active .nav-icon svg{stroke:var(--ouro)}
+.nav-item:active{transform:translateX(1px) scale(.99)}
+.nav-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.1);transition:all .18s ease;border:1px solid rgba(255,255,255,.06)}
+.nav-icon svg{stroke:rgba(255,255,255,.7);transition:stroke .18s}
+.nav-item:hover .nav-icon svg{stroke:rgba(255,255,255,.95)}
+.nav-label{font-size:.8rem;font-weight:600;color:rgba(255,255,255,.7);transition:color .18s;letter-spacing:.01em}
+.nav-item:hover .nav-label{color:rgba(255,255,255,.95)}
+.nav-item.active .nav-label{color:var(--branco);font-weight:700}
+.nav-badge{margin-left:auto;background:var(--ouro);color:var(--azul-dk);font-size:.58rem;font-weight:800;padding:.18em .6em;border-radius:100px;min-width:22px;text-align:center;box-shadow:0 1px 4px rgba(245,166,35,.3);flex-shrink:0}
+
+.sidebar-footer{margin-top:auto;padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.08)}
+.sf-text{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.05em}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);padding-top:28px;min-height:100vh}
+
+.page-header{background:var(--branco);border-bottom:1px solid var(--borda);padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--header-h);position:sticky;top:28px;z-index:100;box-shadow:0 1px 8px rgba(26,43,94,.06)}
+.ph-left{display:flex;align-items:center;gap:.8rem}
+.ph-back{display:none}
+.ph-breadcrumb{font-size:.65rem;color:var(--cinza-3);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.ph-title{font-size:1.1rem;font-weight:800;color:var(--azul)}
+.ph-right{display:flex;align-items:center;gap:.8rem}
+.ph-sync{font-size:.65rem;color:var(--cinza-3);display:flex;align-items:center;gap:.35rem}
+.ph-sync-dot{width:6px;height:6px;border-radius:50%;background:var(--verde);animation:pulse 2s infinite}
+.ph-btn{background:var(--azul);color:var(--branco);border:none;border-radius:8px;padding:.45rem 1rem;font-size:.72rem;font-weight:700;font-family:var(--font);cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;gap:.4rem}
+.ph-btn:hover{background:var(--azul-md)}
+
+.content{padding:1.5rem 2rem 3rem}
+
+/* ── LOADER ── */
+.loader-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem;gap:1rem}
+.loader-ring{width:40px;height:40px;border:3px solid var(--borda);border-top-color:var(--azul);border-radius:50%;animation:spin .8s linear infinite}
+.loader-txt{font-size:.78rem;color:var(--cinza-3);font-weight:500}
+.error-box{background:var(--verm-lt);border:1px solid #F5A9A9;border-radius:12px;padding:1.2rem 1.5rem;font-size:.82rem;color:var(--vermelho);display:flex;align-items:center;gap:.7rem}
+
+/* ── KPI CARDS ── */
+.kpi-row{display:grid;gap:1rem;margin-bottom:1.5rem}
+.kpi-row.cols-4{grid-template-columns:repeat(4,1fr)}
+.kpi-row.cols-3{grid-template-columns:repeat(3,1fr)}
+.kpi-row.cols-2{grid-template-columns:repeat(2,1fr)}
+
+.kpi{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.5rem;transition:box-shadow .2s;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul)}
+.kpi.ouro::before{background:var(--ouro)}
+.kpi.verde::before{background:var(--verde)}
+.kpi.verm::before{background:var(--vermelho)}
+.kpi.roxo::before{background:var(--roxo)}
+.kpi.ciano::before{background:var(--ciano)}
+.kpi:hover{box-shadow:0 4px 20px rgba(26,43,94,.1)}
+
+.kpi-header{display:flex;align-items:center;justify-content:space-between}
+.kpi-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza-3)}
+.kpi-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--cinza-5)}
+.kpi-value{font-size:2rem;font-weight:900;color:var(--azul);line-height:1;letter-spacing:-.03em}
+.kpi.ouro .kpi-value{color:var(--ouro-dk)}
+.kpi.verde .kpi-value{color:var(--verde)}
+.kpi.verm .kpi-value{color:var(--vermelho)}
+.kpi.roxo .kpi-value{color:var(--roxo)}
+.kpi.ciano .kpi-value{color:var(--ciano)}
+.kpi-sub{font-size:.68rem;color:var(--cinza-3);font-weight:500}
+.kpi-delta{display:inline-flex;align-items:center;gap:.25rem;font-size:.65rem;font-weight:700;padding:.15em .5em;border-radius:100px}
+.kpi-delta.up{background:var(--verde-lt);color:var(--verde)}
+.kpi-delta.down{background:var(--verm-lt);color:var(--vermelho)}
+
+/* ── GRID CHARTS ── */
+.chart-grid{display:grid;gap:1.2rem;margin-bottom:1.2rem}
+.chart-grid.g2{grid-template-columns:1fr 1fr}
+.chart-grid.g3{grid-template-columns:1fr 1fr 1fr}
+.chart-grid.g12{grid-template-columns:2fr 1fr}
+.chart-grid.g21{grid-template-columns:1fr 2fr}
+
+.chart-card{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.2rem;overflow:hidden}
+.chart-card.full{grid-column:1/-1}
+.cc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;gap:.5rem}
+.cc-title{font-size:.82rem;font-weight:800;color:var(--cinza-1)}
+.cc-sub{font-size:.65rem;color:var(--cinza-3);margin-top:.15rem}
+.cc-badge{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25em .7em;border-radius:100px;background:var(--azul-lt);color:var(--azul);flex-shrink:0}
+.cc-badge.ouro{background:var(--ouro-lt);color:var(--ouro-dk)}
+.cc-badge.verde{background:var(--verde-lt);color:var(--verde)}
+.chart-wrap{position:relative}
+.chart-wrap canvas{max-height:220px}
+.chart-wrap.tall canvas{max-height:280px}
+
+/* ── TABELA ── */
+.table-card{background:var(--branco);border:1px solid var(--borda);border-radius:14px;overflow:hidden;margin-bottom:1.2rem}
+.table-toolbar{padding:.9rem 1.2rem;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid var(--borda);flex-wrap:wrap}
+.table-toolbar-title{font-size:.82rem;font-weight:800;color:var(--cinza-1);margin-right:auto}
+.search-box{display:flex;align-items:center;gap:.5rem;background:var(--cinza-5);border:1px solid var(--borda);border-radius:8px;padding:.4rem .8rem;font-size:.75rem}
+.search-box input{border:none;background:none;font-family:var(--font);font-size:.75rem;color:var(--cinza-1);outline:none;width:180px}
+.search-box input::placeholder{color:var(--cinza-3)}
+.btn-sm{border:1px solid var(--borda);background:var(--branco);border-radius:8px;padding:.4rem .9rem;font-size:.7rem;font-weight:700;font-family:var(--font);color:var(--cinza-2);cursor:pointer;display:flex;align-items:center;gap:.35rem;transition:all .2s}
+.btn-sm:hover{border-color:var(--azul);color:var(--azul)}
+.btn-sm.primary{background:var(--azul);color:var(--branco);border-color:var(--azul)}
+.btn-sm.primary:hover{background:var(--azul-md)}
+.btn-sm.ouro{background:var(--ouro);color:var(--azul-dk);border-color:var(--ouro)}
+
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--azul)}
+thead th{padding:.7rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.85);text-align:left;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--borda);transition:background .15s}
+tbody tr:hover{background:var(--azul-lt)}
+tbody tr:last-child{border-bottom:none}
+td{padding:.65rem 1rem;font-size:.78rem;color:var(--cinza-1);vertical-align:middle}
+td.mono{font-family:'Courier New',monospace;font-size:.72rem;color:var(--cinza-2)}
+.pill{display:inline-flex;align-items:center;gap:.3rem;padding:.2em .65em;border-radius:100px;font-size:.62rem;font-weight:700;white-space:nowrap}
+.pill.azul{background:var(--azul-lt);color:var(--azul)}
+.pill.ouro{background:var(--ouro-lt);color:var(--ouro-dk)}
+.pill.verde{background:var(--verde-lt);color:var(--verde)}
+.pill.verm{background:var(--verm-lt);color:var(--vermelho)}
+.pill.cinza{background:var(--cinza-5);color:var(--cinza-2)}
+.pill.roxo{background:var(--roxo-lt);color:var(--roxo)}
+
+/* ── PAGINAÇÃO ── */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.2rem;border-top:1px solid var(--borda);font-size:.72rem;color:var(--cinza-3)}
+.page-btns{display:flex;align-items:center;gap:.3rem}
+.page-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--borda);background:var(--branco);font-family:var(--font);font-size:.72rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-weight:600;color:var(--cinza-2)}
+.page-btn:hover{border-color:var(--azul);color:var(--azul)}
+.page-btn.active{background:var(--azul);color:var(--branco);border-color:var(--azul)}
+.page-btn:disabled{opacity:.4;cursor:default}
+
+/* ── SEÇÃO HEADER ── */
+.sec-head{margin-bottom:1.5rem}
+.sec-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro);display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.sec-eyebrow-bar{width:20px;height:3px;background:var(--ouro);border-radius:2px}
+.sec-title{font-size:1.5rem;font-weight:900;color:var(--azul);letter-spacing:-.02em}
+.sec-desc{font-size:.82rem;color:var(--cinza-2);margin-top:.3rem;line-height:1.5}
+
+/* ── RANKING BARS ── */
+.rank-list{display:flex;flex-direction:column;gap:.6rem}
+.rank-item{display:flex;flex-direction:column;gap:.25rem}
+.rank-header{display:flex;align-items:center;justify-content:space-between}
+.rank-label{font-size:.75rem;font-weight:600;color:var(--cinza-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:65%}
+.rank-value{font-size:.75rem;font-weight:700;color:var(--azul)}
+.rank-bar{height:6px;background:var(--cinza-5);border-radius:3px;overflow:hidden}
+.rank-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--azul),var(--azul-md));transition:width .8s ease}
+.rank-fill.ouro{background:linear-gradient(90deg,var(--ouro),var(--ouro-dk))}
+.rank-fill.verde{background:linear-gradient(90deg,var(--verde),#00A852)}
+.rank-fill.verm{background:linear-gradient(90deg,var(--vermelho),#E74C3C)}
+
+/* ── EMPTY STATE ── */
+.empty-state{padding:3rem;text-align:center;color:var(--cinza-3)}
+.empty-icon{font-size:2.5rem;margin-bottom:.8rem;opacity:.5}
+.empty-text{font-size:.82rem;font-weight:500}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab{padding:.45rem 1rem;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid var(--borda);background:var(--branco);color:var(--cinza-2);transition:all .2s;font-family:var(--font)}
+.tab.active{background:var(--azul);color:var(--branco);border-color:var(--azul)}
+.tab:hover:not(.active){border-color:var(--azul);color:var(--azul)}
+
+/* ── DIVISOR ── */
+.divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0}
+.divider-line{flex:1;height:1px;background:var(--borda)}
+.divider-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cinza-3)}
+
+/* ── ACCORDION (Rodovias por trecho) ── */
+.accordion-group{border:1px solid var(--borda);border-radius:12px;overflow:hidden;margin-bottom:.8rem}
+.accordion-head{padding:.9rem 1.2rem;background:var(--branco);display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .15s;gap:.8rem}
+.accordion-head:hover{background:var(--azul-lt)}
+.accordion-head.open{background:var(--azul-lt);border-bottom:1px solid var(--borda)}
+.acc-info{display:flex;align-items:center;gap:.8rem;flex:1}
+.acc-rod{font-size:.85rem;font-weight:800;color:var(--azul)}
+.acc-name{font-size:.75rem;color:var(--cinza-2);font-weight:500}
+.acc-stats{display:flex;gap:.6rem;flex-shrink:0}
+.acc-stat{font-size:.65rem;background:var(--cinza-5);padding:.2em .6em;border-radius:6px;color:var(--cinza-2);font-weight:600}
+.acc-chevron{width:20px;height:20px;display:flex;align-items:center;justify-content:center;transition:transform .2s;color:var(--cinza-3);font-size:.8rem}
+.accordion-head.open .acc-chevron{transform:rotate(180deg)}
+.accordion-body{display:none;overflow:hidden}
+.accordion-body.open{display:block}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease forwards}
+
+/* ── PAGES ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .kpi-row.cols-4{grid-template-columns:repeat(2,1fr)}
+  .chart-grid.g12,.chart-grid.g21{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .kpi-row.cols-4,.kpi-row.cols-3{grid-template-columns:1fr 1fr}
+  .chart-grid.g2,.chart-grid.g3{grid-template-columns:1fr}
+  .content{padding:1rem}
+}
+
+    /* IDENTIDADE SEINFRA 2026 — TOPBAR HEADER FOOTER (override do legado) */
+    .topbar-gov { background: var(--azul); padding: 0.35rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .topbar-gov-text { font-family: var(--font-cond); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .topbar-gov-live { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-cond); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amarelo); }
+    .topbar-gov .topbar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amarelo); animation: pulse 2s ease-in-out infinite; }
+    header.site-header { background: #fff; padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2.5px solid var(--azul); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 20px rgba(26,43,94,0.08); }
+    header.site-header .header-brand { display: flex; align-items: center; gap: 1.1rem; }
+    .brand-gov { display: flex; align-items: center; gap: 0.65rem; }
+    .brand-brasao { height: 50px; width: auto; display: block; }
+    .brand-gov-text { display: flex; flex-direction: column; line-height: 1; gap: 0.1rem; }
+    .brand-gov-label { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 700; color: var(--verde); letter-spacing: 0.12em; text-transform: uppercase; }
+    .brand-gov-estado { font-family: var(--font-cond); font-size: 1.45rem; font-weight: 900; color: var(--azul); letter-spacing: 0.02em; line-height: 1; }
+    .brand-gov-slogan { font-family: var(--font-cond); font-size: 0.6rem; font-weight: 600; color: var(--verde); letter-spacing: 0.15em; text-transform: uppercase; }
+    .brand-divider { width: 1.5px; height: 44px; background: linear-gradient(to bottom, transparent, var(--borda), transparent); margin: 0 0.2rem; flex-shrink: 0; }
+    .brand-seinfra { display: flex; flex-direction: column; line-height: 1.25; }
+    .brand-seinfra-pre { font-family: 'Lexend Deca', sans-serif; font-size: 0.7rem; font-weight: 400; color: var(--azul); }
+    .brand-seinfra-name { font-family: 'Lexend Zetta', sans-serif; font-size: 0.98rem; font-weight: 700; color: var(--azul); }
+    header.site-header .header-right { display: flex; align-items: center; gap: 0.7rem; }
+    .header-badge-gov { font-family: var(--font-cond); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--azul); padding: 0.35em 1.1em; border-radius: 100px; }
+    .header-live { display: flex; align-items: center; gap: 0.35rem; font-family: var(--font-cond); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--azul); opacity: 0.7; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 6px #22C55E; animation: pulse 2s ease-in-out infinite; }
+    footer.site-footer { background: var(--azul); color: rgba(255,255,255,0.6); padding: 1.5rem 2rem; margin-top: 3rem; border-top: none; }
+    footer.site-footer .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+    .footer-col { flex: 1; min-width: 0; }
+    .footer-item { font-family: var(--font-cond); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; color: rgba(255,255,255,0.6); line-height: 1.9; }
+    .footer-vdiv { width: 1px; background: rgba(255,255,255,0.15); align-self: stretch; flex-shrink: 0; }
+    .footer-brand-wrap { text-align: right; white-space: nowrap; }
+    .footer-brand-pre { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-brand-nome { font-family: 'Lexend Zetta', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: -0.01em; line-height: 1.1; }
+    @media (max-width: 640px) {
+      header.site-header { padding: 0.55rem 1rem; }
+      .topbar-gov { padding: 0.35rem 1rem; }
+      .topbar-gov-text { display: none; }
+      .brand-brasao { height: 36px; }
+      .brand-gov-estado { font-size: 1.05rem; }
+      .brand-gov-label, .brand-gov-slogan { font-size: 0.55rem; }
+      .brand-seinfra-name { font-size: 0.82rem; }
+      .brand-seinfra-pre { display: none; }
+      .brand-divider { display: none; }
+      .header-badge-gov { display: none; }
+      .header-live { display: none; }
+      footer.site-footer .footer-inner { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .footer-vdiv { width: 100%; height: 1px; }
+      .footer-brand-wrap { text-align: left; }
+      footer.site-footer { padding: 1.2rem 1rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- HEADER GOV/SEINFRA 2026 -->
+<div class="topbar-gov">
+  <span class="topbar-gov-text">DMOB — Departamento de Mobilidade · SEINFRA/AM · 2026</span>
+  <div class="topbar-gov-live"><div class="topbar-dot"></div>Online</div>
+</div>
+<header class="site-header">
+  <div class="header-brand">
+    <div class="brand-gov">
+      <img src="https://leonzordhue.github.io/atlas-amazonas/assets/brasao_am.png"
+           alt="Brasão do Amazonas" class="brand-brasao"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div style="display:none;width:50px;height:50px;border-radius:8px;background:var(--azul);color:#fff;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0">🦅</div>
+      <div class="brand-gov-text">
+        <div class="brand-gov-label">Governo do</div>
+        <div class="brand-gov-estado">Amazonas</div>
+        <div class="brand-gov-slogan">A Força da Nossa Gente</div>
+      </div>
+    </div>
+    <div class="brand-divider"></div>
+    <div class="brand-seinfra">
+      <div class="brand-seinfra-pre">Secretaria de</div>
+      <div class="brand-seinfra-name">Infraestrutura</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="header-badge-gov">BI Dashboard</span>
+    <div class="header-live"><div class="live-dot"></div>Online</div>
+  </div>
+</header>
+
+
+
+<!-- GOV BAR -->
+<div class="gov-bar">
+  <div class="gov-bar-l">Estado do Amazonas · Secretaria de Estado de Infraestrutura</div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <div class="gov-live"><div class="gov-dot"></div>Dados em tempo real</div>
+    <div class="gov-bar-r" id="lastUpdate">—</div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sb-logo">
+      <div class="sb-icon">🏛️</div>
+      <div>
+        <div class="sb-name">SEINFRA<span>/AM</span></div>
+        <div class="sb-sub">Central de Inteligência</div>
+      </div>
+    </div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.3);margin-top:.3rem;letter-spacing:.05em">DMOB · Depto. de Mobilidade</div>
+  </div>
+
+  <div class="sb-section">Visão Geral</div>
+  <div class="nav-item active" data-page="painel" onclick="window.navigate('painel')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    </div>
+    <span class="nav-label">Painel Geral</span>
+  </div>
+
+  <div class="sb-section">Infraestrutura Viária</div>
+  <div class="nav-item" data-page="rodovias" onclick="window.navigate('rodovias')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10h12l3 10"/><path d="M9 7V3M15 7V3"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+    </div>
+    <span class="nav-label">Rodovias</span>
+    <span class="nav-badge" id="badge-rod">—</span>
+  </div>
+  <div class="nav-item" data-page="ramais" onclick="window.navigate('ramais')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L8 6H4v4l-2 2 2 2v4h4l4 4 4-4h4v-4l2-2-2-2V6h-4z"/><circle cx="12" cy="12" r="2"/></svg>
+    </div>
+    <span class="nav-label">Ramais</span>
+    <span class="nav-badge" id="badge-ram">—</span>
+  </div>
+  <div class="nav-item" data-page="viario" onclick="window.navigate('viario')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    </div>
+    <span class="nav-label">Viário Urbano</span>
+    <span class="nav-badge" id="badge-via">—</span>
+  </div>
+
+  <div class="sb-section">Infraestrutura Modal</div>
+  <div class="nav-item" data-page="aerodromos" onclick="window.navigate('aerodromos')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+    </div>
+    <span class="nav-label">Aeródromos</span>
+    <span class="nav-badge" id="badge-aero">—</span>
+  </div>
+  <div class="nav-item" data-page="terminais" onclick="window.navigate('terminais')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+    </div>
+    <span class="nav-label">Terminais Fluviais</span>
+    <span class="nav-badge" id="badge-term">—</span>
+  </div>
+
+  <div class="sb-section">Análise & Inteligência</div>
+  <div class="nav-item" data-page="sinistros" onclick="window.navigate('sinistros')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <span class="nav-label">Sinistros / Notícias</span>
+    <span class="nav-badge" id="badge-sin">—</span>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sf-text">SEINFRA-AM · DMOB · 2026</div>
+    <div class="sf-text" style="margin-top:.2rem">AKE UFT-1.0 · v2.0-bi</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <header class="page-header">
+    <div class="ph-left">
+      <div>
+        <div class="ph-breadcrumb" id="ph-bread">Painel Geral</div>
+        <div class="ph-title" id="ph-title">Central de Inteligência de Infraestrutura</div>
+      </div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-sync"><div class="ph-sync-dot"></div><span id="syncStatus">Sincronizando…</span></div>
+      <button class="ph-btn" onclick="exportarCSV()">⬇️ Exportar CSV</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ═══════════════════ PAINEL GERAL ═══════════════════ -->
+    <div class="page active" id="page-painel">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Dashboard Executivo</div>
+        <div class="sec-title">Painel Geral de Infraestrutura</div>
+        <div class="sec-desc">Visão consolidada de toda a infraestrutura do Estado do Amazonas gerenciada pela SEINFRA/AM — dados em tempo real das planilhas operacionais.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-geral">
+        <div class="kpi"><div class="kpi-header"><div class="kpi-label">Trechos de Rodovias</div><div class="kpi-icon">🛣️</div></div><div class="kpi-value" id="kg-rod">—</div><div class="kpi-sub">segmentos cadastrados</div></div>
+        <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Ramais Rurais</div><div class="kpi-icon">🌿</div></div><div class="kpi-value" id="kg-ram">—</div><div class="kpi-sub">registros ativos</div></div>
+        <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Terminais Fluviais</div><div class="kpi-icon">⚓</div></div><div class="kpi-value" id="kg-term">—</div><div class="kpi-sub">terminais cadastrados</div></div>
+        <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Aeródromos</div><div class="kpi-icon">✈️</div></div><div class="kpi-value" id="kg-aero">—</div><div class="kpi-sub">aeródromos ativos</div></div>
+      </div>
+      <div class="kpi-row cols-4">
+        <div class="kpi roxo"><div class="kpi-header"><div class="kpi-label">Viário Urbano</div><div class="kpi-icon">🏙️</div></div><div class="kpi-value" id="kg-via">—</div><div class="kpi-sub">municípios com viário</div></div>
+        <div class="kpi verm"><div class="kpi-header"><div class="kpi-label">Sinistros/Notícias</div><div class="kpi-icon">🚨</div></div><div class="kpi-value" id="kg-sin">—</div><div class="kpi-sub">registros monitorados</div></div>
+        <div class="kpi"><div class="kpi-header"><div class="kpi-label">Municípios Atendidos</div><div class="kpi-icon">📍</div></div><div class="kpi-value">62</div><div class="kpi-sub">municípios do Amazonas</div></div>
+        <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Plataformas Ativas</div><div class="kpi-icon">⚡</div></div><div class="kpi-value">7</div><div class="kpi-sub">sistemas integrados</div></div>
+      </div>
+
+      <div class="chart-grid g2">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Distribuição por Categoria</div><div class="cc-sub">Volume de registros por tipo de infraestrutura</div></div><div class="cc-badge ouro">Geral</div></div>
+          <div class="chart-wrap"><canvas id="chart-geral-dist"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Presença Municipal</div><div class="cc-sub">Municípios cobertos por categoria de infraestrutura</div></div><div class="cc-badge verde">Cobertura</div></div>
+          <div class="chart-wrap"><canvas id="chart-geral-mun"></canvas></div>
+        </div>
+      </div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Planilha Geral — Busca Integrada</div><div class="divider-line"></div></div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">🗂️ Banco de Dados Geral</div>
+          <div class="search-box">🔍 <input type="text" id="search-geral" placeholder="Buscar em todos os campos…" oninput="filtrarTabela('geral')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSV()">⬇️ Exportar CSV</button>
+        </div>
+        <div id="table-geral-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando planilha geral…</div></div></div>
+        <div class="pagination" id="pag-geral">
+          <span id="pag-geral-info">—</span>
+          <div class="page-btns" id="pag-geral-btns"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ RODOVIAS ═══════════════════ -->
+    <div class="page" id="page-rodovias">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Viária</div>
+        <div class="sec-title">🛣️ Rodovias Estaduais do Amazonas</div>
+        <div class="sec-desc">Cadastro técnico dos trechos da malha rodoviária estadual e federal sob responsabilidade da SEINFRA/AM — jurisdição, extensões, faixas de domínio e dados de localização.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-rod"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Rodovias por Jurisdição</div><div class="cc-sub">Estadual vs Federal</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-rod-juris"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Distribuição por Região</div><div class="cc-sub">RMM, Interior, outras</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-rod-regiao"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:1.2rem">
+        <div class="cc-head"><div><div class="cc-title">Top 10 — Maiores Extensões por Rodovia</div><div class="cc-sub">Soma total de extensão (km) por código de rodovia</div></div><div class="cc-badge">Ranking</div></div>
+        <div class="chart-wrap tall"><canvas id="chart-rod-ext"></canvas></div>
+      </div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Trechos agrupados por rodovia</div><div class="divider-line"></div></div>
+
+      <div id="rod-accordions"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando trechos…</div></div></div>
+    </div>
+
+    <!-- ═══════════════════ RAMAIS ═══════════════════ -->
+    <div class="page" id="page-ramais">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Viária</div>
+        <div class="sec-title">🌿 Ramais Rurais do Amazonas</div>
+        <div class="sec-desc">Inventário dos ramais de acesso às comunidades rurais e ribeirinhas do Estado do Amazonas — situação, extensão, municípios e calhas fluviais atendidas.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-ram"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Situação dos Ramais</div><div class="cc-sub">Distribuição por status (excl. "A Visitar")</div></div><div class="cc-badge ouro">Status</div></div>
+          <div class="chart-wrap"><canvas id="chart-ram-sit"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 5 — Mais Ramais por Município</div><div class="cc-sub">Municípios com maior quantidade de ramais cadastrados</div></div></div>
+          <div class="rank-list" id="rank-ram-mun" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="chart-grid g2">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 5 — Maiores Extensões de Ramal</div><div class="cc-sub">Ramais com maior extensão total (km)</div></div></div>
+          <div class="rank-list" id="rank-ram-ext" style="padding:.5rem 0"></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Municípios com Menos Ramais</div><div class="cc-sub">Ranking dos 5 com menor presença de ramais</div></div></div>
+          <div class="rank-list" id="rank-ram-menos" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:1.2rem">
+        <div class="cc-head"><div><div class="cc-title">Distribuição por Calha Fluvial</div><div class="cc-sub">Quantidade de ramais por bacia/calha</div></div><div class="cc-badge verde">Calhas</div></div>
+        <div class="chart-wrap"><canvas id="chart-ram-calha"></canvas></div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar" style="flex-wrap:wrap;gap:.6rem">
+          <div class="table-toolbar-title">🌿 Tabela de Ramais</div>
+          <select id="filter-ram-mun" onchange="filtrarRamais()" style="border:1px solid var(--borda);border-radius:8px;padding:.4rem .8rem;font-size:.75rem;font-family:var(--font);color:var(--cinza-1);background:var(--branco);cursor:pointer;outline:none">
+            <option value="">📍 Todos os municípios</option>
+          </select>
+          <div class="search-box">🔍 <input type="text" id="search-ram" placeholder="Buscar ramal, situação, código…" oninput="filtrarRamais()"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('ram')">⬇️ CSV</button>
+        </div>
+        <div id="table-ram-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando ramais…</div></div></div>
+        <div class="pagination" id="pag-ram"><span id="pag-ram-info">—</span><div class="page-btns" id="pag-ram-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ VIÁRIO ═══════════════════ -->
+    <div class="page" id="page-viario">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Viária</div>
+        <div class="sec-title">🏙️ Viário Urbano Municipal</div>
+        <div class="sec-desc">Cadastro das obras de pavimentação e infraestrutura viária urbana nos 62 municípios do Amazonas — extensões pavimentadas, investimentos e comparativos regionais.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-via"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 10 — Municípios com Mais Obras Viárias</div><div class="cc-sub">Quantidade de registros de obras por município</div></div><div class="cc-badge">Ranking</div></div>
+          <div class="chart-wrap tall"><canvas id="chart-via-top"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Maiores Extensões Pavimentadas</div><div class="cc-sub">Top 5 municípios por extensão total (m)</div></div></div>
+          <div class="rank-list" id="rank-via-ext" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">🏙️ Obras de Viário por Município</div>
+          <div class="search-box">🔍 <input type="text" id="search-via" placeholder="Buscar município, rua, obra…" oninput="filtrarTabela('via')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('via')">⬇️ CSV</button>
+        </div>
+        <div id="table-via-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando viário…</div></div></div>
+        <div class="pagination" id="pag-via"><span id="pag-via-info">—</span><div class="page-btns" id="pag-via-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ AERÓDROMOS ═══════════════════ -->
+    <div class="page" id="page-aerodromos">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Modal</div>
+        <div class="sec-title">✈️ Aeródromos do Amazonas</div>
+        <div class="sec-desc">Inventário técnico dos aeródromos sob gestão da SEINFRA/AM — outorgas, operação ANAC, especificações de pista e internacionalização.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-aero"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Por Status de Operação</div><div class="cc-sub">Aeródromos operacionais, em manutenção, etc.</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-aero-op"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Internacionalização</div><div class="cc-sub">Aeródromos com e sem status internacional</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-aero-int"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">✈️ Cadastro de Aeródromos</div>
+          <div class="search-box">🔍 <input type="text" id="search-aero" placeholder="Buscar aeródromo, município, código…" oninput="filtrarTabela('aero')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('aero')">⬇️ CSV</button>
+        </div>
+        <div id="table-aero-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando aeródromos…</div></div></div>
+        <div class="pagination" id="pag-aero"><span id="pag-aero-info">—</span><div class="page-btns" id="pag-aero-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ TERMINAIS ═══════════════════ -->
+    <div class="page" id="page-terminais">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Modal</div>
+        <div class="sec-title">⚓ Terminais Fluviais do Amazonas</div>
+        <div class="sec-desc">Mapeamento dos terminais flutuantes e hidroviários sob gestão da SEINFRA/AM — municípios atendidos, comunidades, processos administrativos e datas de assinatura.</div>
+      </div>
+
+      <div class="chart-grid g2" style="margin-bottom:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Municípios com Mais Terminais</div><div class="cc-sub">Top 8 por quantidade de terminais fluviais</div></div><div class="cc-badge verde">Distribuição</div></div>
+          <div class="chart-wrap tall"><canvas id="chart-term-mun"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Por Tipo de Solicitante</div><div class="cc-sub">Prefeito, Comunidade, Estado, etc.</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-term-sol"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-toolbar" style="background:var(--branco);border:1px solid var(--borda);border-radius:12px;margin-bottom:1.2rem">
+        <div class="table-toolbar-title">⚓ Terminais Fluviais</div>
+        <div class="search-box">🔍 <input type="text" id="search-term" placeholder="Buscar município, comunidade…" oninput="filtrarTerminais()"></div>
+        <button class="btn-sm ouro" onclick="exportarCSVSec('term')">⬇️ CSV</button>
+      </div>
+      <div id="term-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem">
+        <div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando terminais…</div></div>
+      </div>
+      <!-- Modal info terminal -->
+      <div id="term-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,29,72,.55);z-index:500;backdrop-filter:blur(4px)" onclick="fecharModalTerm()"></div>
+      <div id="term-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:501;background:var(--branco);border-radius:16px;box-shadow:0 24px 80px rgba(26,43,94,.25);width:min(500px,90vw);max-height:80vh;overflow-y:auto">
+        <div style="background:var(--azul);padding:1.2rem 1.5rem;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:1rem;font-weight:800;color:var(--branco)" id="term-modal-title">Terminal</div>
+          <button onclick="fecharModalTerm()" style="background:rgba(255,255,255,.15);border:none;color:var(--branco);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">×</button>
+        </div>
+        <div id="term-modal-body" style="padding:1.5rem"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ SINISTROS ═══════════════════ -->
+    <div class="page" id="page-sinistros">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Análise & Inteligência</div>
+        <div class="sec-title">🚨 Sinistros & Notícias de Infraestrutura</div>
+        <div class="sec-desc">Monitoramento de ocorrências, sinistros e notícias relacionadas à infraestrutura rodoviária e modal do Estado do Amazonas.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-sin"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Distribuição por Tipo</div><div class="cc-sub">Categorização das ocorrências registradas</div></div><div class="cc-badge verm">Análise</div></div>
+          <div class="chart-wrap"><canvas id="chart-sin-tipo"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 5 — Rodovias com Mais Ocorrências</div><div class="cc-sub">Ranking por volume de sinistros registrados</div></div></div>
+          <div class="rank-list" id="rank-sin-rod" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">🚨 Registros de Sinistros</div>
+          <div class="search-box">🔍 <input type="text" id="search-sin" placeholder="Buscar rodovia, município, tipo…" oninput="filtrarTabela('sin')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('sin')">⬇️ CSV</button>
+        </div>
+        <div id="table-sin-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando sinistros…</div></div></div>
+        <div class="pagination" id="pag-sin"><span id="pag-sin-info">—</span><div class="page-btns" id="pag-sin-btns"></div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<script>
+/* ╔══════════════════════════════════════════════════════════════════════════╗
+   ║  AKE — AXIOMATIC KERNEL ENGINE · UNIFIED FIELD THEORY                   ║
+   ║  Protocolo: UFT-1.0 · SEINFRA BI Platform · v2.0-bi                    ║
+   ║  @author    Paulo Esteves Fernandes Neto — Chefe DMOB/SEINFRA-AM        ║
+   ╚══════════════════════════════════════════════════════════════════════════╝ */
+
+// ── L0: CONSTANTS ──────────────────────────────────────────────────────────
+const SHEETS = {
+  geral1:  '18cZ8C5AYCaS7tzp9pTy-2dHi0ZplwAAR',
+  geral2:  '1LJTtvldaYyHuMnsF04gim2eZPhIqzy5CbEnOZ1zTCoM',
+  ramais:  '1Cr5Qbj_My7oOcIYiIjZ6NgJiCsij4ZAQCSxdP49cffc',
+  term:    '1cup96GUKBv0xkESitNb9Dzbi_xqjYTzoPgz7-9qfCfI',
+  aero:    '1Inquxh0TfLRlsIiPQEXqWL2MK84neIC1-D32wAstI5o',
+  rod:     '1bYf2anVF4un84-lusSOeSRaNLiod9fq0joUEnbgHxnM',
+  viario:  '1xZK1yriI4FUVtTF0TrUPYP05DIxGBfeNzSuxmGR8A5M',
+  sinistro:'1y7h-FRn0jBfhlr9e7EwDBNES-0hCUhSeAf5s4tVEWxE'
+};
+const CSV_BASE = id => `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv`;
+const ROWS_PER_PAGE = 15;
+const PALETTE = {
+  azul:  ['#1A2B5E','#1A4B9B','#2E6BC4','#5B8FD6','#8FB4E6'],
+  ouro:  ['#F5A623','#D48C10','#B87208','#E8C26B','#F5D4A0'],
+  multi: ['#1A2B5E','#F5A623','#007B3E','#6C3483','#0E6B8F','#C0392B','#1A4B9B','#D48C10','#005C2C','#4A2060'],
+  sit:   {'VISITADO':'#007B3E','CONCLUÍDO':'#1A2B5E','EM OBRA':'#F5A623','VISITADO / CONCLUÍDO':'#6C3483','VISITADO / EM OBRA':'#0E6B8F','OBRA EXTINTA':'#C0392B'}
+};
+
+// ── L1: DATA STORE ──────────────────────────────────────────────────────────
+const DB = {
+  geral: [], rod: [], ram: [], via: [], aero: [], term: [], sin: [],
+  filtered: { geral:[], rod:[], ram:[], via:[], aero:[], term:[], sin:[] },
+  pages: { geral:1, rod:1, ram:1, via:1, aero:1, term:1, sin:1 },
+  charts: {}
+};
+
+// ── L2: CSV PARSER ──────────────────────────────────────────────────────────
+function parseCSVLine(line) {
+  const res = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { inQ = !inQ; }
+    else if (c === ',' && !inQ) { res.push(cur); cur = ''; }
+    else { cur += c; }
+  }
+  res.push(cur);
+  return res;
+}
+function normalizeHeader(h) {
+  return h.trim().replace(/^["'\s]+|["'\s]+$/g,'')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9_]/g,'_').replace(/__+/g,'_').replace(/^_|_$/g,'');
+}
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) return [];
+  const headers = parseCSVLine(lines[0]).map(normalizeHeader);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseCSVLine(lines[i]);
+    if (vals.every(v => !v.trim())) continue;
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim().replace(/^"|"$/g,''); });
+    rows.push(obj);
+  }
+  return rows;
+}
+// Extrai código AM/BR limpo de qualquer string
+function extractCodRod(s) {
+  if (!s) return '';
+  const m = String(s).match(/\b(AM|BR|PA|MT|RR|AC|AP|TO)-?\s*(\d{2,3})\b/i);
+  return m ? (m[1].toUpperCase() + '-' + m[2].padStart(3,'0')) : '';
+}
+// detectCol: busca fuzzy em keys normalizadas
+function detectColVal(row, candidates) {
+  const keys = Object.keys(row);
+  for (const c of candidates) {
+    const found = keys.find(k => k.includes(c));
+    if (found !== undefined && row[found]) return row[found];
+  }
+  return '';
+}
+
+// ── L3: FETCH ───────────────────────────────────────────────────────────────
+async function fetchSheet(id) {
+  const url = CSV_BASE(id);
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return parseCSV(await r.text());
+}
+
+// ── L4: TABLE RENDERER ──────────────────────────────────────────────────────
+function renderTable(containerId, data, page, cols) {
+  if (!data.length) {
+    document.getElementById(containerId).innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">Nenhum registro encontrado</div></div>';
+    return;
+  }
+  const start = (page - 1) * ROWS_PER_PAGE;
+  const slice = data.slice(start, start + ROWS_PER_PAGE);
+  const displayCols = cols || Object.keys(data[0]);
+  const labelCol = c => c.replace(/_/g,' ').replace(/\b\w/g, l=>l.toUpperCase());
+  let html = '<div style="overflow-x:auto"><table><thead><tr>';
+  displayCols.forEach(c => { html += `<th>${labelCol(c)}</th>`; });
+  html += '</tr></thead><tbody>';
+  slice.forEach(row => {
+    html += '<tr>';
+    displayCols.forEach(c => {
+      const v = row[c] || '—';
+      html += `<td>${formatCell(c, v)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  document.getElementById(containerId).innerHTML = html;
+}
+
+function formatCell(col, val) {
+  if (!val || val === '—' || val.trim() === '') return '<span style="color:var(--cinza-4)">—</span>';
+  const colL = col.toLowerCase();
+  if (colL.includes('jurisdi') || colL.includes('jurisdic')) {
+    const c = val.toLowerCase().includes('estadual') ? 'azul' : 'ouro';
+    return `<span class="pill ${c}">${val}</span>`;
+  }
+  if (colL.includes('situa')) {
+    const v = val.toUpperCase();
+    if (v.includes('CONCLU')) return `<span class="pill verde">${val}</span>`;
+    if (v.includes('EM OBRA')) return `<span class="pill ouro">${val}</span>`;
+    if (v.includes('VISITA') && !v.includes('A VISITAR')) return `<span class="pill ciano" style="background:var(--ciano-lt);color:var(--ciano)">${val}</span>`;
+    if (v.includes('EXTINT')) return `<span class="pill verm">${val}</span>`;
+    return `<span class="pill cinza">${val}</span>`;
+  }
+  if (colL === 'operacao' || colL === 'operação' || colL.includes('opera')) {
+    return `<span class="pill verde">${val}</span>`;
+  }
+  if (colL === 'internacionalizacao' || colL.includes('intern')) {
+    return val && val.trim() && val !== '—' ? `<span class="pill roxo">${val}</span>` : '<span style="color:var(--cinza-4)">—</span>';
+  }
+  if (/^(am|br)-\d{3}$/i.test(val.trim())) {
+    return `<strong style="color:var(--azul)">${val}</strong>`;
+  }
+  if (colL === 'icao' || colL === 'ciad' || colL === 'codigo_ser_snv' || colL === 'codigo') {
+    return `<span class="mono" style="font-weight:700;color:var(--azul-md)">${val}</span>`;
+  }
+  // Valores muito longos: truncar com tooltip
+  if (val.length > 80) {
+    return `<span title="${val.replace(/"/g,'&quot;')}" style="cursor:help">${val.slice(0,77)}…</span>`;
+  }
+  return val;
+}
+
+function updatePagination(section, total, current) {
+  const totalPages = Math.ceil(total / ROWS_PER_PAGE);
+  const info = document.getElementById(`pag-${section}-info`);
+  const btns = document.getElementById(`pag-${section}-btns`);
+  if (!info || !btns) return;
+  const start = (current - 1) * ROWS_PER_PAGE + 1;
+  const end = Math.min(current * ROWS_PER_PAGE, total);
+  info.textContent = `Exibindo ${start}–${end} de ${total} registros`;
+
+  let html = '';
+  html += `<button class="page-btn" onclick="goPage('${section}',${current-1})" ${current===1?'disabled':''}>← Ant.</button>`;
+
+  // Janela de páginas
+  const windowSize = 3;
+  const half = Math.floor(windowSize / 2);
+  let pStart = Math.max(1, current - half);
+  let pEnd = Math.min(totalPages, pStart + windowSize - 1);
+  if (pEnd - pStart < windowSize - 1) pStart = Math.max(1, pEnd - windowSize + 1);
+
+  if (pStart > 1) { html += `<button class="page-btn" onclick="goPage('${section}',1)">1</button>`; if(pStart>2) html+='<span style="padding:0 .25rem;color:var(--cinza-3)">…</span>'; }
+  for (let p = pStart; p <= pEnd; p++) {
+    html += `<button class="page-btn ${p===current?'active':''}" onclick="goPage('${section}',${p})">${p}</button>`;
+  }
+  if (pEnd < totalPages) { if(pEnd<totalPages-1) html+='<span style="padding:0 .25rem;color:var(--cinza-3)">…</span>'; html+=`<button class="page-btn" onclick="goPage('${section}',${totalPages})">${totalPages}</button>`; }
+
+  html += `<button class="page-btn" onclick="goPage('${section}',${current+1})" ${current===totalPages?'disabled':''}>Próx. →</button>`;
+  btns.innerHTML = html;
+}
+
+function goPage(section, page) {
+  const data = DB.filtered[section];
+  const total = Math.ceil(data.length / ROWS_PER_PAGE);
+  if (page < 1 || page > total) return;
+  DB.pages[section] = page;
+  renderSection(section);
+}
+
+function filtrarTabela(section) {
+  const q = (document.getElementById(`search-${section}`)?.value || '').toLowerCase();
+  const src = section === 'geral' ? DB.geral : DB[section];
+  DB.filtered[section] = q ? src.filter(r => Object.values(r).some(v => v.toLowerCase().includes(q))) : [...src];
+  DB.pages[section] = 1;
+  renderSection(section);
+}
+
+// ── L5: CHART UTILS ─────────────────────────────────────────────────────────
+function destroyChart(id) {
+  if (DB.charts[id]) { DB.charts[id].destroy(); delete DB.charts[id]; }
+}
+function makeBar(id, labels, data, opts = {}) {
+  destroyChart(id);
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  DB.charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: opts.colors || PALETTE.azul[0], borderRadius: 6, borderSkipped: false }]
+    },
+    options: {
+      indexAxis: opts.horizontal ? 'y' : 'x',
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed[opts.horizontal?'x':'y']}${opts.unit||''}` } } },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font: { family: 'Outfit', size: 11 }, color: '#8896A8' } },
+        y: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font: { family: 'Outfit', size: 11 }, color: '#8896A8' } }
+      }
+    }
+  });
+}
+function makeDoughnut(id, labels, data, opts = {}) {
+  destroyChart(id);
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  const colors = opts.colors || PALETTE.multi.slice(0, data.length);
+  DB.charts[id] = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 8 }] },
+    options: {
+      responsive: true, maintainAspectRatio: true, cutout: '60%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { family: 'Outfit', size: 11 }, padding: 12, usePointStyle: true, pointStyleWidth: 8 } },
+        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed} (${((c.parsed/c.dataset.data.reduce((a,b)=>a+b,0))*100).toFixed(1)}%)` } }
+      }
+    }
+  });
+}
+function renderRankList(id, items, maxVal, colorClass = '') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!items.length) { el.innerHTML = '<div class="empty-state" style="padding:1rem"><div class="empty-text">Sem dados disponíveis</div></div>'; return; }
+  el.innerHTML = items.map((item, i) => `
+    <div class="rank-item">
+      <div class="rank-header">
+        <span class="rank-label">${i+1}. ${item.label}</span>
+        <span class="rank-value">${item.value.toLocaleString('pt-BR')}${item.unit||''}</span>
+      </div>
+      <div class="rank-bar"><div class="rank-fill ${colorClass}" style="width:${(item.value/maxVal*100).toFixed(1)}%"></div></div>
+    </div>`).join('');
+}
+function countBy(arr, key) {
+  const map = {};
+  arr.forEach(r => { const v = r[key] || 'Sem info'; map[v] = (map[v]||0) + 1; });
+  return map;
+}
+function topN(obj, n = 5) {
+  return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);
+}
+function setKpi(id, val) { const el = document.getElementById(id); if(el) el.textContent = typeof val === 'number' ? val.toLocaleString('pt-BR') : val; }
+
+// ── L6: SECTION RENDERERS ───────────────────────────────────────────────────
+
+// GERAL
+function renderSection(section) {
+  if (section === 'geral') {
+    renderTable('table-geral-wrap', DB.filtered.geral, DB.pages.geral);
+    updatePagination('geral', DB.filtered.geral.length, DB.pages.geral);
+  } else if (section === 'ram') {
+    renderTable('table-ram-wrap', DB.filtered.ram, DB.pages.ram, COLS.ram);
+    updatePagination('ram', DB.filtered.ram.length, DB.pages.ram);
+  } else if (section === 'via') {
+    renderTable('table-via-wrap', DB.filtered.via, DB.pages.via, COLS.via);
+    updatePagination('via', DB.filtered.via.length, DB.pages.via);
+  } else if (section === 'aero') {
+    renderTable('table-aero-wrap', DB.filtered.aero, DB.pages.aero, COLS.aero);
+    updatePagination('aero', DB.filtered.aero.length, DB.pages.aero);
+  } else if (section === 'term') {
+    renderTable('table-term-wrap', DB.filtered.term, DB.pages.term, COLS.term);
+    updatePagination('term', DB.filtered.term.length, DB.pages.term);
+  } else if (section === 'sin') {
+    renderTable('table-sin-wrap', DB.filtered.sin, DB.pages.sin);
+    updatePagination('sin', DB.filtered.sin.length, DB.pages.sin);
+  }
+}
+
+// Colunas preferidas por seção
+const COLS = {
+  ram: null, via: null, aero: null, term: null
+};
+
+// ── INIT GERAL ──
+async function initGeral() {
+  try {
+    const [d1, d2] = await Promise.all([fetchSheet(SHEETS.geral1), fetchSheet(SHEETS.geral2)]);
+    DB.geral = [...d1, ...d2];
+    DB.filtered.geral = [...DB.geral];
+    renderSection('geral');
+    document.getElementById('kg-rod').textContent = DB.rod.length || '—';
+    document.getElementById('kg-ram').textContent = DB.ram.length || '—';
+  } catch(e) {
+    document.getElementById('table-geral-wrap').innerHTML = `<div class="error-box">⚠️ Erro ao carregar planilha geral: ${e.message}</div>`;
+  }
+}
+
+// ── INIT RODOVIAS ──
+async function initRodovias() {
+  try {
+    const data = await fetchSheet(SHEETS.rod);
+    DB.rod = data;
+    setKpi('badge-rod', data.length);
+    document.getElementById('kg-rod').textContent = data.length;
+
+    // Planilha normalizada: codigo_ser_snv, rodovia, sentido, jurisdicao,
+    // km_inicial, km_final, extensao, unidade, regiao, inicio, final, faixa_de_dominio
+    // "rodovia" contem texto longo do trecho — extrair código AM/BR limpo
+    const getCod = r => {
+      // Tentar campo rodovia primeiro, depois codigo_ser_snv, depois varrer tudo
+      const candidates = [r['rodovia'], r['codigo_ser_snv'], r['codigo'], r['cod']];
+      for (const v of candidates) {
+        const c = extractCodRod(v || '');
+        if (c) return c;
+      }
+      // último recurso: varrer todos os campos
+      for (const v of Object.values(r)) {
+        const c = extractCodRod(String(v || ''));
+        if (c) return c;
+      }
+      return '';
+    };
+
+    const getExt = r => parseFloat((r['extensao'] || r['extensao_km'] || '0').replace(',','.')) || 0;
+    const getJur = r => r['jurisdicao'] || r['jurisdição'] || '';
+    const getReg = r => r['regiao'] || r['região'] || '';
+    const getIni = r => r['km_inicial'] || r['km_ini'] || r['inicio'] || '';
+    const getFim = r => r['km_final'] || r['km_fim'] || r['final'] || '';
+    const getSent= r => r['sentido'] || '';
+    const getFaixa=r=> r['faixa_de_dominio'] || r['faixa'] || '';
+    const getCodSNV = r => r['codigo_ser_snv'] || r['codigo'] || '';
+
+    // KPIs
+    const estadual = data.filter(r => getJur(r).toLowerCase().includes('estadual')).length;
+    const federal  = data.filter(r => getJur(r).toLowerCase().includes('federal')).length;
+    const rmm      = data.filter(r => getReg(r).toUpperCase().includes('RMM')).length;
+    document.getElementById('kpi-rod').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Trechos</div><div class="kpi-icon">📏</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">segmentos cadastrados</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Trechos Estaduais</div><div class="kpi-icon">🏛️</div></div><div class="kpi-value">${estadual}</div><div class="kpi-sub">jurisdição estadual</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Trechos Federais</div><div class="kpi-icon">🇧🇷</div></div><div class="kpi-value">${federal}</div><div class="kpi-sub">jurisdição federal</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Trechos RMM</div><div class="kpi-icon">🏙️</div></div><div class="kpi-value">${rmm}</div><div class="kpi-sub">Região Met. de Manaus</div></div>`;
+
+    // Charts: jurisdição e região
+    const jurMap = {}; data.forEach(r => { const j = getJur(r)||'Sem info'; jurMap[j]=(jurMap[j]||0)+1; });
+    makeDoughnut('chart-rod-juris', Object.keys(jurMap), Object.values(jurMap), { colors: [PALETTE.azul[0], PALETTE.ouro[0], PALETTE.multi[2]] });
+    const regMap = {}; data.forEach(r => { const g = getReg(r)||'Sem info'; regMap[g]=(regMap[g]||0)+1; });
+    makeDoughnut('chart-rod-regiao', Object.keys(regMap), Object.values(regMap));
+
+    // Extensão por rodovia (código limpo AM/BR)
+    const extMap = {};
+    data.forEach(r => {
+      const cod = getCod(r) || 'Outras';
+      extMap[cod] = (extMap[cod] || 0) + getExt(r);
+    });
+    const topExt = topN(extMap, 10);
+    makeBar('chart-rod-ext', topExt.map(e=>e[0]), topExt.map(e=>parseFloat(e[1].toFixed(2))),
+      { horizontal: true, colors: PALETTE.multi.slice(0,10), unit:' km' });
+
+    // Accordions agrupados por código AM/BR limpo
+    const rodMap = {};
+    data.forEach(r => {
+      const cod = getCod(r);
+      if (!cod) return; // ignora linhas sem código válido
+      if (!rodMap[cod]) rodMap[cod] = [];
+      rodMap[cod].push(r);
+    });
+
+    const COLS_ROD = ['CÓDIGO SER/SNV','RODOVIA','SENTIDO','JURISDIÇÃO','KM INICIAL','KM FINAL','EXTENSÃO','UND','REGIÃO','INÍCIO','FINAL','FAIXA DE DOMÍNIO'];
+
+    let accHtml = '';
+    Object.keys(rodMap).sort().forEach(cod => {
+      const trechos = rodMap[cod];
+      const totalExt = trechos.reduce((s,r) => s + getExt(r), 0);
+      const iniTrecho = getIni(trechos[0]);
+      const fimTrecho = getFim(trechos[trechos.length-1]);
+      accHtml += `
+        <div class="accordion-group">
+          <div class="accordion-head" onclick="toggleAcc(this)">
+            <div class="acc-info">
+              <span class="acc-rod">${cod}</span>
+              ${iniTrecho||fimTrecho ? `<span class="acc-name">${iniTrecho ? 'KM '+iniTrecho : ''} ${fimTrecho ? '→ KM '+fimTrecho : ''}</span>` : ''}
+            </div>
+            <div class="acc-stats">
+              <span class="acc-stat">${trechos.length} trecho${trechos.length>1?'s':''}</span>
+              ${totalExt>0 ? `<span class="acc-stat">${totalExt.toFixed(2)} km</span>` : ''}
+            </div>
+            <div class="acc-chevron">▼</div>
+          </div>
+          <div class="accordion-body">
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr>
+                  <th>CÓDIGO SER/SNV</th>
+                  <th>SENTIDO</th>
+                  <th>JURISDIÇÃO</th>
+                  <th>KM INICIAL</th>
+                  <th>KM FINAL</th>
+                  <th>EXTENSÃO</th>
+                  <th>REGIÃO</th>
+                  <th>INÍCIO</th>
+                  <th>FINAL</th>
+                  <th>FAIXA DE DOMÍNIO</th>
+                </tr></thead>
+                <tbody>
+                ${trechos.map(r => `<tr>
+                  <td class="mono">${getCodSNV(r)||'—'}</td>
+                  <td>${getSent(r)||'—'}</td>
+                  <td>${getJur(r) ? `<span class="pill ${getJur(r).toLowerCase().includes('estadual')?'azul':'ouro'}">${getJur(r)}</span>` : '—'}</td>
+                  <td>${getIni(r)||'—'}</td>
+                  <td>${getFim(r)||'—'}</td>
+                  <td>${getExt(r)>0?getExt(r).toFixed(2)+' km':'—'}</td>
+                  <td>${getReg(r)||'—'}</td>
+                  <td style="font-size:.72rem;max-width:150px">${r['inicio']||'—'}</td>
+                  <td style="font-size:.72rem;max-width:150px">${r['final']||'—'}</td>
+                  <td>${getFaixa(r)||'—'}</td>
+                </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>`;
+    });
+    document.getElementById('rod-accordions').innerHTML = accHtml || '<div class="empty-state"><div class="empty-icon">🛣️</div><div class="empty-text">Nenhum trecho com código AM/BR válido encontrado</div></div>';
+
+  } catch(e) {
+    document.getElementById('rod-accordions').innerHTML = `<div class="error-box">⚠️ Erro ao carregar rodovias: ${e.message}</div>`;
+    console.error('[rodovias]', e);
+  }
+}
+
+function toggleAcc(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// ── INIT RAMAIS ──
+async function initRamais() {
+  try {
+    const data = await fetchSheet(SHEETS.ramais);
+    DB.ram = data;
+    DB.filtered.ram = [...data];
+    setKpi('badge-ram', data.length);
+    document.getElementById('kg-ram').textContent = data.length;
+
+    // Detectar colunas chave
+    const keys = Object.keys(data[0] || {});
+    const colMun  = keys.find(k => /munic/i.test(k)) || keys[0];
+    const colSit  = keys.find(k => /situa/i.test(k));
+    const colExt  = keys.find(k => /exten/i.test(k));
+    const colCalha= keys.find(k => /calha|bacia/i.test(k));
+    const colNome = keys.find(k => /nome|ramal|denom/i.test(k)) || keys[1];
+    COLS.ram = keys;
+
+    // KPIs
+    const muns = new Set(data.map(r => r[colMun]).filter(Boolean));
+    const concl = data.filter(r => (r[colSit]||'').toUpperCase().includes('CONCLU')).length;
+    const emObra = data.filter(r => (r[colSit]||'').toUpperCase().includes('EM OBRA')).length;
+    document.getElementById('kpi-ram').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Ramais</div><div class="kpi-icon">🌿</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">registros cadastrados</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Municípios Atendidos</div><div class="kpi-icon">📍</div></div><div class="kpi-value">${muns.size}</div><div class="kpi-sub">municípios com ramais</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Concluídos</div><div class="kpi-icon">✅</div></div><div class="kpi-value">${concl}</div><div class="kpi-sub">obras concluídas</div></div>
+      <div class="kpi ouro" style="--ouro-dk:#B87208"><div class="kpi-header"><div class="kpi-label">Em Obra</div><div class="kpi-icon">🏗️</div></div><div class="kpi-value">${emObra}</div><div class="kpi-sub">em execução</div></div>`;
+
+    // Situação (excl. "A VISITAR")
+    if (colSit) {
+      const sitMap = {};
+      data.forEach(r => {
+        const s = r[colSit]||'';
+        if (!s.toUpperCase().includes('A VISITAR')) sitMap[s] = (sitMap[s]||0)+1;
+      });
+      makeDoughnut('chart-ram-sit', Object.keys(sitMap), Object.values(sitMap), { colors: Object.keys(sitMap).map(k=>PALETTE.sit[k.toUpperCase()]||PALETTE.multi[0]) });
+    }
+
+    // Rank municípios
+    if (colMun) {
+      const munMap = countBy(data, colMun);
+      const topMun = topN(munMap, 5).map(([l,v]) => ({label:l, value:v}));
+      renderRankList('rank-ram-mun', topMun, topMun[0]?.value||1, 'ouro');
+      const botMun = Object.entries(munMap).sort((a,b)=>a[1]-b[1]).slice(0,5).map(([l,v])=>({label:l,value:v}));
+      renderRankList('rank-ram-menos', botMun, topMun[0]?.value||1, 'verm');
+    }
+
+    // Rank extensão
+    if (colExt && colNome) {
+      const extItems = data.map(r => ({label: r[colNome]||'—', value: parseFloat((r[colExt]||'0').replace(',','.'))||0}))
+        .filter(i=>i.value>0).sort((a,b)=>b.value-a.value).slice(0,5);
+      renderRankList('rank-ram-ext', extItems, extItems[0]?.value||1, '');
+    }
+
+    // Calha
+    if (colCalha) {
+      const calhaMap = countBy(data, colCalha);
+      const cal = topN(calhaMap, 8);
+      makeBar('chart-ram-calha', cal.map(e=>e[0]), cal.map(e=>e[1]), { colors: PALETTE.multi.slice(0,8) });
+    }
+
+    // Popular select de municípios
+    if (colMun) {
+      const muns = [...new Set(data.map(r => r[colMun]).filter(Boolean))].sort();
+      const sel = document.getElementById('filter-ram-mun');
+      if (sel) {
+        muns.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m; opt.textContent = m;
+          sel.appendChild(opt);
+        });
+      }
+    }
+
+    renderSection('ram');
+  } catch(e) {
+    document.getElementById('table-ram-wrap').innerHTML = `<div class="error-box">⚠️ Erro: ${e.message}</div>`;
+  }
+}
+
+function filtrarRamais() {
+  const q   = (document.getElementById('search-ram')?.value || '').toLowerCase();
+  const mun = document.getElementById('filter-ram-mun')?.value || '';
+  const keys = Object.keys(DB.ram[0] || {});
+  const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+  DB.filtered.ram = DB.ram.filter(r => {
+    const matchMun = !mun || (colMun && r[colMun] === mun);
+    const matchQ   = !q   || Object.values(r).some(v => v.toLowerCase().includes(q));
+    return matchMun && matchQ;
+  });
+  DB.pages.ram = 1;
+  renderSection('ram');
+}
+
+// ── INIT VIÁRIO ──
+async function initViario() {
+  try {
+    const raw = await fetchSheet(SHEETS.viario);
+
+    // Filtrar SOMENTE viário urbano — excluir linhas com características de ramal/estrada rural
+    const isRural = r => {
+      const vals = Object.values(r).join(' ').toLowerCase();
+      return /\bramal\b|\bestrada\b|\bzona rural\b|\bcomunidade\b/.test(vals);
+    };
+    const data = raw.filter(r => !isRural(r) && Object.values(r).some(v => v && v.trim()));
+
+    DB.via = data;
+    DB.filtered.via = [...data];
+    setKpi('badge-via', data.length);
+    document.getElementById('kg-via').textContent = data.length;
+
+    const keys = Object.keys(data[0] || {});
+    const colMun  = keys.find(k => /munic/.test(k)) || keys[0];
+    const colRua  = keys.find(k => /rua|logr|via|nome|denom/.test(k));
+    const colExt  = keys.find(k => /exten|comprimento|metros|m_/.test(k));
+    const colSit  = keys.find(k => /situa|status|pav/.test(k));
+    const colAnno = keys.find(k => /ano|data|exerc/.test(k));
+    COLS.via = keys;
+
+    const muns = new Set(data.map(r => colMun?r[colMun]:'').filter(Boolean));
+
+    document.getElementById('kpi-via').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Registros</div><div class="kpi-icon">📋</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">obras viárias urbanas</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Municípios com Viário</div><div class="kpi-icon">🏙️</div></div><div class="kpi-value">${muns.size}</div><div class="kpi-sub">de 62 municípios</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Municípios Sem Registro</div><div class="kpi-icon">⚠️</div></div><div class="kpi-value">${62 - muns.size}</div><div class="kpi-sub">aguardam cadastramento</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Média por Município</div><div class="kpi-icon">📊</div></div><div class="kpi-value">${muns.size?(data.length/muns.size).toFixed(1):'—'}</div><div class="kpi-sub">obras por município atendido</div></div>`;
+
+    // Top 10 municípios por quantidade de obras
+    if (colMun) {
+      const munMap = {}; data.forEach(r => { const v=r[colMun]||'Sem info'; munMap[v]=(munMap[v]||0)+1; });
+      const t = topN(munMap, 10);
+      makeBar('chart-via-top', t.map(e=>e[0]), t.map(e=>e[1]),
+        { horizontal: true, colors: PALETTE.azul[0] });
+    }
+
+    // Ranking extensão
+    if (colExt && colMun) {
+      const extMap = {};
+      data.forEach(r => {
+        const m = r[colMun]||'Desconhecido';
+        const v = parseFloat((r[colExt]||'0').replace(',','.'))||0;
+        extMap[m] = (extMap[m]||0) + v;
+      });
+      const t = topN(extMap, 5).map(([l,v]) => ({label:l, value:Math.round(v), unit:'m'}));
+      renderRankList('rank-via-ext', t, t[0]?.value||1, 'verde');
+    }
+
+    renderSection('via');
+  } catch(e) {
+    document.getElementById('table-via-wrap').innerHTML = `<div class="error-box">⚠️ Erro ao carregar viário: ${e.message}</div>`;
+    console.error('[viario]', e);
+  }
+}
+
+// ── INIT AERÓDROMOS ──
+async function initAerodromos() {
+  try {
+    const data = await fetchSheet(SHEETS.aero);
+    // Filtrar linhas que são cabeçalho/metadado (sem código ICAO/CIAD válido)
+    const isHeader = r => {
+      const vals = Object.values(r).join(' ');
+      return vals.length > 300 || /classe rbac|regime tarif|especifica/i.test(vals);
+    };
+    const clean = data.filter(r => !isHeader(r) && Object.values(r).some(v => v && v.trim()));
+
+    DB.aero = clean;
+    DB.filtered.aero = [...clean];
+    setKpi('badge-aero', clean.length);
+    document.getElementById('kg-aero').textContent = clean.length;
+
+    // Detectar colunas chave (headers normalizados)
+    const sample = clean[0] || {};
+    const keys = Object.keys(sample);
+    const colNome   = keys.find(k => /^nome$|^aerodro/.test(k)) || keys.find(k => k.includes('nome'));
+    const colIcao   = keys.find(k => /^icao$/.test(k)) || keys.find(k => k.includes('icao'));
+    const colCiad   = keys.find(k => /^ciad$/.test(k)) || keys.find(k => k.includes('ciad'));
+    const colMun    = keys.find(k => /municipio/.test(k));
+    const colOp     = keys.find(k => /^operacao$|operac/.test(k));
+    const colInt    = keys.find(k => /internacionaliz/.test(k));
+    const colPista  = keys.find(k => /pista|designacao/.test(k));
+    const colComp   = keys.find(k => /^comprimento$/.test(k));
+    const colLarg   = keys.find(k => /^largura$/.test(k));
+    const colSup    = keys.find(k => /^superficie$|superfic/.test(k));
+    const colAlt    = keys.find(k => /^altitude$/.test(k));
+    const colLat    = keys.find(k => /^lat/.test(k));
+    const colLng    = keys.find(k => /^lon|^lng/.test(k));
+
+    // KPIs
+    const muns = new Set(clean.map(r => colMun?r[colMun]:'').filter(Boolean));
+    const comInt = clean.filter(r => colInt && r[colInt] && r[colInt].trim() && r[colInt].trim() !== '—').length;
+    const ops = colOp ? new Set(clean.map(r=>r[colOp]).filter(Boolean)).size : 0;
+
+    document.getElementById('kpi-aero').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Aeródromos</div><div class="kpi-icon">✈️</div></div><div class="kpi-value">${clean.length}</div><div class="kpi-sub">no cadastro SEINFRA/AM</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Municípios Atendidos</div><div class="kpi-icon">📍</div></div><div class="kpi-value">${muns.size}</div><div class="kpi-sub">municípios com aeródromo</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Com Internacionalização</div><div class="kpi-icon">🌍</div></div><div class="kpi-value">${comInt||'—'}</div><div class="kpi-sub">status internacional</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Categorias Operacionais</div><div class="kpi-icon">📋</div></div><div class="kpi-value">${ops||clean.length}</div><div class="kpi-sub">tipos de operação</div></div>`;
+
+    // Charts
+    if (colOp) {
+      const opMap = {}; clean.forEach(r => { const v=r[colOp]||'Sem info'; opMap[v]=(opMap[v]||0)+1; });
+      makeDoughnut('chart-aero-op', Object.keys(opMap), Object.values(opMap));
+    } else {
+      document.getElementById('chart-aero-op').closest('.chart-wrap').innerHTML =
+        '<div class="empty-state" style="padding:1.5rem"><div class="empty-text">Coluna de operação não mapeada</div></div>';
+    }
+    if (colInt) {
+      const iMap = {}; clean.forEach(r => { const v=(r[colInt]||'').trim()||'Sem info'; iMap[v]=(iMap[v]||0)+1; });
+      makeDoughnut('chart-aero-int', Object.keys(iMap), Object.values(iMap), { colors: [PALETTE.azul[0], PALETTE.ouro[0], '#CBD5E0'] });
+    }
+
+    // Tabela com colunas limpas e legíveis
+    COLS.aero = ['icao','ciad','nome','municipio_atendido','uf','operacao','internacionalizacao','pista_designacao','comprimento','largura','superficie','altitude'].filter(c => keys.includes(c));
+    if (!COLS.aero.length) COLS.aero = keys.slice(0, 12);
+
+    renderSection('aero');
+  } catch(e) {
+    document.getElementById('table-aero-wrap').innerHTML = `<div class="error-box">⚠️ Erro ao carregar aeródromos: ${e.message}</div>`;
+    console.error('[aero]', e);
+  }
+}
+
+// ── INIT TERMINAIS ──
+async function initTerminais() {
+  try {
+    const data = await fetchSheet(SHEETS.term);
+    const cleaned = data.filter(r => Object.values(r).some(v => v && v.trim() && v !== '—'));
+    DB.term = cleaned;
+    DB.filtered.term = [...cleaned];
+    setKpi('badge-term', cleaned.length);
+    document.getElementById('kg-term').textContent = cleaned.length;
+
+    const keys = Object.keys(cleaned[0] || {});
+    const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+    const colSol = keys.find(k => /solic/.test(k));
+    const colLoc = keys.find(k => /local|comuni/.test(k));
+    const colGov = keys.find(k => /^gov$/.test(k));
+    const colProc= keys.find(k => /proc/.test(k));
+    const colAssin=keys.find(k => /assin/.test(k));
+
+    // Charts
+    if (colMun) {
+      const munMap = {}; cleaned.forEach(r => { const v=r[colMun]||'Sem info'; munMap[v]=(munMap[v]||0)+1; });
+      const t = topN(munMap, 8);
+      makeBar('chart-term-mun', t.map(e=>e[0]), t.map(e=>e[1]), { horizontal: true, colors: PALETTE.azul[0] });
+    }
+    if (colSol) {
+      const solMap = {}; cleaned.forEach(r => { const v=r[colSol]||'Sem info'; solMap[v]=(solMap[v]||0)+1; });
+      makeDoughnut('chart-term-sol', Object.keys(solMap), Object.values(solMap));
+    }
+
+    // Renderizar cards
+    renderTermCards(cleaned, colMun, colLoc, colGov, colProc, colAssin, keys);
+  } catch(e) {
+    document.getElementById('term-cards-grid').innerHTML = `<div class="error-box">⚠️ Erro: ${e.message}</div>`;
+    console.error('[terminais]', e);
+  }
+}
+
+function renderTermCards(data, colMun, colLoc, colGov, colProc, colAssin, allKeys) {
+  const grid = document.getElementById('term-cards-grid');
+  if (!data.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">⚓</div><div class="empty-text">Nenhum terminal encontrado</div></div>';
+    return;
+  }
+  grid.innerHTML = data.map((r, i) => {
+    const mun  = colMun ? r[colMun] : '—';
+    const loc  = colLoc ? r[colLoc] : '';
+    const gov  = colGov ? r[colGov] : '';
+    const proc = colProc ? r[colProc] : '';
+    const assin= colAssin? r[colAssin]:'';
+    const isGov= gov && ['CH','SEINFRA','2','ESTADO'].includes(String(gov).toUpperCase().trim());
+    return `<div class="term-card" onclick="abrirModalTerm(${i})" style="background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.2rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${isGov?'var(--azul)':'var(--ouro)'}"></div>
+      <div style="display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.8rem">
+        <div style="width:38px;height:38px;border-radius:10px;background:${isGov?'var(--azul-lt)':'var(--ouro-lt)'};display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">⚓</div>
+        <div style="min-width:0">
+          <div style="font-size:.85rem;font-weight:800;color:var(--azul);line-height:1.2;margin-bottom:.25rem">${mun||'Município'}</div>
+          ${loc ? `<div style="font-size:.72rem;color:var(--cinza-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${loc}</div>` : ''}
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem">
+        ${gov ? `<span class="pill ${isGov?'azul':'ouro'}" style="font-size:.58rem">${gov}</span>` : ''}
+        ${proc ? `<span class="pill cinza" style="font-size:.58rem">📋 ${proc}</span>` : ''}
+        ${assin ? `<span class="pill verde" style="font-size:.58rem">📅 ${assin}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Hover effect
+  grid.querySelectorAll('.term-card').forEach(c => {
+    c.addEventListener('mouseenter', () => { c.style.boxShadow = '0 8px 24px rgba(26,43,94,.12)'; c.style.transform = 'translateY(-2px)'; });
+    c.addEventListener('mouseleave', () => { c.style.boxShadow = ''; c.style.transform = ''; });
+  });
+
+  // Armazena referências para modal
+  window._termData = data;
+  window._termAllKeys = allKeys;
+}
+
+function filtrarTerminais() {
+  const q = (document.getElementById('search-term')?.value || '').toLowerCase();
+  const data = q ? DB.term.filter(r => Object.values(r).some(v => v.toLowerCase().includes(q))) : [...DB.term];
+  const keys = Object.keys(DB.term[0] || {});
+  const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+  const colLoc = keys.find(k => /local|comuni/.test(k));
+  const colGov = keys.find(k => /^gov$/.test(k));
+  const colProc= keys.find(k => /proc/.test(k));
+  const colAssin=keys.find(k => /assin/.test(k));
+  renderTermCards(data, colMun, colLoc, colGov, colProc, colAssin, keys);
+}
+
+function abrirModalTerm(idx) {
+  const r = window._termData[idx];
+  if (!r) return;
+  const keys = window._termAllKeys || Object.keys(r);
+  const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+  document.getElementById('term-modal-title').textContent = '⚓ ' + (colMun ? r[colMun] : 'Terminal Fluvial');
+  const campos = keys.filter(k => r[k] && r[k].trim() && r[k] !== '—');
+  document.getElementById('term-modal-body').innerHTML = `
+    <div style="display:grid;gap:.7rem">
+      ${campos.map(k => `
+        <div style="display:flex;flex-direction:column;gap:.15rem;padding:.6rem .8rem;background:var(--cinza-5);border-radius:8px">
+          <span style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza-3)">${k.replace(/_/g,' ')}</span>
+          <span style="font-size:.82rem;font-weight:500;color:var(--cinza-1)">${r[k]}</span>
+        </div>`).join('')}
+    </div>`;
+  document.getElementById('term-modal-overlay').style.display = 'block';
+  document.getElementById('term-modal').style.display = 'block';
+}
+function fecharModalTerm() {
+  document.getElementById('term-modal-overlay').style.display = 'none';
+  document.getElementById('term-modal').style.display = 'none';
+}
+
+// ── INIT SINISTROS ──
+async function initSinistros() {
+  try {
+    const data = await fetchSheet(SHEETS.sinistro);
+    DB.sin = data;
+    DB.filtered.sin = [...data];
+    setKpi('badge-sin', data.length);
+    document.getElementById('kg-sin').textContent = data.length;
+
+    const keys = Object.keys(data[0] || {});
+    const colTipo = keys.find(k => /tipo|categ|class/i.test(k));
+    const colRod  = keys.find(k => /rodov|rod\b/i.test(k));
+    const colMun  = keys.find(k => /munic/i.test(k));
+
+    const muns = colMun ? new Set(data.map(r=>r[colMun]).filter(Boolean)) : new Set();
+    const rods = colRod ? new Set(data.map(r=>r[colRod]).filter(Boolean)) : new Set();
+    document.getElementById('kpi-sin').innerHTML = `
+      <div class="kpi verm"><div class="kpi-header"><div class="kpi-label">Total de Registros</div><div class="kpi-icon">🚨</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">ocorrências monitoradas</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Rodovias Afetadas</div><div class="kpi-icon">🛣️</div></div><div class="kpi-value">${rods.size||'—'}</div><div class="kpi-sub">rodovias com registros</div></div>
+      <div class="kpi roxo"><div class="kpi-header"><div class="kpi-label">Municípios Afetados</div><div class="kpi-icon">📍</div></div><div class="kpi-value">${muns.size||'—'}</div><div class="kpi-sub">municípios com ocorrências</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Tipos Distintos</div><div class="kpi-icon">🏷️</div></div><div class="kpi-value">${colTipo?new Set(data.map(r=>r[colTipo]).filter(Boolean)).size:'—'}</div><div class="kpi-sub">categorias de ocorrência</div></div>`;
+
+    if (colTipo) {
+      const tipoMap = countBy(data, colTipo);
+      const topT = topN(tipoMap, 7);
+      makeDoughnut('chart-sin-tipo', topT.map(e=>e[0]), topT.map(e=>e[1]));
+    }
+    if (colRod) {
+      const rodMap = countBy(data, colRod);
+      const topR = topN(rodMap, 5).map(([l,v])=>({label:l,value:v}));
+      renderRankList('rank-sin-rod', topR, topR[0]?.value||1, 'verm');
+    }
+
+    renderSection('sin');
+  } catch(e) {
+    document.getElementById('table-sin-wrap').innerHTML = `<div class="error-box">⚠️ Erro: ${e.message}</div>`;
+  }
+}
+
+// ── INIT PAINEL GERAL (charts) ──
+async function initPainelCharts() {
+  // Aguarda os dados carregados para renderizar resumo
+  await new Promise(r => setTimeout(r, 800));
+  const categories = ['Rodovias','Ramais','Viário','Aeródromos','Terminais','Sinistros'];
+  const counts = [DB.rod.length, DB.ram.length, DB.via.length, DB.aero.length, DB.term.length, DB.sin.length];
+  makeBar('chart-geral-dist', categories, counts, { colors: PALETTE.multi.slice(0,6) });
+  const coverages = [
+    DB.rod.length ? new Set(DB.rod.map(r=>Object.values(r)[0])).size : 0,
+    DB.ram.length ? new Set(DB.ram.map(r=>Object.values(r)[0])).size : 0,
+    DB.via.length ? new Set(DB.via.map(r=>Object.values(r)[0])).size : 0,
+    DB.aero.length ? new Set(DB.aero.map(r=>Object.values(r)[0])).size : 0,
+    DB.term.length ? new Set(DB.term.map(r=>Object.values(r)[0])).size : 0,
+    DB.sin.length ? new Set(DB.sin.map(r=>Object.values(r)[0])).size : 0
+  ];
+  makeBar('chart-geral-mun', categories, coverages, { colors: PALETTE.ouro[0] });
+}
+
+// ── NAVIGATION ──────────────────────────────────────────────────────────────
+const PAGE_META = {
+  painel:    { bread: 'Dashboard', title: 'Painel Geral de Infraestrutura' },
+  rodovias:  { bread: 'Infraestrutura Viária', title: 'Rodovias Estaduais' },
+  ramais:    { bread: 'Infraestrutura Viária', title: 'Ramais Rurais' },
+  viario:    { bread: 'Infraestrutura Viária', title: 'Viário Urbano Municipal' },
+  aerodromos:{ bread: 'Infraestrutura Modal', title: 'Aeródromos do Amazonas' },
+  terminais: { bread: 'Infraestrutura Modal', title: 'Terminais Fluviais' },
+  sinistros: { bread: 'Análise & Inteligência', title: 'Sinistros & Notícias' }
+};
+
+window.navigate = function(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + page);
+  if (pageEl) pageEl.classList.add('active');
+  const navEl = document.querySelector('.nav-item[data-page="' + page + '"]');
+  if (navEl) navEl.classList.add('active');
+  const meta = PAGE_META[page] || {};
+  document.getElementById('ph-bread').textContent = meta.bread || page;
+  document.getElementById('ph-title').textContent = meta.title || page;
+  window.scrollTo(0, 0);
+  const content = document.querySelector('.content');
+  if (content) { content.classList.add('fade-in'); setTimeout(() => content.classList.remove('fade-in'), 400); }
+};
+
+// ── EXPORT ──────────────────────────────────────────────────────────────────
+function exportarCSV() { exportarCSVSec('geral'); }
+function exportarCSVSec(sec) {
+  const data = DB.filtered[sec] || DB[sec] || [];
+  if (!data.length) return;
+  const keys = Object.keys(data[0]);
+  const csv = [keys.join(','), ...data.map(r => keys.map(k => `"${(r[k]||'').replace(/"/g,'""')}"`).join(','))].join('\n');
+  const blob = new Blob(['\ufeff'+csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `seinfra_${sec}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ── CLOCK ───────────────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  document.getElementById('lastUpdate').textContent =
+    now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+}
+setInterval(updateClock, 60000);
+updateClock();
+
+// ── BOOTSTRAP ───────────────────────────────────────────────────────────────
+(async function boot() {
+  document.getElementById('syncStatus').textContent = 'Carregando dados…';
+
+  // Carrega todas as fontes em paralelo
+  await Promise.allSettled([
+    initRodovias(),
+    initRamais(),
+    initViario(),
+    initAerodromos(),
+    initTerminais(),
+    initSinistros(),
+  ]);
+
+  // Geral depende dos outros
+  await Promise.allSettled([initGeral()]);
+  await initPainelCharts();
+
+  document.getElementById('syncStatus').textContent = 'Dados sincronizados';
+
+  // AKE BUILD LOG
+  const AKE_BUILD_LOG = [
+    { build:'1.0.0-bi', data:'2026-04-16T00:00:00-04:00', autor:'Paulo Esteves Fernandes Neto',
+      ia:'Claude Sonnet 4.6', tipo:'GENESIS', status:'VIGENTE',
+      desc:'Plataforma BI SEINFRA/AM. Single-file monolítica. 7 seções. Chart.js. CSV via gviz/tq. Paginação JS pura funcional. Agrupamento de trechos por rodovia em accordion. KPIs e gráficos por seção. Padrão visual SEINFRA #1A2B5E/#F5A623/Outfit.' }
+  ];
+  console.log('[AKE] SEINFRA BI v1.0.0-bi BOOT OK', AKE_BUILD_LOG[0]);
+})();
+
+    // AKE UFT-1.0 Build Log Identidade 2026
+    window._VERSION_LOG = window._VERSION_LOG || [];
+    window._VERSION_LOG.push({ rev:"v2.0", data:"2026-05-25", descricao:"Identidade Visual 2026: Lexend/Barlow, navy #1A2B5E, header Gov AM, footer institucional" });
+    window._VICIOS_CONHECIDOS = window._VICIOS_CONHECIDOS || [];
+
+  </script>
+<!-- FOOTER 2026 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-item">www.seinfra.am.gov.br</div>
+      <div class="footer-item">Instagram: @seinfra.am</div>
+      <div class="footer-item">TikTok: @seinfra.am</div>
+      <div class="footer-item">facebook.com/seinfra.AM</div>
+    </div>
+    <div class="footer-vdiv"></div>
+    <div class="footer-col">
+      <div class="footer-item">gabinete@seinfra.am.gov.br</div>
+      <div class="footer-item">Fone: (92) 9 9263-0198</div>
+      <div class="footer-item">Av. Arq. José Henriques Bento Rodrigues, 3760</div>
+      <div class="footer-item">Monte das Oliveiras · Manaus/AM · CEP: 69093-149</div>
+    </div>
+    <div class="footer-vdiv"></div>
+    <div class="footer-brand-wrap">
+      <div class="footer-brand-pre">Secretaria de</div>
+      <div class="footer-brand-nome">Infraestrutura</div>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>
