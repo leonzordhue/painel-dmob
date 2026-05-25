@@ -1,785 +1,1674 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEINFRA/AM — Plataformas Digitais</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --azul:         #002D72;
-      --azul-hover:   #00348A;
-      --azul-claro:   #EBF0FA;
-      --azul-borda:   #C4D0E8;
-      --amarelo:      #F5A623;
-      --amarelo-cl:   #FEF3DC;
-      --amarelo-brd:  #F5C878;
-      --verde:        #007B3E;
-      --verde-cl:     #E6F4ED;
-      --cinza-txt:    #1A2540;
-      --cinza-med:    #4A5568;
-      --cinza-aux:    #8896A8;
-      --cinza-bg:     #F5F7FB;
-      --borda:        #E0E6F0;
-      --branco:       #FFFFFF;
-      --font:         'Outfit', sans-serif;
-      --shadow:       0 2px 16px rgba(0,45,114,0.09), 0 0 0 1px var(--borda);
-      --shadow-hover: 0 12px 40px rgba(0,45,114,0.16), 0 0 0 1px var(--azul-borda);
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1A2B5E" />
+<title>SEINFRA/AM — Central de Inteligência de Infraestrutura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Lexend+Deca:wght@300;400;500;600;700;800;900&family=Lexend+Zetta:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  AKE UFT-1.0 · SEINFRA BI · CSS LAYER 6 — UI TOKENS     ║
+   ╚══════════════════════════════════════════════════════════╝ */
+:root {
+  --azul: #1A2B5E;
+  --azul-dk:    #001E50;
+  --azul-md:    #1A4B9B;
+  --azul-lt:    #EBF0FA;
+  --azul-brd:   #C4D0E8;
+  --ouro:       #F5A623;
+  --ouro-dk:    #D48C10;
+  --ouro-lt:    #FEF3DC;
+  --ouro-brd:   #F5C878;
+  --verde: #2D8540;
+  --verde-lt:   #E6F4ED;
+  --vermelho:   #C0392B;
+  --verm-lt:    #FDECEA;
+  --roxo:       #6C3483;
+  --roxo-lt:    #F4ECF7;
+  --ciano:      #0E6B8F;
+  --ciano-lt:   #E8F4F8;
+  --cinza-1:    #1A2540;
+  --cinza-2:    #4A5568;
+  --cinza-3:    #8896A8;
+  --cinza-4:    #CBD5E0;
+  --cinza-5:    #F5F7FB;
+  --branco:     #FFFFFF;
+  --borda:      #E0E6F0;
+  --font: 'Lexend Deca', 'Outfit', sans-serif;
+  --sidebar-w:  260px;
+  --header-h:   60px;
+      --azul-mid: #1E3575;
+      --azul-hover: #152347;
+      --verde-gov: #2D8540;
+      --verde-cl: #E8F5EC;
+      --verde-brd: rgba(45,133,64,0.28);
+      --font-head: 'Lexend Zetta', 'Outfit', sans-serif;
+      --font-cond: 'Barlow Condensed', 'Outfit', sans-serif;
     }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--cinza-5);color:var(--cinza-1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      background: var(--branco);
-      color: var(--cinza-txt);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    a { text-decoration: none; color: inherit; }
-    ::selection { background: rgba(0,45,114,0.14); }
+/* ── TOPBAR GOVERNO ── */
+.gov-bar{background:var(--azul-dk);padding:0.3rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:200;height:28px}
+.gov-bar-l{font-size:0.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:500}
+.gov-bar-r{font-size:0.58rem;color:rgba(255,255,255,.4);letter-spacing:.05em}
+.gov-live{display:flex;align-items:center;gap:.4rem;font-size:.6rem;font-weight:700;color:var(--ouro);text-transform:uppercase;letter-spacing:.1em}
+.gov-dot{width:5px;height:5px;border-radius:50%;background:var(--ouro);animation:pulse 2s infinite}
 
-    /* ══ TOPBAR ══ */
-    .topbar {
-      background: var(--azul);
-      padding: 0.55rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .topbar-left {
-      font-size: 0.7rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 500;
-    }
-    .topbar-right {
-      font-size: 0.68rem; font-weight: 600; color: var(--amarelo);
-      letter-spacing: 0.05em; text-transform: uppercase;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .topbar-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--amarelo); box-shadow: 0 0 8px var(--amarelo);
-      animation: pulse 2s ease-in-out infinite;
-    }
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:28px;left:0;width:var(--sidebar-w);height:calc(100vh - 28px);background:var(--azul);display:flex;flex-direction:column;z-index:150;overflow-y:auto;overflow-x:hidden}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
 
-    /* ══ HEADER ══ */
-    .site-header {
-      background: var(--branco);
-      border-bottom: 2px solid var(--azul);
-      padding: 1.1rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 20px rgba(0,45,114,0.08);
-    }
-    .header-brand { display: flex; align-items: center; gap: 1rem; }
-    .brand-escudo {
-      width: 46px; height: 46px; border-radius: 6px;
-      background: var(--azul);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; flex-shrink: 0;
-    }
-    .brand-sup {
-      font-size: 0.64rem; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--cinza-aux); margin-bottom: 0.15rem;
-    }
-    .brand-name { font-size: 1.1rem; font-weight: 800; color: var(--azul); letter-spacing: -0.01em; }
-    .brand-name span { color: var(--amarelo); }
-    .header-badge {
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--azul); background: var(--azul-claro);
-      border: 1.5px solid var(--azul-borda);
-      padding: 0.4em 1em; border-radius: 100px;
-    }
+.sidebar-brand{padding:1.2rem 1.2rem 1rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.sb-icon{width:36px;height:36px;background:var(--ouro);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.sb-name{font-size:.95rem;font-weight:800;color:var(--branco);letter-spacing:-.01em}
+.sb-name span{color:var(--ouro)}
+.sb-sub{font-size:.58rem;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;font-weight:500}
 
-    /* ══ HERO ══ */
-    .hero {
-      background: var(--azul);
-      position: relative; overflow: hidden;
-      padding: 6rem 2.5rem 7rem;
-      text-align: center;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        repeating-linear-gradient(-50deg, transparent, transparent 48px, rgba(255,255,255,0.022) 48px, rgba(255,255,255,0.022) 49px),
-        radial-gradient(ellipse at 75% 40%, rgba(245,166,35,0.10) 0%, transparent 55%),
-        radial-gradient(ellipse at 15% 70%, rgba(0,123,62,0.08) 0%, transparent 45%);
-      pointer-events: none;
-    }
-    .hero-accent-bar {
-      position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
-      background: linear-gradient(to bottom, var(--amarelo), rgba(245,166,35,0));
-    }
-    .hero-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
-    .hero-chip {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--amarelo); background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.3);
-      padding: 0.45em 1.1em; border-radius: 100px;
-      margin-bottom: 2rem;
-      opacity: 0; animation: up 0.5s 0.1s forwards;
-    }
-    .hero-chip-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--amarelo); box-shadow: 0 0 8px var(--amarelo);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    .hero-title {
-      font-size: clamp(2.4rem, 6vw, 5rem);
-      font-weight: 900; line-height: 1; letter-spacing: -0.025em;
-      color: var(--branco); margin-bottom: 1.2rem;
-      opacity: 0; animation: up 0.55s 0.2s forwards;
-    }
-    .hero-title em { font-style: normal; color: var(--amarelo); }
-    .hero-sub {
-      font-size: 1.05rem; font-weight: 400;
-      line-height: 1.7; color: rgba(255,255,255,0.65);
-      max-width: 580px; margin: 0 auto 3rem;
-      opacity: 0; animation: up 0.55s 0.3s forwards;
-    }
-    .hero-rule {
-      display: flex; align-items: center; justify-content: center; gap: 1rem;
-      opacity: 0; animation: up 0.5s 0.4s forwards;
-    }
-    .hero-rule-line { width: 56px; height: 1px; background: rgba(255,255,255,0.18); }
-    .hero-rule-text { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
-    .hero-wave { position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; z-index: 2; }
-    .hero-wave svg { display: block; width: 100%; }
+.sb-section{padding:.9rem 1rem .3rem;font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)}
 
-    /* ══ SECTIONS ══ */
-    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 2.5rem 2rem; }
-    .section-head {
-      display: flex; align-items: flex-end; justify-content: space-between;
-      margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
-    }
-    .section-eyebrow {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--amarelo); display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.55rem;
-    }
-    .section-eyebrow-bar { width: 24px; height: 3px; background: var(--amarelo); border-radius: 2px; }
-    .section-title { font-size: 2rem; font-weight: 800; color: var(--azul); letter-spacing: -0.02em; }
-    .section-count {
-      font-size: 0.75rem; font-weight: 700; color: var(--cinza-aux);
-      letter-spacing: 0.08em; text-transform: uppercase;
-      padding-bottom: 0.25rem;
-    }
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.55rem .9rem .55rem 1rem;cursor:pointer;border-left:3px solid transparent;transition:all .18s ease;position:relative;margin:1px .7rem;border-radius:10px;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.09);border-left-color:rgba(255,255,255,.0);transform:translateX(2px)}
+.nav-item:hover .nav-icon{background:rgba(255,255,255,.18);transform:scale(1.08)}
+.nav-item.active{background:linear-gradient(135deg,rgba(245,166,35,.18),rgba(245,166,35,.08));border-left-color:var(--ouro);box-shadow:0 2px 12px rgba(245,166,35,.15),inset 0 0 0 1px rgba(245,166,35,.15)}
+.nav-item.active .nav-icon{background:rgba(245,166,35,.25);box-shadow:0 0 10px rgba(245,166,35,.2)}
+.nav-item.active .nav-icon svg{stroke:var(--ouro)}
+.nav-item:active{transform:translateX(1px) scale(.99)}
+.nav-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.1);transition:all .18s ease;border:1px solid rgba(255,255,255,.06)}
+.nav-icon svg{stroke:rgba(255,255,255,.7);transition:stroke .18s}
+.nav-item:hover .nav-icon svg{stroke:rgba(255,255,255,.95)}
+.nav-label{font-size:.8rem;font-weight:600;color:rgba(255,255,255,.7);transition:color .18s;letter-spacing:.01em}
+.nav-item:hover .nav-label{color:rgba(255,255,255,.95)}
+.nav-item.active .nav-label{color:var(--branco);font-weight:700}
+.nav-badge{margin-left:auto;background:var(--ouro);color:var(--azul-dk);font-size:.58rem;font-weight:800;padding:.18em .6em;border-radius:100px;min-width:22px;text-align:center;box-shadow:0 1px 4px rgba(245,166,35,.3);flex-shrink:0}
 
-    /* ══ GRID ══ */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 4rem;
-    }
+.sidebar-footer{margin-top:auto;padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.08)}
+.sf-text{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.05em}
 
-    /* ══ CARDS ══ */
-    .card {
-      background: var(--branco);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      display: flex; flex-direction: column;
-      overflow: hidden;
-      transition: box-shadow 0.28s, transform 0.28s;
-      position: relative;
-      cursor: pointer;
-    }
-    .card:hover {
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-5px);
-    }
-    .card-stripe {
-      height: 4px;
-      background: linear-gradient(90deg, var(--azul), var(--azul-hover));
-    }
-    .card-stripe.amarelo { background: linear-gradient(90deg, var(--amarelo), #e8960f); }
-    .card-stripe.verde   { background: linear-gradient(90deg, var(--verde), #005a2d); }
-    .card-stripe.azul-cl { background: linear-gradient(90deg, #1a6bb5, #0d4f8a); }
-    .card-stripe.hidro   { background: linear-gradient(90deg, #0077b6, #023e8a); }
-    .card-stripe.aero    { background: linear-gradient(90deg, #7b2d8b, #4a1060); }
-    .card-stripe.atlas   { background: linear-gradient(90deg, #1a7a4e, #0d5235); }
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);padding-top:28px;min-height:100vh}
 
-    .card-body { padding: 1.75rem 1.75rem 1rem; flex: 1; }
-    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.page-header{background:var(--branco);border-bottom:1px solid var(--borda);padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--header-h);position:sticky;top:28px;z-index:100;box-shadow:0 1px 8px rgba(26,43,94,.06)}
+.ph-left{display:flex;align-items:center;gap:.8rem}
+.ph-back{display:none}
+.ph-breadcrumb{font-size:.65rem;color:var(--cinza-3);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.ph-title{font-size:1.1rem;font-weight:800;color:var(--azul)}
+.ph-right{display:flex;align-items:center;gap:.8rem}
+.ph-sync{font-size:.65rem;color:var(--cinza-3);display:flex;align-items:center;gap:.35rem}
+.ph-sync-dot{width:6px;height:6px;border-radius:50%;background:var(--verde);animation:pulse 2s infinite}
+.ph-btn{background:var(--azul);color:var(--branco);border:none;border-radius:8px;padding:.45rem 1rem;font-size:.72rem;font-weight:700;font-family:var(--font);cursor:pointer;letter-spacing:.04em;display:flex;align-items:center;gap:.4rem}
+.ph-btn:hover{background:var(--azul-md)}
 
-    .card-icon {
-      width: 52px; height: 52px; border-radius: 12px;
-      background: var(--azul-claro);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      flex-shrink: 0;
-    }
-    .card-icon.amarelo { background: var(--amarelo-cl); }
-    .card-icon.verde   { background: var(--verde-cl); }
-    .card-icon.hidro   { background: #e0f2fe; }
-    .card-icon.aero    { background: #f3e8ff; }
-    .card-icon.atlas   { background: #e6f4ed; }
-    .card-icon.em-breve { opacity: 0.5; }
+.content{padding:1.5rem 2rem 3rem}
 
-    .card-status {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--verde);
-      display: flex; align-items: center; gap: 0.4rem;
-      background: var(--verde-cl);
-      padding: 0.3em 0.8em; border-radius: 100px;
-    }
-    .card-status.breve {
-      color: var(--cinza-aux);
-      background: var(--cinza-bg);
-    }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--verde);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    .status-dot.breve { background: var(--cinza-aux); animation: none; }
+/* ── LOADER ── */
+.loader-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem;gap:1rem}
+.loader-ring{width:40px;height:40px;border:3px solid var(--borda);border-top-color:var(--azul);border-radius:50%;animation:spin .8s linear infinite}
+.loader-txt{font-size:.78rem;color:var(--cinza-3);font-weight:500}
+.error-box{background:var(--verm-lt);border:1px solid #F5A9A9;border-radius:12px;padding:1.2rem 1.5rem;font-size:.82rem;color:var(--vermelho);display:flex;align-items:center;gap:.7rem}
 
-    .card-title {
-      font-size: 1.15rem; font-weight: 800; color: var(--azul);
-      letter-spacing: -0.01em; margin-bottom: 0.6rem;
-    }
-    .card-desc {
-      font-size: 0.875rem; line-height: 1.65;
-      color: var(--cinza-med); font-weight: 400;
-    }
+/* ── KPI CARDS ── */
+.kpi-row{display:grid;gap:1rem;margin-bottom:1.5rem}
+.kpi-row.cols-4{grid-template-columns:repeat(4,1fr)}
+.kpi-row.cols-3{grid-template-columns:repeat(3,1fr)}
+.kpi-row.cols-2{grid-template-columns:repeat(2,1fr)}
 
-    .card-foot {
-      padding: 1rem 1.75rem 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      border-top: 1px solid var(--borda);
-      margin-top: 1rem;
-    }
-    .card-cta {
-      font-size: 0.8rem; font-weight: 700;
-      color: var(--azul); letter-spacing: 0.02em;
-      display: flex; align-items: center; gap: 0.4rem;
-      transition: gap 0.2s;
-    }
-    .card:hover .card-cta { gap: 0.7rem; }
-    .cta-arrow { font-size: 1rem; transition: transform 0.2s; }
-    .card:hover .cta-arrow { transform: translateX(3px); }
+.kpi{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.5rem;transition:box-shadow .2s;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--azul)}
+.kpi.ouro::before{background:var(--ouro)}
+.kpi.verde::before{background:var(--verde)}
+.kpi.verm::before{background:var(--vermelho)}
+.kpi.roxo::before{background:var(--roxo)}
+.kpi.ciano::before{background:var(--ciano)}
+.kpi:hover{box-shadow:0 4px 20px rgba(26,43,94,.1)}
 
-    .card-ref {
-      font-size: 0.65rem; font-weight: 700;
-      color: var(--cinza-aux); letter-spacing: 0.1em;
-    }
+.kpi-header{display:flex;align-items:center;justify-content:space-between}
+.kpi-label{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza-3)}
+.kpi-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--cinza-5)}
+.kpi-value{font-size:2rem;font-weight:900;color:var(--azul);line-height:1;letter-spacing:-.03em}
+.kpi.ouro .kpi-value{color:var(--ouro-dk)}
+.kpi.verde .kpi-value{color:var(--verde)}
+.kpi.verm .kpi-value{color:var(--vermelho)}
+.kpi.roxo .kpi-value{color:var(--roxo)}
+.kpi.ciano .kpi-value{color:var(--ciano)}
+.kpi-sub{font-size:.68rem;color:var(--cinza-3);font-weight:500}
+.kpi-delta{display:inline-flex;align-items:center;gap:.25rem;font-size:.65rem;font-weight:700;padding:.15em .5em;border-radius:100px}
+.kpi-delta.up{background:var(--verde-lt);color:var(--verde)}
+.kpi-delta.down{background:var(--verm-lt);color:var(--vermelho)}
 
-    /* Card em breve — visual diferente */
-    .card.em-breve {
-      background: var(--cinza-bg);
-      cursor: default;
-    }
-    .card.em-breve:hover {
-      box-shadow: var(--shadow);
-      transform: none;
-    }
-    .card.em-breve .card-title { color: var(--cinza-med); }
-    .card.em-breve .card-cta { color: var(--cinza-aux); }
-    .card.em-breve .cta-arrow { display: none; }
-    .card.em-breve:hover .card-cta { gap: 0.4rem; }
+/* ── GRID CHARTS ── */
+.chart-grid{display:grid;gap:1.2rem;margin-bottom:1.2rem}
+.chart-grid.g2{grid-template-columns:1fr 1fr}
+.chart-grid.g3{grid-template-columns:1fr 1fr 1fr}
+.chart-grid.g12{grid-template-columns:2fr 1fr}
+.chart-grid.g21{grid-template-columns:1fr 2fr}
 
-    /* Divisor de seções */
-    .section-divider {
-      max-width: 1200px; margin: 0 auto 3rem;
-      padding: 0 2.5rem;
-      display: flex; align-items: center; gap: 1.5rem;
-    }
-    .section-divider-line { flex: 1; height: 1px; background: var(--borda); }
-    .section-divider-label {
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--cinza-aux);
-      white-space: nowrap;
-    }
+.chart-card{background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.2rem;overflow:hidden}
+.chart-card.full{grid-column:1/-1}
+.cc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;gap:.5rem}
+.cc-title{font-size:.82rem;font-weight:800;color:var(--cinza-1)}
+.cc-sub{font-size:.65rem;color:var(--cinza-3);margin-top:.15rem}
+.cc-badge{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.25em .7em;border-radius:100px;background:var(--azul-lt);color:var(--azul);flex-shrink:0}
+.cc-badge.ouro{background:var(--ouro-lt);color:var(--ouro-dk)}
+.cc-badge.verde{background:var(--verde-lt);color:var(--verde)}
+.chart-wrap{position:relative}
+.chart-wrap canvas{max-height:220px}
+.chart-wrap.tall canvas{max-height:280px}
 
-    /* ══ INDICADORES ══ */
-    .indicators {
-      background: var(--azul);
-      padding: 3.5rem 2.5rem;
-      margin-top: 2rem;
-    }
-    .indicators-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem;
-    }
-    .ind-item { text-align: center; }
-    .ind-value { font-size: 2.8rem; font-weight: 900; color: var(--branco); letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.5rem; }
-    .ind-value .accent { color: var(--amarelo); }
-    .ind-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+/* ── TABELA ── */
+.table-card{background:var(--branco);border:1px solid var(--borda);border-radius:14px;overflow:hidden;margin-bottom:1.2rem}
+.table-toolbar{padding:.9rem 1.2rem;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid var(--borda);flex-wrap:wrap}
+.table-toolbar-title{font-size:.82rem;font-weight:800;color:var(--cinza-1);margin-right:auto}
+.search-box{display:flex;align-items:center;gap:.5rem;background:var(--cinza-5);border:1px solid var(--borda);border-radius:8px;padding:.4rem .8rem;font-size:.75rem}
+.search-box input{border:none;background:none;font-family:var(--font);font-size:.75rem;color:var(--cinza-1);outline:none;width:180px}
+.search-box input::placeholder{color:var(--cinza-3)}
+.btn-sm{border:1px solid var(--borda);background:var(--branco);border-radius:8px;padding:.4rem .9rem;font-size:.7rem;font-weight:700;font-family:var(--font);color:var(--cinza-2);cursor:pointer;display:flex;align-items:center;gap:.35rem;transition:all .2s}
+.btn-sm:hover{border-color:var(--azul);color:var(--azul)}
+.btn-sm.primary{background:var(--azul);color:var(--branco);border-color:var(--azul)}
+.btn-sm.primary:hover{background:var(--azul-md)}
+.btn-sm.ouro{background:var(--ouro);color:var(--azul-dk);border-color:var(--ouro)}
 
-    /* ══ FOOTER ══ */
-    .site-footer {
-      background: var(--cinza-bg); border-top: 1px solid var(--borda);
-      padding: 2rem 2.5rem;
-    }
-    .footer-inner {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem;
-    }
-    .footer-brand { display: flex; align-items: center; gap: 0.75rem; }
-    .footer-icon {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: var(--azul);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-    }
-    .footer-name { font-size: 0.95rem; font-weight: 800; color: var(--azul); }
-    .footer-name span { color: var(--amarelo); }
-    .footer-sub { font-size: 0.7rem; color: var(--cinza-aux); margin-top: 0.1rem; }
-    .footer-copy { font-size: 0.72rem; color: var(--cinza-aux); font-weight: 500; }
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--azul)}
+thead th{padding:.7rem 1rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.85);text-align:left;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--borda);transition:background .15s}
+tbody tr:hover{background:var(--azul-lt)}
+tbody tr:last-child{border-bottom:none}
+td{padding:.65rem 1rem;font-size:.78rem;color:var(--cinza-1);vertical-align:middle}
+td.mono{font-family:'Courier New',monospace;font-size:.72rem;color:var(--cinza-2)}
+.pill{display:inline-flex;align-items:center;gap:.3rem;padding:.2em .65em;border-radius:100px;font-size:.62rem;font-weight:700;white-space:nowrap}
+.pill.azul{background:var(--azul-lt);color:var(--azul)}
+.pill.ouro{background:var(--ouro-lt);color:var(--ouro-dk)}
+.pill.verde{background:var(--verde-lt);color:var(--verde)}
+.pill.verm{background:var(--verm-lt);color:var(--vermelho)}
+.pill.cinza{background:var(--cinza-5);color:var(--cinza-2)}
+.pill.roxo{background:var(--roxo-lt);color:var(--roxo)}
 
-    /* ══ REVEAL ══ */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s, transform 0.55s; }
-    .reveal.in { opacity: 1; transform: none; }
-    .d1 { transition-delay: 0.10s; }
-    .d2 { transition-delay: 0.20s; }
-    .d3 { transition-delay: 0.08s; }
-    .d4 { transition-delay: 0.16s; }
-    .d5 { transition-delay: 0.24s; }
+/* ── PAGINAÇÃO ── */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1.2rem;border-top:1px solid var(--borda);font-size:.72rem;color:var(--cinza-3)}
+.page-btns{display:flex;align-items:center;gap:.3rem}
+.page-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--borda);background:var(--branco);font-family:var(--font);font-size:.72rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-weight:600;color:var(--cinza-2)}
+.page-btn:hover{border-color:var(--azul);color:var(--azul)}
+.page-btn.active{background:var(--azul);color:var(--branco);border-color:var(--azul)}
+.page-btn:disabled{opacity:.4;cursor:default}
 
-    @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
-    @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.5; transform:scale(0.85); } }
+/* ── SEÇÃO HEADER ── */
+.sec-head{margin-bottom:1.5rem}
+.sec-eyebrow{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro);display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.sec-eyebrow-bar{width:20px;height:3px;background:var(--ouro);border-radius:2px}
+.sec-title{font-size:1.5rem;font-weight:900;color:var(--azul);letter-spacing:-.02em}
+.sec-desc{font-size:.82rem;color:var(--cinza-2);margin-top:.3rem;line-height:1.5}
 
-    @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 900px)  {
-      .indicators-inner { grid-template-columns: repeat(3,1fr); }
-      .grid-2 { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 680px)  {
-      .grid { grid-template-columns: 1fr; }
-      .grid-2 { grid-template-columns: 1fr; }
-      .indicators-inner { grid-template-columns: repeat(2,1fr); }
-      .section-head { flex-direction: column; align-items: flex-start; }
-      .topbar, .site-header { padding: 0.5rem 1.25rem; }
-      .hero { padding: 4.5rem 1.25rem 6rem; }
-      .section-wrap { padding: 3rem 1.25rem 2rem; }
-      .section-divider { padding: 0 1.25rem; }
-      .header-badge { display: none; }
-      .footer-inner { flex-direction: column; }
-    }
-  
-    /* ══ IDENTIDADE VISUAL — GOVERNO DO AMAZONAS / SEINFRA ══ */
-    :root {
-      --gov-azul:    #293258;
-      --gov-verde:   #33A23D;
-      --gov-amarelo: #FFED00;
-      --gov-cinza:   #ABABAB;
-    }
-    /* Header principal — fundo branco com logo vertical */
-    .gov-header {
-      background: #ffffff;
-      padding: .75rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e0e6f0;
-      box-shadow: 0 2px 12px rgba(41,50,88,.08);
-      position: sticky;
-      top: 0;
-      z-index: 200;
-    }
-    .gov-header-logo img {
-      height: 80px;
-      width: auto;
-      object-fit: contain;
-      display: block;
-    }
-    .gov-header-right {
-      display: flex;
-      align-items: center;
-      gap: .75rem;
-    }
-    .gov-header-badge {
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: #ffffff;
-      background: var(--gov-azul);
-      padding: .35em 1.1em;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-    .gov-header-back {
-      font-size: .7rem;
-      font-weight: 600;
-      color: var(--gov-azul);
-      background: transparent;
-      border: 1.5px solid var(--gov-azul);
-      padding: .32em .85em;
-      border-radius: 7px;
-      text-decoration: none;
-      transition: all .15s;
-      white-space: nowrap;
-    }
-    .gov-header-back:hover {
-      background: var(--gov-azul);
-      color: #fff;
-    }
-    .gov-header-status {
-      display: flex;
-      align-items: center;
-      gap: .4rem;
-      font-size: .62rem;
-      font-weight: 600;
-      color: var(--gov-azul);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      opacity: .7;
-    }
-    .gov-header-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--gov-verde);
-      box-shadow: 0 0 6px var(--gov-verde);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @media(max-width:640px){
-      .gov-header { padding: .5rem 1rem; }
-      .gov-header-logo img { height: 60px; }
-      .gov-header-badge { font-size:.58rem; padding:.28em .8em; }
-      .gov-header-status { display: none; }
+/* ── RANKING BARS ── */
+.rank-list{display:flex;flex-direction:column;gap:.6rem}
+.rank-item{display:flex;flex-direction:column;gap:.25rem}
+.rank-header{display:flex;align-items:center;justify-content:space-between}
+.rank-label{font-size:.75rem;font-weight:600;color:var(--cinza-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:65%}
+.rank-value{font-size:.75rem;font-weight:700;color:var(--azul)}
+.rank-bar{height:6px;background:var(--cinza-5);border-radius:3px;overflow:hidden}
+.rank-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--azul),var(--azul-md));transition:width .8s ease}
+.rank-fill.ouro{background:linear-gradient(90deg,var(--ouro),var(--ouro-dk))}
+.rank-fill.verde{background:linear-gradient(90deg,var(--verde),#00A852)}
+.rank-fill.verm{background:linear-gradient(90deg,var(--vermelho),#E74C3C)}
+
+/* ── EMPTY STATE ── */
+.empty-state{padding:3rem;text-align:center;color:var(--cinza-3)}
+.empty-icon{font-size:2.5rem;margin-bottom:.8rem;opacity:.5}
+.empty-text{font-size:.82rem;font-weight:500}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:.4rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab{padding:.45rem 1rem;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid var(--borda);background:var(--branco);color:var(--cinza-2);transition:all .2s;font-family:var(--font)}
+.tab.active{background:var(--azul);color:var(--branco);border-color:var(--azul)}
+.tab:hover:not(.active){border-color:var(--azul);color:var(--azul)}
+
+/* ── DIVISOR ── */
+.divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0}
+.divider-line{flex:1;height:1px;background:var(--borda)}
+.divider-label{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cinza-3)}
+
+/* ── ACCORDION (Rodovias por trecho) ── */
+.accordion-group{border:1px solid var(--borda);border-radius:12px;overflow:hidden;margin-bottom:.8rem}
+.accordion-head{padding:.9rem 1.2rem;background:var(--branco);display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .15s;gap:.8rem}
+.accordion-head:hover{background:var(--azul-lt)}
+.accordion-head.open{background:var(--azul-lt);border-bottom:1px solid var(--borda)}
+.acc-info{display:flex;align-items:center;gap:.8rem;flex:1}
+.acc-rod{font-size:.85rem;font-weight:800;color:var(--azul)}
+.acc-name{font-size:.75rem;color:var(--cinza-2);font-weight:500}
+.acc-stats{display:flex;gap:.6rem;flex-shrink:0}
+.acc-stat{font-size:.65rem;background:var(--cinza-5);padding:.2em .6em;border-radius:6px;color:var(--cinza-2);font-weight:600}
+.acc-chevron{width:20px;height:20px;display:flex;align-items:center;justify-content:center;transition:transform .2s;color:var(--cinza-3);font-size:.8rem}
+.accordion-head.open .acc-chevron{transform:rotate(180deg)}
+.accordion-body{display:none;overflow:hidden}
+.accordion-body.open{display:block}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease forwards}
+
+/* ── PAGES ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .kpi-row.cols-4{grid-template-columns:repeat(2,1fr)}
+  .chart-grid.g12,.chart-grid.g21{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .kpi-row.cols-4,.kpi-row.cols-3{grid-template-columns:1fr 1fr}
+  .chart-grid.g2,.chart-grid.g3{grid-template-columns:1fr}
+  .content{padding:1rem}
+}
+
+    /* IDENTIDADE SEINFRA 2026 — TOPBAR HEADER FOOTER (override do legado) */
+    .topbar-gov { background: var(--azul); padding: 0.35rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .topbar-gov-text { font-family: var(--font-cond); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .topbar-gov-live { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-cond); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amarelo); }
+    .topbar-gov .topbar-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amarelo); animation: pulse 2s ease-in-out infinite; }
+    header.site-header { background: #fff; padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2.5px solid var(--azul); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 20px rgba(26,43,94,0.08); }
+    header.site-header .header-brand { display: flex; align-items: center; gap: 1.1rem; }
+    .brand-gov { display: flex; align-items: center; gap: 0.65rem; }
+    .brand-brasao { height: 50px; width: auto; display: block; }
+    .brand-gov-text { display: flex; flex-direction: column; line-height: 1; gap: 0.1rem; }
+    .brand-gov-label { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 700; color: var(--verde); letter-spacing: 0.12em; text-transform: uppercase; }
+    .brand-gov-estado { font-family: var(--font-cond); font-size: 1.45rem; font-weight: 900; color: var(--azul); letter-spacing: 0.02em; line-height: 1; }
+    .brand-gov-slogan { font-family: var(--font-cond); font-size: 0.6rem; font-weight: 600; color: var(--verde); letter-spacing: 0.15em; text-transform: uppercase; }
+    .brand-divider { width: 1.5px; height: 44px; background: linear-gradient(to bottom, transparent, var(--borda), transparent); margin: 0 0.2rem; flex-shrink: 0; }
+    .brand-seinfra { display: flex; flex-direction: column; line-height: 1.25; }
+    .brand-seinfra-pre { font-family: 'Lexend Deca', sans-serif; font-size: 0.7rem; font-weight: 400; color: var(--azul); }
+    .brand-seinfra-name { font-family: 'Lexend Zetta', sans-serif; font-size: 0.98rem; font-weight: 700; color: var(--azul); }
+    header.site-header .header-right { display: flex; align-items: center; gap: 0.7rem; }
+    .header-badge-gov { font-family: var(--font-cond); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--azul); padding: 0.35em 1.1em; border-radius: 100px; }
+    .header-live { display: flex; align-items: center; gap: 0.35rem; font-family: var(--font-cond); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--azul); opacity: 0.7; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 6px #22C55E; animation: pulse 2s ease-in-out infinite; }
+    footer.site-footer { background: var(--azul); color: rgba(255,255,255,0.6); padding: 1.5rem 2rem; margin-top: 3rem; border-top: none; }
+    footer.site-footer .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+    .footer-col { flex: 1; min-width: 0; }
+    .footer-item { font-family: var(--font-cond); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; color: rgba(255,255,255,0.6); line-height: 1.9; }
+    .footer-vdiv { width: 1px; background: rgba(255,255,255,0.15); align-self: stretch; flex-shrink: 0; }
+    .footer-brand-wrap { text-align: right; white-space: nowrap; }
+    .footer-brand-pre { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 400; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; text-transform: uppercase; }
+    .footer-brand-nome { font-family: 'Lexend Zetta', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: -0.01em; line-height: 1.1; }
+    @media (max-width: 640px) {
+      header.site-header { padding: 0.55rem 1rem; }
+      .topbar-gov { padding: 0.35rem 1rem; }
+      .topbar-gov-text { display: none; }
+      .brand-brasao { height: 36px; }
+      .brand-gov-estado { font-size: 1.05rem; }
+      .brand-gov-label, .brand-gov-slogan { font-size: 0.55rem; }
+      .brand-seinfra-name { font-size: 0.82rem; }
+      .brand-seinfra-pre { display: none; }
+      .brand-divider { display: none; }
+      .header-badge-gov { display: none; }
+      .header-live { display: none; }
+      footer.site-footer .footer-inner { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+      .footer-vdiv { width: 100%; height: 1px; }
+      .footer-brand-wrap { text-align: left; }
+      footer.site-footer { padding: 1.2rem 1rem; }
     }
 
   </style>
 </head>
 <body>
-<!-- HEADER GOV/SEINFRA -->
-<header class="gov-header">
-  <div class="gov-header-logo">
-    <img src="data:image/png;base64,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" alt="Secretaria de Infraestrutura — Governo do Amazonas"/>
+
+
+<!-- HEADER GOV/SEINFRA 2026 -->
+<div class="topbar-gov">
+  <span class="topbar-gov-text">DMOB — Departamento de Mobilidade · SEINFRA/AM · 2026</span>
+  <div class="topbar-gov-live"><div class="topbar-dot"></div>Online</div>
+</div>
+<header class="site-header">
+  <div class="header-brand">
+    <div class="brand-gov">
+      <img src="https://leonzordhue.github.io/atlas-amazonas/assets/brasao_am.png"
+           alt="Brasão do Amazonas" class="brand-brasao"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <div style="display:none;width:50px;height:50px;border-radius:8px;background:var(--azul);color:#fff;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0">🦅</div>
+      <div class="brand-gov-text">
+        <div class="brand-gov-label">Governo do</div>
+        <div class="brand-gov-estado">Amazonas</div>
+        <div class="brand-gov-slogan">A Força da Nossa Gente</div>
+      </div>
+    </div>
+    <div class="brand-divider"></div>
+    <div class="brand-seinfra">
+      <div class="brand-seinfra-pre">Secretaria de</div>
+      <div class="brand-seinfra-name">Infraestrutura</div>
+    </div>
   </div>
-  <div class="gov-header-right">
-    <div class="gov-header-status"><div class="gov-header-dot"></div>Plataformas</div>
-    <div class="gov-header-badge">Plataformas Digitais</div>
-    
+  <div class="header-right">
+    <span class="header-badge-gov">BI Dashboard</span>
+    <div class="header-live"><div class="live-dot"></div>Online</div>
   </div>
 </header>
 
 
-    
 
-  <section class="hero">
-    <div class="hero-accent-bar"></div>
-    <div class="hero-inner">
-      <div class="hero-chip">
-        <span class="hero-chip-dot"></span>
-        Plataformas digitais em operação
-      </div>
-      <h1 class="hero-title">
-        Infraestrutura<br>
-        do <em>Amazonas</em>
-      </h1>
-      <p class="hero-sub">
-        Sistemas integrados de monitoramento, consulta e análise para a
-        gestão da infraestrutura de transportes do maior estado do Brasil.
-      </p>
-      <div class="hero-rule">
-        <div class="hero-rule-line"></div>
-        <div class="hero-rule-text">SEINFRA · AM · 2026</div>
-        <div class="hero-rule-line"></div>
+<!-- GOV BAR -->
+<div class="gov-bar">
+  <div class="gov-bar-l">Estado do Amazonas · Secretaria de Estado de Infraestrutura</div>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <div class="gov-live"><div class="gov-dot"></div>Dados em tempo real</div>
+    <div class="gov-bar-r" id="lastUpdate">—</div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sb-logo">
+      <div class="sb-icon">🏛️</div>
+      <div>
+        <div class="sb-name">SEINFRA<span>/AM</span></div>
+        <div class="sb-sub">Central de Inteligência</div>
       </div>
     </div>
-    <div class="hero-wave">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,40 C360,70 720,10 1080,40 C1260,56 1380,32 1440,40 L1440,60 L0,60 Z" fill="#ffffff"/>
-      </svg>
-    </div>
-  </section>
-
-  <main>
-    <!-- ══ SEÇÃO RODOVIAS ══ -->
-    <div class="section-wrap">
-      <div class="section-head reveal">
-        <div>
-          <div class="section-eyebrow">
-            <div class="section-eyebrow-bar"></div>
-            Infraestrutura Viária
-          </div>
-          <h2 class="section-title">Rodovias e Vias</h2>
-        </div>
-        <div class="section-count">4 plataformas ativas</div>
-      </div>
-
-      <div class="grid">
-
-        <!-- Sinistros -->
-        <a class="card reveal" href="https://leonzordhue.github.io/rodovias-am-dashboard/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe amarelo"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon amarelo">⚠️</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Observatório de Sinistros</h3>
-            <p class="card-desc">Monitoramento contínuo de acidentes nas rodovias do Amazonas. Coleta automática via Google News RSS com classificação por rodovia, município e tipo de ocorrência.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">01 / 04</div>
-          </div>
-        </a>
-
-        <!-- Ramais -->
-        <a class="card reveal d1" href="https://leonzordhue.github.io/seinfra-ramais/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon">🚧</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Consulta de Ramais</h3>
-            <p class="card-desc">Base de dados completa dos ramais vicinais da SEINFRA/AM com consulta por município. Acesso estruturado às vias de acesso rural do interior do Estado.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">02 / 04</div>
-          </div>
-        </a>
-
-        <!-- Rodovias -->
-        <a class="card reveal d2" href="https://leonzordhue.github.io/seinfra-rodovias/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe azul-cl"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon">🛣️</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Rodovias Estaduais</h3>
-            <p class="card-desc">Consulta detalhada das rodovias estaduais sob gestão da SEINFRA/AM. Dados técnicos, extensões, pavimentação e informações operacionais da malha viária.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">03 / 04</div>
-          </div>
-        </a>
-
-        <!-- Viário Municipal -->
-        <a class="card reveal d3" href="https://leonzordhue.github.io/dmob-viario/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe verde"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon verde">🏘️</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Viário Municipal</h3>
-            <p class="card-desc">Sistema interativo de consulta do viário urbano dos 62 municípios do Amazonas. Mapa estadual clicável com extensão viária, ruas mapeadas e indicadores municipais.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">04 / 04</div>
-          </div>
-        </a>
-
-      </div>
-    </div>
-
-    <!-- ══ DIVISOR ══ -->
-    <div class="section-divider">
-      <div class="section-divider-line"></div>
-      <div class="section-divider-label">Infraestrutura de Transporte</div>
-      <div class="section-divider-line"></div>
-    </div>
-
-    <!-- ══ SEÇÃO NOVOS SISTEMAS ══ -->
-    <div class="section-wrap" style="padding-top:0;">
-      <div class="section-head reveal">
-        <div>
-          <div class="section-eyebrow">
-            <div class="section-eyebrow-bar"></div>
-            Novos Sistemas
-          </div>
-          <h2 class="section-title">Hidroviário & Aeroviário</h2>
-        </div>
-        <div class="section-count">Em implantação</div>
-      </div>
-
-      <div class="grid-2">
-
-        <!-- Terminais Flutuantes -->
-        <a class="card reveal" href="https://leonzordhue.github.io/hidro-amazonas/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe hidro"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon hidro">⚓</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Terminais Flutuantes</h3>
-            <p class="card-desc">Mapeamento e gestão dos terminais hidroviários flutuantes do Amazonas. Localização georreferenciada, dados de destino, municípios atendidos e processos administrativos da infraestrutura hidroviária estadual.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">01 / 02</div>
-          </div>
-        </a>
-
-        <!-- Aeródromos -->
-        <a class="card reveal d1" href="https://leonzordhue.github.io/aero-amazonas/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe aero"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon aero">✈️</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Aeródromos do Amazonas</h3>
-            <p class="card-desc">Inventário técnico dos 23 aeródromos sob gestão da SEINFRA/AM e municipais. Outorgas, especificações de pista, classe operacional ANAC, portarias vigentes e localização georreferenciada.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">02 / 02</div>
-          </div>
-        </a>
-
-      </div>
-    </div>
-
-    <!-- ══ DIVISOR ══ -->
-    <div class="section-divider">
-      <div class="section-divider-line"></div>
-      <div class="section-divider-label">Geoinformação &amp; Cartografia</div>
-      <div class="section-divider-line"></div>
-    </div>
-
-    <!-- ══ SEÇÃO ATLAS ══ -->
-    <div class="section-wrap" style="padding-top:0; padding-bottom: 4rem;">
-      <div class="section-head reveal">
-        <div>
-          <div class="section-eyebrow">
-            <div class="section-eyebrow-bar"></div>
-            Cartografia Digital
-          </div>
-          <h2 class="section-title">Atlas do Amazonas</h2>
-        </div>
-        <div class="section-count">1 plataforma ativa</div>
-      </div>
-
-      <div class="grid-2" style="grid-template-columns: 1fr 1fr;">
-
-        <!-- Atlas do Amazonas -->
-        <a class="card reveal" href="https://leonzordhue.github.io/atlas-amazonas/" target="_blank" rel="noopener noreferrer">
-          <div class="card-stripe atlas"></div>
-          <div class="card-body">
-            <div class="card-top">
-              <div class="card-icon atlas">🗺️</div>
-              <div class="card-status"><span class="status-dot"></span>Ativo</div>
-            </div>
-            <h3 class="card-title">Atlas do Amazonas</h3>
-            <p class="card-desc">Plataforma cartográfica interativa com múltiplas camadas geoespaciais do Estado do Amazonas. Rodovias, ramais, aeródromos, hidrovias, terminais flutuantes, sítios arqueológicos IPHAN, unidades de conservação e limites municipais integrados com painel BI analítico.</p>
-          </div>
-          <div class="card-foot">
-            <div class="card-cta">Acessar sistema <span class="cta-arrow">→</span></div>
-            <div class="card-ref">01 / 01</div>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </main>
-
-  <!-- ══ INDICADORES ══ -->
-  <div class="indicators">
-    <div class="indicators-inner">
-      <div class="ind-item reveal">
-        <div class="ind-value"><span class="accent">7</span></div>
-        <div class="ind-label">Sistemas Ativos</div>
-      </div>
-      <div class="ind-item reveal d1">
-        <div class="ind-value"><span class="accent">62</span></div>
-        <div class="ind-label">Municípios</div>
-      </div>
-      <div class="ind-item reveal d2">
-        <div class="ind-value"><span class="accent">23</span></div>
-        <div class="ind-label">Aeródromos</div>
-      </div>
-      <div class="ind-item reveal d3">
-        <div class="ind-value"><span class="accent">31</span></div>
-        <div class="ind-label">Terminais</div>
-      </div>
-      <div class="ind-item reveal d4">
-        <div class="ind-value"><span class="accent">AM</span></div>
-        <div class="ind-label">Estado do Amazonas</div>
-      </div>
-    </div>
+    <div style="font-size:.6rem;color:rgba(255,255,255,.3);margin-top:.3rem;letter-spacing:.05em">DMOB · Depto. de Mobilidade</div>
   </div>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-icon">🏛️</div>
-        <div>
-          <div class="footer-name">SEINFRA<span>/AM</span></div>
-          <div class="footer-sub">Secretaria de Estado de Infraestrutura — Amazonas</div>
+  <div class="sb-section">Visão Geral</div>
+  <div class="nav-item active" data-page="painel" onclick="window.navigate('painel')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    </div>
+    <span class="nav-label">Painel Geral</span>
+  </div>
+
+  <div class="sb-section">Infraestrutura Viária</div>
+  <div class="nav-item" data-page="rodovias" onclick="window.navigate('rodovias')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10h12l3 10"/><path d="M9 7V3M15 7V3"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+    </div>
+    <span class="nav-label">Rodovias</span>
+    <span class="nav-badge" id="badge-rod">—</span>
+  </div>
+  <div class="nav-item" data-page="ramais" onclick="window.navigate('ramais')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L8 6H4v4l-2 2 2 2v4h4l4 4 4-4h4v-4l2-2-2-2V6h-4z"/><circle cx="12" cy="12" r="2"/></svg>
+    </div>
+    <span class="nav-label">Ramais</span>
+    <span class="nav-badge" id="badge-ram">—</span>
+  </div>
+  <div class="nav-item" data-page="viario" onclick="window.navigate('viario')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    </div>
+    <span class="nav-label">Viário Urbano</span>
+    <span class="nav-badge" id="badge-via">—</span>
+  </div>
+
+  <div class="sb-section">Infraestrutura Modal</div>
+  <div class="nav-item" data-page="aerodromos" onclick="window.navigate('aerodromos')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+    </div>
+    <span class="nav-label">Aeródromos</span>
+    <span class="nav-badge" id="badge-aero">—</span>
+  </div>
+  <div class="nav-item" data-page="terminais" onclick="window.navigate('terminais')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+    </div>
+    <span class="nav-label">Terminais Fluviais</span>
+    <span class="nav-badge" id="badge-term">—</span>
+  </div>
+
+  <div class="sb-section">Análise & Inteligência</div>
+  <div class="nav-item" data-page="sinistros" onclick="window.navigate('sinistros')">
+    <div class="nav-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <span class="nav-label">Sinistros / Notícias</span>
+    <span class="nav-badge" id="badge-sin">—</span>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sf-text">SEINFRA-AM · DMOB · 2026</div>
+    <div class="sf-text" style="margin-top:.2rem">AKE UFT-1.0 · v2.0-bi</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <header class="page-header">
+    <div class="ph-left">
+      <div>
+        <div class="ph-breadcrumb" id="ph-bread">Painel Geral</div>
+        <div class="ph-title" id="ph-title">Central de Inteligência de Infraestrutura</div>
+      </div>
+    </div>
+    <div class="ph-right">
+      <div class="ph-sync"><div class="ph-sync-dot"></div><span id="syncStatus">Sincronizando…</span></div>
+      <button class="ph-btn" onclick="exportarCSV()">⬇️ Exportar CSV</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ═══════════════════ PAINEL GERAL ═══════════════════ -->
+    <div class="page active" id="page-painel">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Dashboard Executivo</div>
+        <div class="sec-title">Painel Geral de Infraestrutura</div>
+        <div class="sec-desc">Visão consolidada de toda a infraestrutura do Estado do Amazonas gerenciada pela SEINFRA/AM — dados em tempo real das planilhas operacionais.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-geral">
+        <div class="kpi"><div class="kpi-header"><div class="kpi-label">Trechos de Rodovias</div><div class="kpi-icon">🛣️</div></div><div class="kpi-value" id="kg-rod">—</div><div class="kpi-sub">segmentos cadastrados</div></div>
+        <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Ramais Rurais</div><div class="kpi-icon">🌿</div></div><div class="kpi-value" id="kg-ram">—</div><div class="kpi-sub">registros ativos</div></div>
+        <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Terminais Fluviais</div><div class="kpi-icon">⚓</div></div><div class="kpi-value" id="kg-term">—</div><div class="kpi-sub">terminais cadastrados</div></div>
+        <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Aeródromos</div><div class="kpi-icon">✈️</div></div><div class="kpi-value" id="kg-aero">—</div><div class="kpi-sub">aeródromos ativos</div></div>
+      </div>
+      <div class="kpi-row cols-4">
+        <div class="kpi roxo"><div class="kpi-header"><div class="kpi-label">Viário Urbano</div><div class="kpi-icon">🏙️</div></div><div class="kpi-value" id="kg-via">—</div><div class="kpi-sub">municípios com viário</div></div>
+        <div class="kpi verm"><div class="kpi-header"><div class="kpi-label">Sinistros/Notícias</div><div class="kpi-icon">🚨</div></div><div class="kpi-value" id="kg-sin">—</div><div class="kpi-sub">registros monitorados</div></div>
+        <div class="kpi"><div class="kpi-header"><div class="kpi-label">Municípios Atendidos</div><div class="kpi-icon">📍</div></div><div class="kpi-value">62</div><div class="kpi-sub">municípios do Amazonas</div></div>
+        <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Plataformas Ativas</div><div class="kpi-icon">⚡</div></div><div class="kpi-value">7</div><div class="kpi-sub">sistemas integrados</div></div>
+      </div>
+
+      <div class="chart-grid g2">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Distribuição por Categoria</div><div class="cc-sub">Volume de registros por tipo de infraestrutura</div></div><div class="cc-badge ouro">Geral</div></div>
+          <div class="chart-wrap"><canvas id="chart-geral-dist"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Presença Municipal</div><div class="cc-sub">Municípios cobertos por categoria de infraestrutura</div></div><div class="cc-badge verde">Cobertura</div></div>
+          <div class="chart-wrap"><canvas id="chart-geral-mun"></canvas></div>
         </div>
       </div>
-      <div class="footer-copy">Plataformas Digitais · Manaus, AM · 2026</div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Planilha Geral — Busca Integrada</div><div class="divider-line"></div></div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">🗂️ Banco de Dados Geral</div>
+          <div class="search-box">🔍 <input type="text" id="search-geral" placeholder="Buscar em todos os campos…" oninput="filtrarTabela('geral')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSV()">⬇️ Exportar CSV</button>
+        </div>
+        <div id="table-geral-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando planilha geral…</div></div></div>
+        <div class="pagination" id="pag-geral">
+          <span id="pag-geral-info">—</span>
+          <div class="page-btns" id="pag-geral-btns"></div>
+        </div>
+      </div>
     </div>
-  </footer>
 
-  <script>
-    // ╔══════════════════════════════════════════════════════════════════════════╗
-    // ║  AKE — AXIOMATIC KERNEL ENGINE · UNIFIED FIELD THEORY                   ║
-    // ║  Protocolo: UFT-1.0 · Hub de Navegação · Zero Lógica de Domínio         ║
-    // ╠══════════════════════════════════════════════════════════════════════════╣
-    // ║  @domain    Hub — Plataformas Digitais DMOB/SEINFRA-AM                  ║
-    // ║  @author    Paulo Esteves Fernandes Neto — Chefe DMOB/SEINFRA-AM        ║
-    // ║  @version   1.1.0-ake                                                   ║
-    // ║  @build     REV-2                                                        ║
-    // ║  @created   2026-03-24                                                  ║
-    // ║  @repo      github.com/leonzordhue/painel-dmob                          ║
-    // ║                                                                          ║
-    // ║  CLASSIFICAÇÃO AKE:                                                      ║
-    // ║    Perfil:        Hub (zero Library, zero Logic Core)                    ║
-    // ║    Camada 1–5:    Não aplicável — este arquivo é puro UI/navegação       ║
-    // ║    Camada 6 (UI): Links para 7 plataformas AKE + animação reveal        ║
-    // ║                                                                          ║
-    // ║  PLATAFORMAS VINCULADAS:                                                 ║
-    // ║    - seinfra-rodovias (Planejamento Rodoviário)                          ║
-    // ║    - seinfra-ramais (Consulta de Ramais)                                 ║
-    // ║    - rodovias-am-dashboard (Observatório de Sinistros)                   ║
-    // ║    - aero-amazonas (Aeródromos)                                          ║
-    // ║    - hidro-amazonas (Terminais Flutuantes)                               ║
-    // ║    - dmob-viario (Viário Municipal)                                      ║
-    // ║    - atlas-amazonas (Atlas Cartográfico — NOVO REV-2)                    ║
-    // ╚══════════════════════════════════════════════════════════════════════════╝
+    <!-- ═══════════════════ RODOVIAS ═══════════════════ -->
+    <div class="page" id="page-rodovias">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Viária</div>
+        <div class="sec-title">🛣️ Rodovias Estaduais do Amazonas</div>
+        <div class="sec-desc">Cadastro técnico dos trechos da malha rodoviária estadual e federal sob responsabilidade da SEINFRA/AM — jurisdição, extensões, faixas de domínio e dados de localização.</div>
+      </div>
 
-    var AKE_BUILD_LOG = [
-      {
-        build: "1.0.0-ake",
-        data: "2026-03-24T10:15:00-04:00",
-        autor: "Paulo Esteves Fernandes Neto",
-        ia_assistente: "Claude Opus 4.6",
-        tipo: "GENESIS_RETROFIT",
-        status: "SUPERADA",
-        descricao: "Retrofit AKE no hub de navegação. Sem Library, sem Logic Core. Apenas Header L0 e Log."
-      },
-      {
-        build: "1.1.0-ake",
-        data: "2026-04-15T00:00:00-04:00",
-        autor: "Paulo Esteves Fernandes Neto",
-        ia_assistente: "Claude Sonnet 4.6",
-        tipo: "REV-2",
-        status: "VIGENTE",
-        descricao: "Adição do card Atlas do Amazonas (atlas-amazonas). Nova seção 'Geoinformação & Cartografia'. Indicador de sistemas ativos atualizado de 6 para 7. Variáveis CSS card-stripe.atlas e card-icon.atlas inseridas. Nenhuma lógica de domínio alterada."
+      <div class="kpi-row cols-4" id="kpi-rod"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Rodovias por Jurisdição</div><div class="cc-sub">Estadual vs Federal</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-rod-juris"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Distribuição por Região</div><div class="cc-sub">RMM, Interior, outras</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-rod-regiao"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:1.2rem">
+        <div class="cc-head"><div><div class="cc-title">Top 10 — Maiores Extensões por Rodovia</div><div class="cc-sub">Soma total de extensão (km) por código de rodovia</div></div><div class="cc-badge">Ranking</div></div>
+        <div class="chart-wrap tall"><canvas id="chart-rod-ext"></canvas></div>
+      </div>
+
+      <div class="divider"><div class="divider-line"></div><div class="divider-label">Trechos agrupados por rodovia</div><div class="divider-line"></div></div>
+
+      <div id="rod-accordions"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando trechos…</div></div></div>
+    </div>
+
+    <!-- ═══════════════════ RAMAIS ═══════════════════ -->
+    <div class="page" id="page-ramais">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Viária</div>
+        <div class="sec-title">🌿 Ramais Rurais do Amazonas</div>
+        <div class="sec-desc">Inventário dos ramais de acesso às comunidades rurais e ribeirinhas do Estado do Amazonas — situação, extensão, municípios e calhas fluviais atendidas.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-ram"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Situação dos Ramais</div><div class="cc-sub">Distribuição por status (excl. "A Visitar")</div></div><div class="cc-badge ouro">Status</div></div>
+          <div class="chart-wrap"><canvas id="chart-ram-sit"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 5 — Mais Ramais por Município</div><div class="cc-sub">Municípios com maior quantidade de ramais cadastrados</div></div></div>
+          <div class="rank-list" id="rank-ram-mun" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="chart-grid g2">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 5 — Maiores Extensões de Ramal</div><div class="cc-sub">Ramais com maior extensão total (km)</div></div></div>
+          <div class="rank-list" id="rank-ram-ext" style="padding:.5rem 0"></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Municípios com Menos Ramais</div><div class="cc-sub">Ranking dos 5 com menor presença de ramais</div></div></div>
+          <div class="rank-list" id="rank-ram-menos" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:1.2rem">
+        <div class="cc-head"><div><div class="cc-title">Distribuição por Calha Fluvial</div><div class="cc-sub">Quantidade de ramais por bacia/calha</div></div><div class="cc-badge verde">Calhas</div></div>
+        <div class="chart-wrap"><canvas id="chart-ram-calha"></canvas></div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar" style="flex-wrap:wrap;gap:.6rem">
+          <div class="table-toolbar-title">🌿 Tabela de Ramais</div>
+          <select id="filter-ram-mun" onchange="filtrarRamais()" style="border:1px solid var(--borda);border-radius:8px;padding:.4rem .8rem;font-size:.75rem;font-family:var(--font);color:var(--cinza-1);background:var(--branco);cursor:pointer;outline:none">
+            <option value="">📍 Todos os municípios</option>
+          </select>
+          <div class="search-box">🔍 <input type="text" id="search-ram" placeholder="Buscar ramal, situação, código…" oninput="filtrarRamais()"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('ram')">⬇️ CSV</button>
+        </div>
+        <div id="table-ram-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando ramais…</div></div></div>
+        <div class="pagination" id="pag-ram"><span id="pag-ram-info">—</span><div class="page-btns" id="pag-ram-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ VIÁRIO ═══════════════════ -->
+    <div class="page" id="page-viario">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Viária</div>
+        <div class="sec-title">🏙️ Viário Urbano Municipal</div>
+        <div class="sec-desc">Cadastro das obras de pavimentação e infraestrutura viária urbana nos 62 municípios do Amazonas — extensões pavimentadas, investimentos e comparativos regionais.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-via"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 10 — Municípios com Mais Obras Viárias</div><div class="cc-sub">Quantidade de registros de obras por município</div></div><div class="cc-badge">Ranking</div></div>
+          <div class="chart-wrap tall"><canvas id="chart-via-top"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Maiores Extensões Pavimentadas</div><div class="cc-sub">Top 5 municípios por extensão total (m)</div></div></div>
+          <div class="rank-list" id="rank-via-ext" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">🏙️ Obras de Viário por Município</div>
+          <div class="search-box">🔍 <input type="text" id="search-via" placeholder="Buscar município, rua, obra…" oninput="filtrarTabela('via')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('via')">⬇️ CSV</button>
+        </div>
+        <div id="table-via-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando viário…</div></div></div>
+        <div class="pagination" id="pag-via"><span id="pag-via-info">—</span><div class="page-btns" id="pag-via-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ AERÓDROMOS ═══════════════════ -->
+    <div class="page" id="page-aerodromos">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Modal</div>
+        <div class="sec-title">✈️ Aeródromos do Amazonas</div>
+        <div class="sec-desc">Inventário técnico dos aeródromos sob gestão da SEINFRA/AM — outorgas, operação ANAC, especificações de pista e internacionalização.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-aero"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Por Status de Operação</div><div class="cc-sub">Aeródromos operacionais, em manutenção, etc.</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-aero-op"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Internacionalização</div><div class="cc-sub">Aeródromos com e sem status internacional</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-aero-int"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">✈️ Cadastro de Aeródromos</div>
+          <div class="search-box">🔍 <input type="text" id="search-aero" placeholder="Buscar aeródromo, município, código…" oninput="filtrarTabela('aero')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('aero')">⬇️ CSV</button>
+        </div>
+        <div id="table-aero-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando aeródromos…</div></div></div>
+        <div class="pagination" id="pag-aero"><span id="pag-aero-info">—</span><div class="page-btns" id="pag-aero-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ TERMINAIS ═══════════════════ -->
+    <div class="page" id="page-terminais">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Infraestrutura Modal</div>
+        <div class="sec-title">⚓ Terminais Fluviais do Amazonas</div>
+        <div class="sec-desc">Mapeamento dos terminais flutuantes e hidroviários sob gestão da SEINFRA/AM — municípios atendidos, comunidades, processos administrativos e datas de assinatura.</div>
+      </div>
+
+      <div class="chart-grid g2" style="margin-bottom:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Municípios com Mais Terminais</div><div class="cc-sub">Top 8 por quantidade de terminais fluviais</div></div><div class="cc-badge verde">Distribuição</div></div>
+          <div class="chart-wrap tall"><canvas id="chart-term-mun"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Por Tipo de Solicitante</div><div class="cc-sub">Prefeito, Comunidade, Estado, etc.</div></div></div>
+          <div class="chart-wrap"><canvas id="chart-term-sol"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-toolbar" style="background:var(--branco);border:1px solid var(--borda);border-radius:12px;margin-bottom:1.2rem">
+        <div class="table-toolbar-title">⚓ Terminais Fluviais</div>
+        <div class="search-box">🔍 <input type="text" id="search-term" placeholder="Buscar município, comunidade…" oninput="filtrarTerminais()"></div>
+        <button class="btn-sm ouro" onclick="exportarCSVSec('term')">⬇️ CSV</button>
+      </div>
+      <div id="term-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem">
+        <div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando terminais…</div></div>
+      </div>
+      <!-- Modal info terminal -->
+      <div id="term-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,29,72,.55);z-index:500;backdrop-filter:blur(4px)" onclick="fecharModalTerm()"></div>
+      <div id="term-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:501;background:var(--branco);border-radius:16px;box-shadow:0 24px 80px rgba(26,43,94,.25);width:min(500px,90vw);max-height:80vh;overflow-y:auto">
+        <div style="background:var(--azul);padding:1.2rem 1.5rem;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between">
+          <div style="font-size:1rem;font-weight:800;color:var(--branco)" id="term-modal-title">Terminal</div>
+          <button onclick="fecharModalTerm()" style="background:rgba(255,255,255,.15);border:none;color:var(--branco);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center">×</button>
+        </div>
+        <div id="term-modal-body" style="padding:1.5rem"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ SINISTROS ═══════════════════ -->
+    <div class="page" id="page-sinistros">
+      <div class="sec-head">
+        <div class="sec-eyebrow"><div class="sec-eyebrow-bar"></div>Análise & Inteligência</div>
+        <div class="sec-title">🚨 Sinistros & Notícias de Infraestrutura</div>
+        <div class="sec-desc">Monitoramento de ocorrências, sinistros e notícias relacionadas à infraestrutura rodoviária e modal do Estado do Amazonas.</div>
+      </div>
+
+      <div class="kpi-row cols-4" id="kpi-sin"></div>
+
+      <div class="chart-grid g2" style="margin-top:1.2rem">
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Distribuição por Tipo</div><div class="cc-sub">Categorização das ocorrências registradas</div></div><div class="cc-badge verm">Análise</div></div>
+          <div class="chart-wrap"><canvas id="chart-sin-tipo"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-head"><div><div class="cc-title">Top 5 — Rodovias com Mais Ocorrências</div><div class="cc-sub">Ranking por volume de sinistros registrados</div></div></div>
+          <div class="rank-list" id="rank-sin-rod" style="padding:.5rem 0"></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-title">🚨 Registros de Sinistros</div>
+          <div class="search-box">🔍 <input type="text" id="search-sin" placeholder="Buscar rodovia, município, tipo…" oninput="filtrarTabela('sin')"></div>
+          <button class="btn-sm ouro" onclick="exportarCSVSec('sin')">⬇️ CSV</button>
+        </div>
+        <div id="table-sin-wrap"><div class="loader-wrap"><div class="loader-ring"></div><div class="loader-txt">Carregando sinistros…</div></div></div>
+        <div class="pagination" id="pag-sin"><span id="pag-sin-info">—</span><div class="page-btns" id="pag-sin-btns"></div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<script>
+/* ╔══════════════════════════════════════════════════════════════════════════╗
+   ║  AKE — AXIOMATIC KERNEL ENGINE · UNIFIED FIELD THEORY                   ║
+   ║  Protocolo: UFT-1.0 · SEINFRA BI Platform · v2.0-bi                    ║
+   ║  @author    Paulo Esteves Fernandes Neto — Chefe DMOB/SEINFRA-AM        ║
+   ╚══════════════════════════════════════════════════════════════════════════╝ */
+
+// ── L0: CONSTANTS ──────────────────────────────────────────────────────────
+const SHEETS = {
+  geral1:  '18cZ8C5AYCaS7tzp9pTy-2dHi0ZplwAAR',
+  geral2:  '1LJTtvldaYyHuMnsF04gim2eZPhIqzy5CbEnOZ1zTCoM',
+  ramais:  '1Cr5Qbj_My7oOcIYiIjZ6NgJiCsij4ZAQCSxdP49cffc',
+  term:    '1cup96GUKBv0xkESitNb9Dzbi_xqjYTzoPgz7-9qfCfI',
+  aero:    '1Inquxh0TfLRlsIiPQEXqWL2MK84neIC1-D32wAstI5o',
+  rod:     '1bYf2anVF4un84-lusSOeSRaNLiod9fq0joUEnbgHxnM',
+  viario:  '1xZK1yriI4FUVtTF0TrUPYP05DIxGBfeNzSuxmGR8A5M',
+  sinistro:'1y7h-FRn0jBfhlr9e7EwDBNES-0hCUhSeAf5s4tVEWxE'
+};
+const CSV_BASE = id => `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv`;
+const ROWS_PER_PAGE = 15;
+const PALETTE = {
+  azul:  ['#1A2B5E','#1A4B9B','#2E6BC4','#5B8FD6','#8FB4E6'],
+  ouro:  ['#F5A623','#D48C10','#B87208','#E8C26B','#F5D4A0'],
+  multi: ['#1A2B5E','#F5A623','#007B3E','#6C3483','#0E6B8F','#C0392B','#1A4B9B','#D48C10','#005C2C','#4A2060'],
+  sit:   {'VISITADO':'#007B3E','CONCLUÍDO':'#1A2B5E','EM OBRA':'#F5A623','VISITADO / CONCLUÍDO':'#6C3483','VISITADO / EM OBRA':'#0E6B8F','OBRA EXTINTA':'#C0392B'}
+};
+
+// ── L1: DATA STORE ──────────────────────────────────────────────────────────
+const DB = {
+  geral: [], rod: [], ram: [], via: [], aero: [], term: [], sin: [],
+  filtered: { geral:[], rod:[], ram:[], via:[], aero:[], term:[], sin:[] },
+  pages: { geral:1, rod:1, ram:1, via:1, aero:1, term:1, sin:1 },
+  charts: {}
+};
+
+// ── L2: CSV PARSER ──────────────────────────────────────────────────────────
+function parseCSVLine(line) {
+  const res = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { inQ = !inQ; }
+    else if (c === ',' && !inQ) { res.push(cur); cur = ''; }
+    else { cur += c; }
+  }
+  res.push(cur);
+  return res;
+}
+function normalizeHeader(h) {
+  return h.trim().replace(/^["'\s]+|["'\s]+$/g,'')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9_]/g,'_').replace(/__+/g,'_').replace(/^_|_$/g,'');
+}
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) return [];
+  const headers = parseCSVLine(lines[0]).map(normalizeHeader);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseCSVLine(lines[i]);
+    if (vals.every(v => !v.trim())) continue;
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim().replace(/^"|"$/g,''); });
+    rows.push(obj);
+  }
+  return rows;
+}
+// Extrai código AM/BR limpo de qualquer string
+function extractCodRod(s) {
+  if (!s) return '';
+  const m = String(s).match(/\b(AM|BR|PA|MT|RR|AC|AP|TO)-?\s*(\d{2,3})\b/i);
+  return m ? (m[1].toUpperCase() + '-' + m[2].padStart(3,'0')) : '';
+}
+// detectCol: busca fuzzy em keys normalizadas
+function detectColVal(row, candidates) {
+  const keys = Object.keys(row);
+  for (const c of candidates) {
+    const found = keys.find(k => k.includes(c));
+    if (found !== undefined && row[found]) return row[found];
+  }
+  return '';
+}
+
+// ── L3: FETCH ───────────────────────────────────────────────────────────────
+async function fetchSheet(id) {
+  const url = CSV_BASE(id);
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return parseCSV(await r.text());
+}
+
+// ── L4: TABLE RENDERER ──────────────────────────────────────────────────────
+function renderTable(containerId, data, page, cols) {
+  if (!data.length) {
+    document.getElementById(containerId).innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-text">Nenhum registro encontrado</div></div>';
+    return;
+  }
+  const start = (page - 1) * ROWS_PER_PAGE;
+  const slice = data.slice(start, start + ROWS_PER_PAGE);
+  const displayCols = cols || Object.keys(data[0]);
+  const labelCol = c => c.replace(/_/g,' ').replace(/\b\w/g, l=>l.toUpperCase());
+  let html = '<div style="overflow-x:auto"><table><thead><tr>';
+  displayCols.forEach(c => { html += `<th>${labelCol(c)}</th>`; });
+  html += '</tr></thead><tbody>';
+  slice.forEach(row => {
+    html += '<tr>';
+    displayCols.forEach(c => {
+      const v = row[c] || '—';
+      html += `<td>${formatCell(c, v)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  document.getElementById(containerId).innerHTML = html;
+}
+
+function formatCell(col, val) {
+  if (!val || val === '—' || val.trim() === '') return '<span style="color:var(--cinza-4)">—</span>';
+  const colL = col.toLowerCase();
+  if (colL.includes('jurisdi') || colL.includes('jurisdic')) {
+    const c = val.toLowerCase().includes('estadual') ? 'azul' : 'ouro';
+    return `<span class="pill ${c}">${val}</span>`;
+  }
+  if (colL.includes('situa')) {
+    const v = val.toUpperCase();
+    if (v.includes('CONCLU')) return `<span class="pill verde">${val}</span>`;
+    if (v.includes('EM OBRA')) return `<span class="pill ouro">${val}</span>`;
+    if (v.includes('VISITA') && !v.includes('A VISITAR')) return `<span class="pill ciano" style="background:var(--ciano-lt);color:var(--ciano)">${val}</span>`;
+    if (v.includes('EXTINT')) return `<span class="pill verm">${val}</span>`;
+    return `<span class="pill cinza">${val}</span>`;
+  }
+  if (colL === 'operacao' || colL === 'operação' || colL.includes('opera')) {
+    return `<span class="pill verde">${val}</span>`;
+  }
+  if (colL === 'internacionalizacao' || colL.includes('intern')) {
+    return val && val.trim() && val !== '—' ? `<span class="pill roxo">${val}</span>` : '<span style="color:var(--cinza-4)">—</span>';
+  }
+  if (/^(am|br)-\d{3}$/i.test(val.trim())) {
+    return `<strong style="color:var(--azul)">${val}</strong>`;
+  }
+  if (colL === 'icao' || colL === 'ciad' || colL === 'codigo_ser_snv' || colL === 'codigo') {
+    return `<span class="mono" style="font-weight:700;color:var(--azul-md)">${val}</span>`;
+  }
+  // Valores muito longos: truncar com tooltip
+  if (val.length > 80) {
+    return `<span title="${val.replace(/"/g,'&quot;')}" style="cursor:help">${val.slice(0,77)}…</span>`;
+  }
+  return val;
+}
+
+function updatePagination(section, total, current) {
+  const totalPages = Math.ceil(total / ROWS_PER_PAGE);
+  const info = document.getElementById(`pag-${section}-info`);
+  const btns = document.getElementById(`pag-${section}-btns`);
+  if (!info || !btns) return;
+  const start = (current - 1) * ROWS_PER_PAGE + 1;
+  const end = Math.min(current * ROWS_PER_PAGE, total);
+  info.textContent = `Exibindo ${start}–${end} de ${total} registros`;
+
+  let html = '';
+  html += `<button class="page-btn" onclick="goPage('${section}',${current-1})" ${current===1?'disabled':''}>← Ant.</button>`;
+
+  // Janela de páginas
+  const windowSize = 3;
+  const half = Math.floor(windowSize / 2);
+  let pStart = Math.max(1, current - half);
+  let pEnd = Math.min(totalPages, pStart + windowSize - 1);
+  if (pEnd - pStart < windowSize - 1) pStart = Math.max(1, pEnd - windowSize + 1);
+
+  if (pStart > 1) { html += `<button class="page-btn" onclick="goPage('${section}',1)">1</button>`; if(pStart>2) html+='<span style="padding:0 .25rem;color:var(--cinza-3)">…</span>'; }
+  for (let p = pStart; p <= pEnd; p++) {
+    html += `<button class="page-btn ${p===current?'active':''}" onclick="goPage('${section}',${p})">${p}</button>`;
+  }
+  if (pEnd < totalPages) { if(pEnd<totalPages-1) html+='<span style="padding:0 .25rem;color:var(--cinza-3)">…</span>'; html+=`<button class="page-btn" onclick="goPage('${section}',${totalPages})">${totalPages}</button>`; }
+
+  html += `<button class="page-btn" onclick="goPage('${section}',${current+1})" ${current===totalPages?'disabled':''}>Próx. →</button>`;
+  btns.innerHTML = html;
+}
+
+function goPage(section, page) {
+  const data = DB.filtered[section];
+  const total = Math.ceil(data.length / ROWS_PER_PAGE);
+  if (page < 1 || page > total) return;
+  DB.pages[section] = page;
+  renderSection(section);
+}
+
+function filtrarTabela(section) {
+  const q = (document.getElementById(`search-${section}`)?.value || '').toLowerCase();
+  const src = section === 'geral' ? DB.geral : DB[section];
+  DB.filtered[section] = q ? src.filter(r => Object.values(r).some(v => v.toLowerCase().includes(q))) : [...src];
+  DB.pages[section] = 1;
+  renderSection(section);
+}
+
+// ── L5: CHART UTILS ─────────────────────────────────────────────────────────
+function destroyChart(id) {
+  if (DB.charts[id]) { DB.charts[id].destroy(); delete DB.charts[id]; }
+}
+function makeBar(id, labels, data, opts = {}) {
+  destroyChart(id);
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  DB.charts[id] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: opts.colors || PALETTE.azul[0], borderRadius: 6, borderSkipped: false }]
+    },
+    options: {
+      indexAxis: opts.horizontal ? 'y' : 'x',
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.parsed[opts.horizontal?'x':'y']}${opts.unit||''}` } } },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font: { family: 'Outfit', size: 11 }, color: '#8896A8' } },
+        y: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font: { family: 'Outfit', size: 11 }, color: '#8896A8' } }
       }
-    ];
+    }
+  });
+}
+function makeDoughnut(id, labels, data, opts = {}) {
+  destroyChart(id);
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  const colors = opts.colors || PALETTE.multi.slice(0, data.length);
+  DB.charts[id] = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 8 }] },
+    options: {
+      responsive: true, maintainAspectRatio: true, cutout: '60%',
+      plugins: {
+        legend: { position: 'right', labels: { font: { family: 'Outfit', size: 11 }, padding: 12, usePointStyle: true, pointStyleWidth: 8 } },
+        tooltip: { callbacks: { label: c => ` ${c.label}: ${c.parsed} (${((c.parsed/c.dataset.data.reduce((a,b)=>a+b,0))*100).toFixed(1)}%)` } }
+      }
+    }
+  });
+}
+function renderRankList(id, items, maxVal, colorClass = '') {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (!items.length) { el.innerHTML = '<div class="empty-state" style="padding:1rem"><div class="empty-text">Sem dados disponíveis</div></div>'; return; }
+  el.innerHTML = items.map((item, i) => `
+    <div class="rank-item">
+      <div class="rank-header">
+        <span class="rank-label">${i+1}. ${item.label}</span>
+        <span class="rank-value">${item.value.toLocaleString('pt-BR')}${item.unit||''}</span>
+      </div>
+      <div class="rank-bar"><div class="rank-fill ${colorClass}" style="width:${(item.value/maxVal*100).toFixed(1)}%"></div></div>
+    </div>`).join('');
+}
+function countBy(arr, key) {
+  const map = {};
+  arr.forEach(r => { const v = r[key] || 'Sem info'; map[v] = (map[v]||0) + 1; });
+  return map;
+}
+function topN(obj, n = 5) {
+  return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n);
+}
+function setKpi(id, val) { const el = document.getElementById(id); if(el) el.textContent = typeof val === 'number' ? val.toLocaleString('pt-BR') : val; }
 
-    // ── UI: Animação de Reveal (IntersectionObserver) ──
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+// ── L6: SECTION RENDERERS ───────────────────────────────────────────────────
+
+// GERAL
+function renderSection(section) {
+  if (section === 'geral') {
+    renderTable('table-geral-wrap', DB.filtered.geral, DB.pages.geral);
+    updatePagination('geral', DB.filtered.geral.length, DB.pages.geral);
+  } else if (section === 'ram') {
+    renderTable('table-ram-wrap', DB.filtered.ram, DB.pages.ram, COLS.ram);
+    updatePagination('ram', DB.filtered.ram.length, DB.pages.ram);
+  } else if (section === 'via') {
+    renderTable('table-via-wrap', DB.filtered.via, DB.pages.via, COLS.via);
+    updatePagination('via', DB.filtered.via.length, DB.pages.via);
+  } else if (section === 'aero') {
+    renderTable('table-aero-wrap', DB.filtered.aero, DB.pages.aero, COLS.aero);
+    updatePagination('aero', DB.filtered.aero.length, DB.pages.aero);
+  } else if (section === 'term') {
+    renderTable('table-term-wrap', DB.filtered.term, DB.pages.term, COLS.term);
+    updatePagination('term', DB.filtered.term.length, DB.pages.term);
+  } else if (section === 'sin') {
+    renderTable('table-sin-wrap', DB.filtered.sin, DB.pages.sin);
+    updatePagination('sin', DB.filtered.sin.length, DB.pages.sin);
+  }
+}
+
+// Colunas preferidas por seção
+const COLS = {
+  ram: null, via: null, aero: null, term: null
+};
+
+// ── INIT GERAL ──
+async function initGeral() {
+  try {
+    const [d1, d2] = await Promise.all([fetchSheet(SHEETS.geral1), fetchSheet(SHEETS.geral2)]);
+    DB.geral = [...d1, ...d2];
+    DB.filtered.geral = [...DB.geral];
+    renderSection('geral');
+    document.getElementById('kg-rod').textContent = DB.rod.length || '—';
+    document.getElementById('kg-ram').textContent = DB.ram.length || '—';
+  } catch(e) {
+    document.getElementById('table-geral-wrap').innerHTML = `<div class="error-box">⚠️ Erro ao carregar planilha geral: ${e.message}</div>`;
+  }
+}
+
+// ── INIT RODOVIAS ──
+async function initRodovias() {
+  try {
+    const data = await fetchSheet(SHEETS.rod);
+    DB.rod = data;
+    setKpi('badge-rod', data.length);
+    document.getElementById('kg-rod').textContent = data.length;
+
+    // Planilha normalizada: codigo_ser_snv, rodovia, sentido, jurisdicao,
+    // km_inicial, km_final, extensao, unidade, regiao, inicio, final, faixa_de_dominio
+    // "rodovia" contem texto longo do trecho — extrair código AM/BR limpo
+    const getCod = r => {
+      // Tentar campo rodovia primeiro, depois codigo_ser_snv, depois varrer tudo
+      const candidates = [r['rodovia'], r['codigo_ser_snv'], r['codigo'], r['cod']];
+      for (const v of candidates) {
+        const c = extractCodRod(v || '');
+        if (c) return c;
+      }
+      // último recurso: varrer todos os campos
+      for (const v of Object.values(r)) {
+        const c = extractCodRod(String(v || ''));
+        if (c) return c;
+      }
+      return '';
+    };
+
+    const getExt = r => parseFloat((r['extensao'] || r['extensao_km'] || '0').replace(',','.')) || 0;
+    const getJur = r => r['jurisdicao'] || r['jurisdição'] || '';
+    const getReg = r => r['regiao'] || r['região'] || '';
+    const getIni = r => r['km_inicial'] || r['km_ini'] || r['inicio'] || '';
+    const getFim = r => r['km_final'] || r['km_fim'] || r['final'] || '';
+    const getSent= r => r['sentido'] || '';
+    const getFaixa=r=> r['faixa_de_dominio'] || r['faixa'] || '';
+    const getCodSNV = r => r['codigo_ser_snv'] || r['codigo'] || '';
+
+    // KPIs
+    const estadual = data.filter(r => getJur(r).toLowerCase().includes('estadual')).length;
+    const federal  = data.filter(r => getJur(r).toLowerCase().includes('federal')).length;
+    const rmm      = data.filter(r => getReg(r).toUpperCase().includes('RMM')).length;
+    document.getElementById('kpi-rod').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Trechos</div><div class="kpi-icon">📏</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">segmentos cadastrados</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Trechos Estaduais</div><div class="kpi-icon">🏛️</div></div><div class="kpi-value">${estadual}</div><div class="kpi-sub">jurisdição estadual</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Trechos Federais</div><div class="kpi-icon">🇧🇷</div></div><div class="kpi-value">${federal}</div><div class="kpi-sub">jurisdição federal</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Trechos RMM</div><div class="kpi-icon">🏙️</div></div><div class="kpi-value">${rmm}</div><div class="kpi-sub">Região Met. de Manaus</div></div>`;
+
+    // Charts: jurisdição e região
+    const jurMap = {}; data.forEach(r => { const j = getJur(r)||'Sem info'; jurMap[j]=(jurMap[j]||0)+1; });
+    makeDoughnut('chart-rod-juris', Object.keys(jurMap), Object.values(jurMap), { colors: [PALETTE.azul[0], PALETTE.ouro[0], PALETTE.multi[2]] });
+    const regMap = {}; data.forEach(r => { const g = getReg(r)||'Sem info'; regMap[g]=(regMap[g]||0)+1; });
+    makeDoughnut('chart-rod-regiao', Object.keys(regMap), Object.values(regMap));
+
+    // Extensão por rodovia (código limpo AM/BR)
+    const extMap = {};
+    data.forEach(r => {
+      const cod = getCod(r) || 'Outras';
+      extMap[cod] = (extMap[cod] || 0) + getExt(r);
+    });
+    const topExt = topN(extMap, 10);
+    makeBar('chart-rod-ext', topExt.map(e=>e[0]), topExt.map(e=>parseFloat(e[1].toFixed(2))),
+      { horizontal: true, colors: PALETTE.multi.slice(0,10), unit:' km' });
+
+    // Accordions agrupados por código AM/BR limpo
+    const rodMap = {};
+    data.forEach(r => {
+      const cod = getCod(r);
+      if (!cod) return; // ignora linhas sem código válido
+      if (!rodMap[cod]) rodMap[cod] = [];
+      rodMap[cod].push(r);
+    });
+
+    const COLS_ROD = ['CÓDIGO SER/SNV','RODOVIA','SENTIDO','JURISDIÇÃO','KM INICIAL','KM FINAL','EXTENSÃO','UND','REGIÃO','INÍCIO','FINAL','FAIXA DE DOMÍNIO'];
+
+    let accHtml = '';
+    Object.keys(rodMap).sort().forEach(cod => {
+      const trechos = rodMap[cod];
+      const totalExt = trechos.reduce((s,r) => s + getExt(r), 0);
+      const iniTrecho = getIni(trechos[0]);
+      const fimTrecho = getFim(trechos[trechos.length-1]);
+      accHtml += `
+        <div class="accordion-group">
+          <div class="accordion-head" onclick="toggleAcc(this)">
+            <div class="acc-info">
+              <span class="acc-rod">${cod}</span>
+              ${iniTrecho||fimTrecho ? `<span class="acc-name">${iniTrecho ? 'KM '+iniTrecho : ''} ${fimTrecho ? '→ KM '+fimTrecho : ''}</span>` : ''}
+            </div>
+            <div class="acc-stats">
+              <span class="acc-stat">${trechos.length} trecho${trechos.length>1?'s':''}</span>
+              ${totalExt>0 ? `<span class="acc-stat">${totalExt.toFixed(2)} km</span>` : ''}
+            </div>
+            <div class="acc-chevron">▼</div>
+          </div>
+          <div class="accordion-body">
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr>
+                  <th>CÓDIGO SER/SNV</th>
+                  <th>SENTIDO</th>
+                  <th>JURISDIÇÃO</th>
+                  <th>KM INICIAL</th>
+                  <th>KM FINAL</th>
+                  <th>EXTENSÃO</th>
+                  <th>REGIÃO</th>
+                  <th>INÍCIO</th>
+                  <th>FINAL</th>
+                  <th>FAIXA DE DOMÍNIO</th>
+                </tr></thead>
+                <tbody>
+                ${trechos.map(r => `<tr>
+                  <td class="mono">${getCodSNV(r)||'—'}</td>
+                  <td>${getSent(r)||'—'}</td>
+                  <td>${getJur(r) ? `<span class="pill ${getJur(r).toLowerCase().includes('estadual')?'azul':'ouro'}">${getJur(r)}</span>` : '—'}</td>
+                  <td>${getIni(r)||'—'}</td>
+                  <td>${getFim(r)||'—'}</td>
+                  <td>${getExt(r)>0?getExt(r).toFixed(2)+' km':'—'}</td>
+                  <td>${getReg(r)||'—'}</td>
+                  <td style="font-size:.72rem;max-width:150px">${r['inicio']||'—'}</td>
+                  <td style="font-size:.72rem;max-width:150px">${r['final']||'—'}</td>
+                  <td>${getFaixa(r)||'—'}</td>
+                </tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>`;
+    });
+    document.getElementById('rod-accordions').innerHTML = accHtml || '<div class="empty-state"><div class="empty-icon">🛣️</div><div class="empty-text">Nenhum trecho com código AM/BR válido encontrado</div></div>';
+
+  } catch(e) {
+    document.getElementById('rod-accordions').innerHTML = `<div class="error-box">⚠️ Erro ao carregar rodovias: ${e.message}</div>`;
+    console.error('[rodovias]', e);
+  }
+}
+
+function toggleAcc(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// ── INIT RAMAIS ──
+async function initRamais() {
+  try {
+    const data = await fetchSheet(SHEETS.ramais);
+    DB.ram = data;
+    DB.filtered.ram = [...data];
+    setKpi('badge-ram', data.length);
+    document.getElementById('kg-ram').textContent = data.length;
+
+    // Detectar colunas chave
+    const keys = Object.keys(data[0] || {});
+    const colMun  = keys.find(k => /munic/i.test(k)) || keys[0];
+    const colSit  = keys.find(k => /situa/i.test(k));
+    const colExt  = keys.find(k => /exten/i.test(k));
+    const colCalha= keys.find(k => /calha|bacia/i.test(k));
+    const colNome = keys.find(k => /nome|ramal|denom/i.test(k)) || keys[1];
+    COLS.ram = keys;
+
+    // KPIs
+    const muns = new Set(data.map(r => r[colMun]).filter(Boolean));
+    const concl = data.filter(r => (r[colSit]||'').toUpperCase().includes('CONCLU')).length;
+    const emObra = data.filter(r => (r[colSit]||'').toUpperCase().includes('EM OBRA')).length;
+    document.getElementById('kpi-ram').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Ramais</div><div class="kpi-icon">🌿</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">registros cadastrados</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Municípios Atendidos</div><div class="kpi-icon">📍</div></div><div class="kpi-value">${muns.size}</div><div class="kpi-sub">municípios com ramais</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Concluídos</div><div class="kpi-icon">✅</div></div><div class="kpi-value">${concl}</div><div class="kpi-sub">obras concluídas</div></div>
+      <div class="kpi ouro" style="--ouro-dk:#B87208"><div class="kpi-header"><div class="kpi-label">Em Obra</div><div class="kpi-icon">🏗️</div></div><div class="kpi-value">${emObra}</div><div class="kpi-sub">em execução</div></div>`;
+
+    // Situação (excl. "A VISITAR")
+    if (colSit) {
+      const sitMap = {};
+      data.forEach(r => {
+        const s = r[colSit]||'';
+        if (!s.toUpperCase().includes('A VISITAR')) sitMap[s] = (sitMap[s]||0)+1;
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+      makeDoughnut('chart-ram-sit', Object.keys(sitMap), Object.values(sitMap), { colors: Object.keys(sitMap).map(k=>PALETTE.sit[k.toUpperCase()]||PALETTE.multi[0]) });
+    }
+
+    // Rank municípios
+    if (colMun) {
+      const munMap = countBy(data, colMun);
+      const topMun = topN(munMap, 5).map(([l,v]) => ({label:l, value:v}));
+      renderRankList('rank-ram-mun', topMun, topMun[0]?.value||1, 'ouro');
+      const botMun = Object.entries(munMap).sort((a,b)=>a[1]-b[1]).slice(0,5).map(([l,v])=>({label:l,value:v}));
+      renderRankList('rank-ram-menos', botMun, topMun[0]?.value||1, 'verm');
+    }
+
+    // Rank extensão
+    if (colExt && colNome) {
+      const extItems = data.map(r => ({label: r[colNome]||'—', value: parseFloat((r[colExt]||'0').replace(',','.'))||0}))
+        .filter(i=>i.value>0).sort((a,b)=>b.value-a.value).slice(0,5);
+      renderRankList('rank-ram-ext', extItems, extItems[0]?.value||1, '');
+    }
+
+    // Calha
+    if (colCalha) {
+      const calhaMap = countBy(data, colCalha);
+      const cal = topN(calhaMap, 8);
+      makeBar('chart-ram-calha', cal.map(e=>e[0]), cal.map(e=>e[1]), { colors: PALETTE.multi.slice(0,8) });
+    }
+
+    // Popular select de municípios
+    if (colMun) {
+      const muns = [...new Set(data.map(r => r[colMun]).filter(Boolean))].sort();
+      const sel = document.getElementById('filter-ram-mun');
+      if (sel) {
+        muns.forEach(m => {
+          const opt = document.createElement('option');
+          opt.value = m; opt.textContent = m;
+          sel.appendChild(opt);
+        });
+      }
+    }
+
+    renderSection('ram');
+  } catch(e) {
+    document.getElementById('table-ram-wrap').innerHTML = `<div class="error-box">⚠️ Erro: ${e.message}</div>`;
+  }
+}
+
+function filtrarRamais() {
+  const q   = (document.getElementById('search-ram')?.value || '').toLowerCase();
+  const mun = document.getElementById('filter-ram-mun')?.value || '';
+  const keys = Object.keys(DB.ram[0] || {});
+  const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+  DB.filtered.ram = DB.ram.filter(r => {
+    const matchMun = !mun || (colMun && r[colMun] === mun);
+    const matchQ   = !q   || Object.values(r).some(v => v.toLowerCase().includes(q));
+    return matchMun && matchQ;
+  });
+  DB.pages.ram = 1;
+  renderSection('ram');
+}
+
+// ── INIT VIÁRIO ──
+async function initViario() {
+  try {
+    const raw = await fetchSheet(SHEETS.viario);
+
+    // Filtrar SOMENTE viário urbano — excluir linhas com características de ramal/estrada rural
+    const isRural = r => {
+      const vals = Object.values(r).join(' ').toLowerCase();
+      return /\bramal\b|\bestrada\b|\bzona rural\b|\bcomunidade\b/.test(vals);
+    };
+    const data = raw.filter(r => !isRural(r) && Object.values(r).some(v => v && v.trim()));
+
+    DB.via = data;
+    DB.filtered.via = [...data];
+    setKpi('badge-via', data.length);
+    document.getElementById('kg-via').textContent = data.length;
+
+    const keys = Object.keys(data[0] || {});
+    const colMun  = keys.find(k => /munic/.test(k)) || keys[0];
+    const colRua  = keys.find(k => /rua|logr|via|nome|denom/.test(k));
+    const colExt  = keys.find(k => /exten|comprimento|metros|m_/.test(k));
+    const colSit  = keys.find(k => /situa|status|pav/.test(k));
+    const colAnno = keys.find(k => /ano|data|exerc/.test(k));
+    COLS.via = keys;
+
+    const muns = new Set(data.map(r => colMun?r[colMun]:'').filter(Boolean));
+
+    document.getElementById('kpi-via').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Registros</div><div class="kpi-icon">📋</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">obras viárias urbanas</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Municípios com Viário</div><div class="kpi-icon">🏙️</div></div><div class="kpi-value">${muns.size}</div><div class="kpi-sub">de 62 municípios</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Municípios Sem Registro</div><div class="kpi-icon">⚠️</div></div><div class="kpi-value">${62 - muns.size}</div><div class="kpi-sub">aguardam cadastramento</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Média por Município</div><div class="kpi-icon">📊</div></div><div class="kpi-value">${muns.size?(data.length/muns.size).toFixed(1):'—'}</div><div class="kpi-sub">obras por município atendido</div></div>`;
+
+    // Top 10 municípios por quantidade de obras
+    if (colMun) {
+      const munMap = {}; data.forEach(r => { const v=r[colMun]||'Sem info'; munMap[v]=(munMap[v]||0)+1; });
+      const t = topN(munMap, 10);
+      makeBar('chart-via-top', t.map(e=>e[0]), t.map(e=>e[1]),
+        { horizontal: true, colors: PALETTE.azul[0] });
+    }
+
+    // Ranking extensão
+    if (colExt && colMun) {
+      const extMap = {};
+      data.forEach(r => {
+        const m = r[colMun]||'Desconhecido';
+        const v = parseFloat((r[colExt]||'0').replace(',','.'))||0;
+        extMap[m] = (extMap[m]||0) + v;
+      });
+      const t = topN(extMap, 5).map(([l,v]) => ({label:l, value:Math.round(v), unit:'m'}));
+      renderRankList('rank-via-ext', t, t[0]?.value||1, 'verde');
+    }
+
+    renderSection('via');
+  } catch(e) {
+    document.getElementById('table-via-wrap').innerHTML = `<div class="error-box">⚠️ Erro ao carregar viário: ${e.message}</div>`;
+    console.error('[viario]', e);
+  }
+}
+
+// ── INIT AERÓDROMOS ──
+async function initAerodromos() {
+  try {
+    const data = await fetchSheet(SHEETS.aero);
+    // Filtrar linhas que são cabeçalho/metadado (sem código ICAO/CIAD válido)
+    const isHeader = r => {
+      const vals = Object.values(r).join(' ');
+      return vals.length > 300 || /classe rbac|regime tarif|especifica/i.test(vals);
+    };
+    const clean = data.filter(r => !isHeader(r) && Object.values(r).some(v => v && v.trim()));
+
+    DB.aero = clean;
+    DB.filtered.aero = [...clean];
+    setKpi('badge-aero', clean.length);
+    document.getElementById('kg-aero').textContent = clean.length;
+
+    // Detectar colunas chave (headers normalizados)
+    const sample = clean[0] || {};
+    const keys = Object.keys(sample);
+    const colNome   = keys.find(k => /^nome$|^aerodro/.test(k)) || keys.find(k => k.includes('nome'));
+    const colIcao   = keys.find(k => /^icao$/.test(k)) || keys.find(k => k.includes('icao'));
+    const colCiad   = keys.find(k => /^ciad$/.test(k)) || keys.find(k => k.includes('ciad'));
+    const colMun    = keys.find(k => /municipio/.test(k));
+    const colOp     = keys.find(k => /^operacao$|operac/.test(k));
+    const colInt    = keys.find(k => /internacionaliz/.test(k));
+    const colPista  = keys.find(k => /pista|designacao/.test(k));
+    const colComp   = keys.find(k => /^comprimento$/.test(k));
+    const colLarg   = keys.find(k => /^largura$/.test(k));
+    const colSup    = keys.find(k => /^superficie$|superfic/.test(k));
+    const colAlt    = keys.find(k => /^altitude$/.test(k));
+    const colLat    = keys.find(k => /^lat/.test(k));
+    const colLng    = keys.find(k => /^lon|^lng/.test(k));
+
+    // KPIs
+    const muns = new Set(clean.map(r => colMun?r[colMun]:'').filter(Boolean));
+    const comInt = clean.filter(r => colInt && r[colInt] && r[colInt].trim() && r[colInt].trim() !== '—').length;
+    const ops = colOp ? new Set(clean.map(r=>r[colOp]).filter(Boolean)).size : 0;
+
+    document.getElementById('kpi-aero').innerHTML = `
+      <div class="kpi"><div class="kpi-header"><div class="kpi-label">Total de Aeródromos</div><div class="kpi-icon">✈️</div></div><div class="kpi-value">${clean.length}</div><div class="kpi-sub">no cadastro SEINFRA/AM</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Municípios Atendidos</div><div class="kpi-icon">📍</div></div><div class="kpi-value">${muns.size}</div><div class="kpi-sub">municípios com aeródromo</div></div>
+      <div class="kpi verde"><div class="kpi-header"><div class="kpi-label">Com Internacionalização</div><div class="kpi-icon">🌍</div></div><div class="kpi-value">${comInt||'—'}</div><div class="kpi-sub">status internacional</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Categorias Operacionais</div><div class="kpi-icon">📋</div></div><div class="kpi-value">${ops||clean.length}</div><div class="kpi-sub">tipos de operação</div></div>`;
+
+    // Charts
+    if (colOp) {
+      const opMap = {}; clean.forEach(r => { const v=r[colOp]||'Sem info'; opMap[v]=(opMap[v]||0)+1; });
+      makeDoughnut('chart-aero-op', Object.keys(opMap), Object.values(opMap));
+    } else {
+      document.getElementById('chart-aero-op').closest('.chart-wrap').innerHTML =
+        '<div class="empty-state" style="padding:1.5rem"><div class="empty-text">Coluna de operação não mapeada</div></div>';
+    }
+    if (colInt) {
+      const iMap = {}; clean.forEach(r => { const v=(r[colInt]||'').trim()||'Sem info'; iMap[v]=(iMap[v]||0)+1; });
+      makeDoughnut('chart-aero-int', Object.keys(iMap), Object.values(iMap), { colors: [PALETTE.azul[0], PALETTE.ouro[0], '#CBD5E0'] });
+    }
+
+    // Tabela com colunas limpas e legíveis
+    COLS.aero = ['icao','ciad','nome','municipio_atendido','uf','operacao','internacionalizacao','pista_designacao','comprimento','largura','superficie','altitude'].filter(c => keys.includes(c));
+    if (!COLS.aero.length) COLS.aero = keys.slice(0, 12);
+
+    renderSection('aero');
+  } catch(e) {
+    document.getElementById('table-aero-wrap').innerHTML = `<div class="error-box">⚠️ Erro ao carregar aeródromos: ${e.message}</div>`;
+    console.error('[aero]', e);
+  }
+}
+
+// ── INIT TERMINAIS ──
+async function initTerminais() {
+  try {
+    const data = await fetchSheet(SHEETS.term);
+    const cleaned = data.filter(r => Object.values(r).some(v => v && v.trim() && v !== '—'));
+    DB.term = cleaned;
+    DB.filtered.term = [...cleaned];
+    setKpi('badge-term', cleaned.length);
+    document.getElementById('kg-term').textContent = cleaned.length;
+
+    const keys = Object.keys(cleaned[0] || {});
+    const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+    const colSol = keys.find(k => /solic/.test(k));
+    const colLoc = keys.find(k => /local|comuni/.test(k));
+    const colGov = keys.find(k => /^gov$/.test(k));
+    const colProc= keys.find(k => /proc/.test(k));
+    const colAssin=keys.find(k => /assin/.test(k));
+
+    // Charts
+    if (colMun) {
+      const munMap = {}; cleaned.forEach(r => { const v=r[colMun]||'Sem info'; munMap[v]=(munMap[v]||0)+1; });
+      const t = topN(munMap, 8);
+      makeBar('chart-term-mun', t.map(e=>e[0]), t.map(e=>e[1]), { horizontal: true, colors: PALETTE.azul[0] });
+    }
+    if (colSol) {
+      const solMap = {}; cleaned.forEach(r => { const v=r[colSol]||'Sem info'; solMap[v]=(solMap[v]||0)+1; });
+      makeDoughnut('chart-term-sol', Object.keys(solMap), Object.values(solMap));
+    }
+
+    // Renderizar cards
+    renderTermCards(cleaned, colMun, colLoc, colGov, colProc, colAssin, keys);
+  } catch(e) {
+    document.getElementById('term-cards-grid').innerHTML = `<div class="error-box">⚠️ Erro: ${e.message}</div>`;
+    console.error('[terminais]', e);
+  }
+}
+
+function renderTermCards(data, colMun, colLoc, colGov, colProc, colAssin, allKeys) {
+  const grid = document.getElementById('term-cards-grid');
+  if (!data.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">⚓</div><div class="empty-text">Nenhum terminal encontrado</div></div>';
+    return;
+  }
+  grid.innerHTML = data.map((r, i) => {
+    const mun  = colMun ? r[colMun] : '—';
+    const loc  = colLoc ? r[colLoc] : '';
+    const gov  = colGov ? r[colGov] : '';
+    const proc = colProc ? r[colProc] : '';
+    const assin= colAssin? r[colAssin]:'';
+    const isGov= gov && ['CH','SEINFRA','2','ESTADO'].includes(String(gov).toUpperCase().trim());
+    return `<div class="term-card" onclick="abrirModalTerm(${i})" style="background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:1.2rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${isGov?'var(--azul)':'var(--ouro)'}"></div>
+      <div style="display:flex;align-items:flex-start;gap:.8rem;margin-bottom:.8rem">
+        <div style="width:38px;height:38px;border-radius:10px;background:${isGov?'var(--azul-lt)':'var(--ouro-lt)'};display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">⚓</div>
+        <div style="min-width:0">
+          <div style="font-size:.85rem;font-weight:800;color:var(--azul);line-height:1.2;margin-bottom:.25rem">${mun||'Município'}</div>
+          ${loc ? `<div style="font-size:.72rem;color:var(--cinza-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${loc}</div>` : ''}
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.4rem">
+        ${gov ? `<span class="pill ${isGov?'azul':'ouro'}" style="font-size:.58rem">${gov}</span>` : ''}
+        ${proc ? `<span class="pill cinza" style="font-size:.58rem">📋 ${proc}</span>` : ''}
+        ${assin ? `<span class="pill verde" style="font-size:.58rem">📅 ${assin}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Hover effect
+  grid.querySelectorAll('.term-card').forEach(c => {
+    c.addEventListener('mouseenter', () => { c.style.boxShadow = '0 8px 24px rgba(26,43,94,.12)'; c.style.transform = 'translateY(-2px)'; });
+    c.addEventListener('mouseleave', () => { c.style.boxShadow = ''; c.style.transform = ''; });
+  });
+
+  // Armazena referências para modal
+  window._termData = data;
+  window._termAllKeys = allKeys;
+}
+
+function filtrarTerminais() {
+  const q = (document.getElementById('search-term')?.value || '').toLowerCase();
+  const data = q ? DB.term.filter(r => Object.values(r).some(v => v.toLowerCase().includes(q))) : [...DB.term];
+  const keys = Object.keys(DB.term[0] || {});
+  const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+  const colLoc = keys.find(k => /local|comuni/.test(k));
+  const colGov = keys.find(k => /^gov$/.test(k));
+  const colProc= keys.find(k => /proc/.test(k));
+  const colAssin=keys.find(k => /assin/.test(k));
+  renderTermCards(data, colMun, colLoc, colGov, colProc, colAssin, keys);
+}
+
+function abrirModalTerm(idx) {
+  const r = window._termData[idx];
+  if (!r) return;
+  const keys = window._termAllKeys || Object.keys(r);
+  const colMun = keys.find(k => /munic/.test(k)) || keys[0];
+  document.getElementById('term-modal-title').textContent = '⚓ ' + (colMun ? r[colMun] : 'Terminal Fluvial');
+  const campos = keys.filter(k => r[k] && r[k].trim() && r[k] !== '—');
+  document.getElementById('term-modal-body').innerHTML = `
+    <div style="display:grid;gap:.7rem">
+      ${campos.map(k => `
+        <div style="display:flex;flex-direction:column;gap:.15rem;padding:.6rem .8rem;background:var(--cinza-5);border-radius:8px">
+          <span style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza-3)">${k.replace(/_/g,' ')}</span>
+          <span style="font-size:.82rem;font-weight:500;color:var(--cinza-1)">${r[k]}</span>
+        </div>`).join('')}
+    </div>`;
+  document.getElementById('term-modal-overlay').style.display = 'block';
+  document.getElementById('term-modal').style.display = 'block';
+}
+function fecharModalTerm() {
+  document.getElementById('term-modal-overlay').style.display = 'none';
+  document.getElementById('term-modal').style.display = 'none';
+}
+
+// ── INIT SINISTROS ──
+async function initSinistros() {
+  try {
+    const data = await fetchSheet(SHEETS.sinistro);
+    DB.sin = data;
+    DB.filtered.sin = [...data];
+    setKpi('badge-sin', data.length);
+    document.getElementById('kg-sin').textContent = data.length;
+
+    const keys = Object.keys(data[0] || {});
+    const colTipo = keys.find(k => /tipo|categ|class/i.test(k));
+    const colRod  = keys.find(k => /rodov|rod\b/i.test(k));
+    const colMun  = keys.find(k => /munic/i.test(k));
+
+    const muns = colMun ? new Set(data.map(r=>r[colMun]).filter(Boolean)) : new Set();
+    const rods = colRod ? new Set(data.map(r=>r[colRod]).filter(Boolean)) : new Set();
+    document.getElementById('kpi-sin').innerHTML = `
+      <div class="kpi verm"><div class="kpi-header"><div class="kpi-label">Total de Registros</div><div class="kpi-icon">🚨</div></div><div class="kpi-value">${data.length}</div><div class="kpi-sub">ocorrências monitoradas</div></div>
+      <div class="kpi ouro"><div class="kpi-header"><div class="kpi-label">Rodovias Afetadas</div><div class="kpi-icon">🛣️</div></div><div class="kpi-value">${rods.size||'—'}</div><div class="kpi-sub">rodovias com registros</div></div>
+      <div class="kpi roxo"><div class="kpi-header"><div class="kpi-label">Municípios Afetados</div><div class="kpi-icon">📍</div></div><div class="kpi-value">${muns.size||'—'}</div><div class="kpi-sub">municípios com ocorrências</div></div>
+      <div class="kpi ciano"><div class="kpi-header"><div class="kpi-label">Tipos Distintos</div><div class="kpi-icon">🏷️</div></div><div class="kpi-value">${colTipo?new Set(data.map(r=>r[colTipo]).filter(Boolean)).size:'—'}</div><div class="kpi-sub">categorias de ocorrência</div></div>`;
+
+    if (colTipo) {
+      const tipoMap = countBy(data, colTipo);
+      const topT = topN(tipoMap, 7);
+      makeDoughnut('chart-sin-tipo', topT.map(e=>e[0]), topT.map(e=>e[1]));
+    }
+    if (colRod) {
+      const rodMap = countBy(data, colRod);
+      const topR = topN(rodMap, 5).map(([l,v])=>({label:l,value:v}));
+      renderRankList('rank-sin-rod', topR, topR[0]?.value||1, 'verm');
+    }
+
+    renderSection('sin');
+  } catch(e) {
+    document.getElementById('table-sin-wrap').innerHTML = `<div class="error-box">⚠️ Erro: ${e.message}</div>`;
+  }
+}
+
+// ── INIT PAINEL GERAL (charts) ──
+async function initPainelCharts() {
+  // Aguarda os dados carregados para renderizar resumo
+  await new Promise(r => setTimeout(r, 800));
+  const categories = ['Rodovias','Ramais','Viário','Aeródromos','Terminais','Sinistros'];
+  const counts = [DB.rod.length, DB.ram.length, DB.via.length, DB.aero.length, DB.term.length, DB.sin.length];
+  makeBar('chart-geral-dist', categories, counts, { colors: PALETTE.multi.slice(0,6) });
+  const coverages = [
+    DB.rod.length ? new Set(DB.rod.map(r=>Object.values(r)[0])).size : 0,
+    DB.ram.length ? new Set(DB.ram.map(r=>Object.values(r)[0])).size : 0,
+    DB.via.length ? new Set(DB.via.map(r=>Object.values(r)[0])).size : 0,
+    DB.aero.length ? new Set(DB.aero.map(r=>Object.values(r)[0])).size : 0,
+    DB.term.length ? new Set(DB.term.map(r=>Object.values(r)[0])).size : 0,
+    DB.sin.length ? new Set(DB.sin.map(r=>Object.values(r)[0])).size : 0
+  ];
+  makeBar('chart-geral-mun', categories, coverages, { colors: PALETTE.ouro[0] });
+}
+
+// ── NAVIGATION ──────────────────────────────────────────────────────────────
+const PAGE_META = {
+  painel:    { bread: 'Dashboard', title: 'Painel Geral de Infraestrutura' },
+  rodovias:  { bread: 'Infraestrutura Viária', title: 'Rodovias Estaduais' },
+  ramais:    { bread: 'Infraestrutura Viária', title: 'Ramais Rurais' },
+  viario:    { bread: 'Infraestrutura Viária', title: 'Viário Urbano Municipal' },
+  aerodromos:{ bread: 'Infraestrutura Modal', title: 'Aeródromos do Amazonas' },
+  terminais: { bread: 'Infraestrutura Modal', title: 'Terminais Fluviais' },
+  sinistros: { bread: 'Análise & Inteligência', title: 'Sinistros & Notícias' }
+};
+
+window.navigate = function(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + page);
+  if (pageEl) pageEl.classList.add('active');
+  const navEl = document.querySelector('.nav-item[data-page="' + page + '"]');
+  if (navEl) navEl.classList.add('active');
+  const meta = PAGE_META[page] || {};
+  document.getElementById('ph-bread').textContent = meta.bread || page;
+  document.getElementById('ph-title').textContent = meta.title || page;
+  window.scrollTo(0, 0);
+  const content = document.querySelector('.content');
+  if (content) { content.classList.add('fade-in'); setTimeout(() => content.classList.remove('fade-in'), 400); }
+};
+
+// ── EXPORT ──────────────────────────────────────────────────────────────────
+function exportarCSV() { exportarCSVSec('geral'); }
+function exportarCSVSec(sec) {
+  const data = DB.filtered[sec] || DB[sec] || [];
+  if (!data.length) return;
+  const keys = Object.keys(data[0]);
+  const csv = [keys.join(','), ...data.map(r => keys.map(k => `"${(r[k]||'').replace(/"/g,'""')}"`).join(','))].join('\n');
+  const blob = new Blob(['\ufeff'+csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `seinfra_${sec}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ── CLOCK ───────────────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  document.getElementById('lastUpdate').textContent =
+    now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+}
+setInterval(updateClock, 60000);
+updateClock();
+
+// ── BOOTSTRAP ───────────────────────────────────────────────────────────────
+(async function boot() {
+  document.getElementById('syncStatus').textContent = 'Carregando dados…';
+
+  // Carrega todas as fontes em paralelo
+  await Promise.allSettled([
+    initRodovias(),
+    initRamais(),
+    initViario(),
+    initAerodromos(),
+    initTerminais(),
+    initSinistros(),
+  ]);
+
+  // Geral depende dos outros
+  await Promise.allSettled([initGeral()]);
+  await initPainelCharts();
+
+  document.getElementById('syncStatus').textContent = 'Dados sincronizados';
+
+  // AKE BUILD LOG
+  const AKE_BUILD_LOG = [
+    { build:'1.0.0-bi', data:'2026-04-16T00:00:00-04:00', autor:'Paulo Esteves Fernandes Neto',
+      ia:'Claude Sonnet 4.6', tipo:'GENESIS', status:'VIGENTE',
+      desc:'Plataforma BI SEINFRA/AM. Single-file monolítica. 7 seções. Chart.js. CSV via gviz/tq. Paginação JS pura funcional. Agrupamento de trechos por rodovia em accordion. KPIs e gráficos por seção. Padrão visual SEINFRA #1A2B5E/#F5A623/Outfit.' }
+  ];
+  console.log('[AKE] SEINFRA BI v1.0.0-bi BOOT OK', AKE_BUILD_LOG[0]);
+})();
+
+    // AKE UFT-1.0 Build Log Identidade 2026
+    window._VERSION_LOG = window._VERSION_LOG || [];
+    window._VERSION_LOG.push({ rev:"v2.0", data:"2026-05-25", descricao:"Identidade Visual 2026: Lexend/Barlow, navy #1A2B5E, header Gov AM, footer institucional" });
+    window._VICIOS_CONHECIDOS = window._VICIOS_CONHECIDOS || [];
+
   </script>
+<!-- FOOTER 2026 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-item">www.seinfra.am.gov.br</div>
+      <div class="footer-item">Instagram: @seinfra.am</div>
+      <div class="footer-item">TikTok: @seinfra.am</div>
+      <div class="footer-item">facebook.com/seinfra.AM</div>
+    </div>
+    <div class="footer-vdiv"></div>
+    <div class="footer-col">
+      <div class="footer-item">gabinete@seinfra.am.gov.br</div>
+      <div class="footer-item">Fone: (92) 9 9263-0198</div>
+      <div class="footer-item">Av. Arq. José Henriques Bento Rodrigues, 3760</div>
+      <div class="footer-item">Monte das Oliveiras · Manaus/AM · CEP: 69093-149</div>
+    </div>
+    <div class="footer-vdiv"></div>
+    <div class="footer-brand-wrap">
+      <div class="footer-brand-pre">Secretaria de</div>
+      <div class="footer-brand-nome">Infraestrutura</div>
+    </div>
+  </div>
+</footer>
+
+
 
 </body>
 </html>
